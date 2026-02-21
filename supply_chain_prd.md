@@ -1,26 +1,25 @@
 # SourceShift — Product Requirements Document v2
-### Supply Chain Procurement Decision Tool | Datathon Build
+### Granular Supply Chain Optimization Tool | Datathon Build
 
 ---
 
 ## 1. Vision & Problem Statement
 
-When a region goes offline — a port closes, a country faces sanctions, a factory floods — procurement teams have hours to find alternatives. Today this is done manually. There is no interactive tool that combines **real trade flow data**, **live disruption signals**, and **optimization logic** to give a procurement manager a ranked alternative supplier recommendation in real time.
+When a major event (tariff, sanction, disaster, etc.) impacts a region, companies need to quickly find alternative sources to minimize price increases and supply chain disruptions. Existing tools focus on countries, but real-world procurement happens at the level of cities, ports, resource sites, and companies.
 
-**SourceShift** solves this. It is a 3D globe-based procurement decision tool backed by real international trade data where a user can mark any region as disrupted and immediately receive re-routed supplier recommendations with cost, lead time, and risk tradeoffs surfaced in a financial terminal sidebar.
+**SourceShift** now aims to optimize supply chains at a granular level—cities, major resource points, and companies—so that both companies and consumers can maintain the lowest possible costs during disruptions.
 
-**The datathon pitch:** *"We pulled real bilateral trade flows from the UN Comtrade API, layered live disruption signals from the GDELT news event database, and built a minimum-cost-flow optimizer on top. When you click a country, you're not seeing mocked data — you're seeing actual 2023 trade volumes re-routed in real time."*
+**The datathon pitch:** *"We pulled real company, port, and city-level trade flows, layered live disruption signals from the GDELT news event database, and built a minimum-cost-flow optimizer on top. When you click a company, port, or city, you're not seeing mocked data — you're seeing actual flows re-routed in real time to minimize cost and disruption."*
 
 ---
 
 ## 2. Data Architecture — The Core of the Datathon Story
-
 This is what separates SourceShift from a slideshow. Three real data sources feed the application:
 
-### Data Source 1: UN Comtrade API — Trade Flow Network (Free, No Key Required for Preview)
-**What it gives you:** Real bilateral import/export volumes between ~200 countries, broken down by HS commodity code (electronics, textiles, chemicals, machinery, etc.), going back to 2000, updated annually.
+### Data Source 1: Company/Port/City-Level Trade Flow Network
+**What it gives you:** Real flows between companies, cities, or ports, not just countries. Use trade registries, port shipment data, and company-level export/import records where available.
 
-**What you use it for:** Building the actual supplier network graph. Instead of making up that "China exports $X of electronics to the US," you pull the real number. This becomes the edge weight in your supply graph — the arc thickness on the globe reflects real trade volume.
+**What you use it for:** Building the actual supplier network graph. Instead of making up that "Company X exports $Y of electronics to Port Z," you pull the real number. This becomes the edge weight in your supply graph — the arc thickness on the map reflects real trade volume.
 
 **How to access it:**
 ```python
@@ -51,13 +50,12 @@ data = response.json()
 | Vehicles & auto parts | 87 | Automotive supply chains |
 
 ---
-
 ### Data Source 2: GDELT — Live Disruption Signal Layer (100% Free, No Key)
-**What it gives you:** A real-time database of global news events, updated every 15 minutes, covering protests, disasters, conflicts, port closures, and economic crises — all geo-tagged to country level.
+**What it gives you:** A real-time database of global news events, updated every 15 minutes, covering protests, disasters, conflicts, port closures, and economic crises — all geo-tagged to city, port, or company level where possible.
 
-**What you use it for:** The disruption risk score on each globe node. Instead of making up risk scores, you query GDELT for the volume of "supply chain disruption"-related news events in each country over the past 90 days. High event density = high risk score = amber/red health ring on the globe.
+**What you use it for:** The disruption risk score on each node. Instead of making up risk scores, you query GDELT for the volume of "supply chain disruption"-related news events in each city, port, or company over the past 90 days. High event density = high risk score = amber/red health ring on the map.
 
-**This is your datathon differentiator.** Most tools use static risk scores from ratings agencies. Yours is live news signal.
+**This is your datathon differentiator.** Most tools use static risk scores from ratings agencies. Yours is live news signal, geo-tagged to the most granular level possible.
 
 **How to access it:**
 ```python
@@ -88,11 +86,10 @@ composite_risk = (normalized_score × 0.6) + (geo_instability_index × 0.25) + (
 **Pre-pull strategy:** Query GDELT the morning of the demo for the 30 countries in your node graph. Cache the counts. This gives you "live" data that is genuinely current as of demo day.
 
 ---
-
 ### Data Source 3: World Bank WITS API — Tariff & Trade Cost Layer (Free, No Key for Basic Queries)
-**What it gives you:** Applied tariff rates between country pairs by HS commodity code — i.e., how much extra cost is incurred routing trade through a given country pair vs. another.
+**What it gives you:** Applied tariff rates and trade costs at the company, port, or city level, including specific routes and contracts.
 
-**What you use it for:** The cost delta in your re-routing recommendations. When the tool says "shifting to Vietnam adds +8% cost," that number comes from real MFN tariff rates plus trade distance cost proxies, not a made-up number.
+**What you use it for:** The cost delta in your re-routing recommendations. When the tool says "shifting to Company X or Port Y adds +8% cost," that number comes from real MFN tariff rates plus trade distance cost proxies, not a made-up number.
 
 **How to access it:**
 ```python
@@ -112,23 +109,22 @@ effective_cost = base_trade_cost × (1 + applied_tariff_rate) × distance_factor
 ---
 
 ## 3. Data Pipeline (Run Night Before Demo)
-
 ```
-Step 1: pull_comtrade.py
+Step 1: pull_company_flows.py
   → For each of 5 commodity categories
-  → For top 15 exporting countries
-  → Pull bilateral export volumes to US, EU, and Japan as destination markets
-  → Output: trade_flows.json (nodes + edges with real volume data)
+  → For top companies, cities, and ports
+  → Pull bilateral export/import volumes to key destination markets
+  → Output: trade_flows.json (nodes = companies/cities/ports, edges = real volume data)
 
 Step 2: pull_gdelt.py
-  → For each country in the node graph
+  → For each node in the graph (company/city/port)
   → Query GDELT for disruption event count, last 90 days
-  → Output: disruption_signals.json (country → risk score)
+  → Output: disruption_signals.json (node → risk score)
 
 Step 3: pull_wits.py
-  → For each country pair in the graph
-  → Pull applied tariff rate for each commodity category
-  → Output: tariff_matrix.json (country_pair → tariff_rate by category)
+  → For each node pair in the graph
+  → Pull applied tariff rate and trade cost for each commodity category
+  → Output: tariff_matrix.json (node_pair → tariff_rate by category)
 
 Step 4: build_graph.py
   → Merge all three sources into a unified supplier_graph.json
@@ -143,53 +139,53 @@ Everything the frontend needs is in `supplier_graph.json`. No live API calls dur
 
 ## 4. Core Features
 
-### 4.1 Globe Visualization
-- Interactive 3D globe rendered with **Globe.gl**
-- Supplier nodes rendered as colored points — size proportional to real trade volume from Comtrade
+### 4.1 Map Visualization (Updated)
+- Interactive map (globe or regional) rendered with **Globe.gl** or similar
+- Supplier nodes rendered as colored points — size proportional to real trade volume from company/port/city flows
 - Node color encodes GDELT-derived disruption risk: green / amber / red
 - Animated arc lines between nodes — arc thickness proportional to real trade flow volume
-- Click any country to trigger disruption mode
-- Disrupted region pulses red
+- Click any company, city, or port to trigger disruption mode
+- Disrupted node pulses red
 - Recommended re-routed arcs animate in electric blue
 
-### 4.2 Terminal Sidebar
+### 4.2 Terminal Sidebar (Updated)
 Updates in real time on disruption. Displays:
 
 ```
-⚠ DISRUPTION DETECTED: China (Electronics)
+⚠ DISRUPTION DETECTED: Company X (Electronics)
 
-REAL TRADE DATA (UN Comtrade 2023)
+REAL TRADE DATA (Company/Port/City Flows)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Affected Export Volume:    $284B / year
+Affected Export Volume:    $Y / year
 Categories Disrupted:      Electronics, Machinery
-US Import Dependency:      67% of HS-85 imports
+Import Dependency:         67% of HS-85 imports
 GDELT Risk Signal:         ████████░░ HIGH (142 events / 90d)
 
-TOP ALTERNATIVE SUPPLIERS
+TOP ALTERNATIVE SUPPLIERS/ROUTES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1.  Vietnam
-    2023 Export Volume:  $38B (HS-85)
-    Applied US Tariff:   0% (PNTR)
-    GDELT Risk:          ██░░░░░░░░ LOW
-    Est. Cost Delta:     +4.2%
+1.  Company Y
+  2023 Export Volume:  $Z (HS-85)
+  Applied Tariff:      0% (Contract/Route)
+  GDELT Risk:          ██░░░░░░░░ LOW
+  Est. Cost Delta:     +4.2%
 
-2.  South Korea
-    2023 Export Volume:  $74B (HS-85)
-    Applied US Tariff:   0% (KORUS FTA)
-    GDELT Risk:          ███░░░░░░░ LOW-MED
-    Est. Cost Delta:     +6.8%
+2.  Port A
+  2023 Export Volume:  $W (HS-85)
+  Applied Tariff:      0% (Route)
+  GDELT Risk:          ███░░░░░░░ LOW-MED
+  Est. Cost Delta:     +6.8%
 
-3.  Mexico
-    2023 Export Volume:  $29B (HS-85)
-    Applied US Tariff:   0% (USMCA)
-    GDELT Risk:          █████░░░░░ MEDIUM
-    Est. Cost Delta:     +2.1%
+3.  City B
+  2023 Export Volume:  $V (HS-85)
+  Applied Tariff:      0% (Route)
+  GDELT Risk:          █████░░░░░ MEDIUM
+  Est. Cost Delta:     +2.1%
 
 RECOMMENDED ACTION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-→ Primary: Vietnam (lowest tariff, lowest risk)
-→ Hedge:   Mexico (lowest cost delta, USMCA)
-→ Gap: 45% of China volume cannot be covered
+→ Primary: Company Y (lowest tariff, lowest risk)
+→ Hedge:   Port A (lowest cost delta)
+→ Gap: 45% of Company X volume cannot be covered
   by a single alternative — split sourcing required
 ```
 
@@ -235,7 +231,7 @@ Three sliders adjusting re-ranking priority in real time:
 ├────────────────────────────────────────┬────────────────────────────┤
 │                                        │  TERMINAL                   │
 │                                        │                             │
-│         3D GLOBE                       │  Data: UN Comtrade 2023     │
+│         MAP (Globe/Regional)           │  Data: Company/Port/City    │
 │                                        │  Risk: GDELT live signal    │
 │   nodes sized by trade volume          │  Tariffs: World Bank WITS   │
 │   arcs weighted by flow                │                             │
@@ -249,7 +245,7 @@ Three sliders adjusting re-ranking priority in real time:
 │                                        │  Risk  [==|────] 25%        │
 │                                        │                             │
 │                                        │  ── Data Sources ──         │
-│                                        │  ● UN Comtrade API          │
+│                                        │  ● Company/Port/City flows  │
 │                                        │  ● GDELT (updated today)    │
 │                                        │  ● World Bank WITS          │
 └────────────────────────────────────────┴────────────────────────────┘

@@ -31,8 +31,11 @@ export default function TerminalSidebar({
             category={activeCategory}
           />
         </>
-      ) : (
-        <div className="text-xs" style={{ color: COLORS.textMuted }}>
+      ) : null}
+
+      {/* Always show default widgets */}
+      {!disruptedNode && (
+        <div className="text-xs mb-2" style={{ color: COLORS.textMuted }}>
           Click a country node on the globe to simulate a supply chain disruption.
         </div>
       )}
