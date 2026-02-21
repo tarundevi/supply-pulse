@@ -1,7 +1,6 @@
 import React from 'react';
 import { COLORS } from '../utils/constants';
 import DisruptionSummary from './DisruptionSummary';
-import TariffImpactSummary from './TariffImpactSummary';
 import AlternativeSuppliers from './AlternativeSuppliers';
 import OptimizationSliders from './OptimizationSliders';
 import RecommendedAction from './RecommendedAction';
@@ -15,8 +14,6 @@ export default function TerminalSidebar({
   onWeightsChange,
   graph,
   tariffSim,
-  tariffAffectedNodes,
-  tariffRecommendations,
 }) {
   return (
     <div
@@ -55,22 +52,11 @@ export default function TerminalSidebar({
           />
           <RecommendedAction recommendations={recommendations} />
         </>
-      ) : tariffSim && tariffAffectedNodes.length > 0 ? (
-        <>
-          <TariffImpactSummary
-            affectedNodes={tariffAffectedNodes}
-            category={activeCategory}
-            tariffSim={tariffSim}
-          />
-          <AlternativeSuppliers
-            recommendations={tariffRecommendations}
-            category={activeCategory}
-            isTariffScenario={true}
-          />
-          <RecommendedAction recommendations={tariffRecommendations} isTariffScenario={true} />
-        </>
-      ) : (
-        <div className="text-xs" style={{ color: COLORS.textMuted }}>
+      ) : null}
+
+      {/* Always show default widgets */}
+      {!disruptedNode && (
+        <div className="text-xs mb-2" style={{ color: COLORS.textMuted }}>
           Click a country node on the globe to simulate a supply chain disruption.
         </div>
       )}

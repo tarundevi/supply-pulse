@@ -2,31 +2,27 @@ import React from 'react';
 import { COLORS } from '../utils/constants';
 import { formatPercent } from '../utils/formatters';
 
-export default function RecommendedAction({ recommendations, isTariffScenario = false }) {
+export default function RecommendedAction({ recommendations }) {
   if (!recommendations || recommendations.length < 2) return null;
 
   const primary = recommendations[0];
-  
-  // For tariff scenario, use costSavings; for disruption, use costDelta
-  const getCostValue = (r) => isTariffScenario ? r.costSavings : r.costDelta;
-  
-  // Hedge = lowest cost among remaining
+  // Hedge = lowest cost delta among remaining
   const hedge = recommendations
     .slice(1)
-    .sort((a, b) => getCostValue(a) - getCostValue(b))[0];
+    .sort((a, b) => a.costDelta - b.costDelta)[0];
 
   const totalCoverage = recommendations.reduce((s, r) => s + r.coveragePct, 0);
 
   const primaryReason =
-    getCostValue(primary) >= 0
-      ? isTariffScenario ? 'best cost savings' : 'lowest cost delta'
+    primary.costDelta <= 0
+      ? 'lowest cost delta'
       : primary.riskLabel === 'LOW'
         ? 'lowest risk'
         : 'best overall score';
 
   const hedgeReason =
-    getCostValue(hedge) <= getCostValue(primary)
-      ? isTariffScenario ? 'cost savings' : 'lowest cost delta'
+    hedge.costDelta <= primary.costDelta
+      ? 'lowest cost delta'
       : hedge.riskLabel === 'LOW'
         ? 'low risk'
         : 'diversification';

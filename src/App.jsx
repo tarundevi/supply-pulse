@@ -5,7 +5,7 @@ import CategoryFilter from './components/CategoryFilter';
 import DestinationFilter from './components/DestinationFilter';
 import TariffSimulator from './components/TariffSimulator';
 import { useSupplierGraph } from './hooks/useSupplierGraph';
-import { rerouteSupply, findTariffAlternatives } from './engine/optimizer';
+import { rerouteSupply } from './engine/optimizer';
 import { DEFAULT_WEIGHTS, COLORS } from './utils/constants';
 
 export default function App() {
@@ -44,22 +44,6 @@ export default function App() {
     if (!simulatedGraph || !disruptedCountry) return [];
     return rerouteSupply(disruptedCountry, activeCategory, simulatedGraph, weights);
   }, [simulatedGraph, disruptedCountry, activeCategory, weights]);
-
-  const tariffAffectedNodes = useMemo(() => {
-    if (!simulatedGraph || !tariffSim) return [];
-    return simulatedGraph.nodes.filter((n) => tariffSim.countries.includes(n.id));
-  }, [simulatedGraph, tariffSim]);
-
-  const tariffRecommendations = useMemo(() => {
-    if (!simulatedGraph || !graph || !tariffSim || disruptedCountry) return [];
-    return findTariffAlternatives(
-      tariffSim.categories.length > 0 ? tariffSim.countries : [],
-      activeCategory,
-      simulatedGraph,
-      graph,
-      weights
-    );
-  }, [simulatedGraph, graph, tariffSim, activeCategory, weights, disruptedCountry]);
 
   const handleNodeClick = useCallback((nodeId) => {
     setDisruptedCountry((prev) => (prev === nodeId ? null : nodeId));
@@ -143,8 +127,6 @@ export default function App() {
             onWeightsChange={setWeights}
             graph={simulatedGraph}
             tariffSim={tariffSim}
-            tariffAffectedNodes={tariffAffectedNodes}
-            tariffRecommendations={tariffRecommendations}
           />
         </div>
       </div>

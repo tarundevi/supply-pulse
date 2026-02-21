@@ -70,7 +70,7 @@ export default function AlternativeSuppliers({ recommendations, category, isTari
             </span>
             <span
               style={{
-                color: isTariffScenario 
+                color: isTariffScenario
                   ? (rec.costSavings > 0 ? COLORS.riskLow : COLORS.riskMedium)
                   : (rec.costDelta > 0 ? COLORS.riskMedium : COLORS.riskLow),
               }}
