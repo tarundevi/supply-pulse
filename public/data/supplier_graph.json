@@ -1,0 +1,266 @@
+{
+  "nodes": [
+    {
+      "id": "CHN",
+      "country": "China",
+      "countryCode": "156",
+      "lat": 35.86,
+      "lng": 104.19,
+      "export_volumes": {
+        "electronics": 284000000000,
+        "textiles": 120000000000,
+        "chemicals": 58000000000,
+        "machinery": 195000000000,
+        "vehicles": 32000000000
+      },
+      "tariff_rates": {
+        "electronics": 0.025,
+        "textiles": 0.12,
+        "chemicals": 0.05,
+        "machinery": 0.03,
+        "vehicles": 0.025
+      },
+      "gdelt_risk_score": 7.2,
+      "gdelt_event_count": 142,
+      "distance_cost_factor": 0.08
+    },
+    {
+      "id": "VNM",
+      "country": "Vietnam",
+      "countryCode": "704",
+      "lat": 14.06,
+      "lng": 108.28,
+      "export_volumes": {
+        "electronics": 38000000000,
+        "textiles": 29000000000,
+        "chemicals": 3200000000,
+        "machinery": 8500000000,
+        "vehicles": 1200000000
+      },
+      "tariff_rates": {
+        "electronics": 0.0,
+        "textiles": 0.08,
+        "chemicals": 0.03,
+        "machinery": 0.02,
+        "vehicles": 0.025
+      },
+      "gdelt_risk_score": 2.1,
+      "gdelt_event_count": 18,
+      "distance_cost_factor": 0.09
+    },
+    {
+      "id": "KOR",
+      "country": "South Korea",
+      "countryCode": "410",
+      "lat": 35.91,
+      "lng": 127.77,
+      "export_volumes": {
+        "electronics": 74000000000,
+        "textiles": 3500000000,
+        "chemicals": 42000000000,
+        "machinery": 52000000000,
+        "vehicles": 46000000000
+      },
+      "tariff_rates": {
+        "electronics": 0.0,
+        "textiles": 0.10,
+        "chemicals": 0.02,
+        "machinery": 0.0,
+        "vehicles": 0.0
+      },
+      "gdelt_risk_score": 3.4,
+      "gdelt_event_count": 34,
+      "distance_cost_factor": 0.07
+    },
+    {
+      "id": "MEX",
+      "country": "Mexico",
+      "countryCode": "484",
+      "lat": 23.63,
+      "lng": -102.55,
+      "export_volumes": {
+        "electronics": 29000000000,
+        "textiles": 5800000000,
+        "chemicals": 7200000000,
+        "machinery": 38000000000,
+        "vehicles": 68000000000
+      },
+      "tariff_rates": {
+        "electronics": 0.0,
+        "textiles": 0.0,
+        "chemicals": 0.0,
+        "machinery": 0.0,
+        "vehicles": 0.0
+      },
+      "gdelt_risk_score": 5.0,
+      "gdelt_event_count": 72,
+      "distance_cost_factor": 0.03
+    },
+    {
+      "id": "IND",
+      "country": "India",
+      "countryCode": "356",
+      "lat": 20.59,
+      "lng": 78.96,
+      "export_volumes": {
+        "electronics": 12000000000,
+        "textiles": 36000000000,
+        "chemicals": 28000000000,
+        "machinery": 14000000000,
+        "vehicles": 8500000000
+      },
+      "tariff_rates": {
+        "electronics": 0.035,
+        "textiles": 0.15,
+        "chemicals": 0.06,
+        "machinery": 0.04,
+        "vehicles": 0.05
+      },
+      "gdelt_risk_score": 4.5,
+      "gdelt_event_count": 58,
+      "distance_cost_factor": 0.10
+    },
+    {
+      "id": "DEU",
+      "country": "Germany",
+      "countryCode": "276",
+      "lat": 51.17,
+      "lng": 10.45,
+      "export_volumes": {
+        "electronics": 62000000000,
+        "textiles": 14000000000,
+        "chemicals": 95000000000,
+        "machinery": 145000000000,
+        "vehicles": 152000000000
+      },
+      "tariff_rates": {
+        "electronics": 0.015,
+        "textiles": 0.08,
+        "chemicals": 0.02,
+        "machinery": 0.015,
+        "vehicles": 0.025
+      },
+      "gdelt_risk_score": 1.8,
+      "gdelt_event_count": 12,
+      "distance_cost_factor": 0.06
+    },
+    {
+      "id": "JPN",
+      "country": "Japan",
+      "countryCode": "392",
+      "lat": 36.20,
+      "lng": 138.25,
+      "export_volumes": {
+        "electronics": 56000000000,
+        "textiles": 2100000000,
+        "chemicals": 36000000000,
+        "machinery": 89000000000,
+        "vehicles": 98000000000
+      },
+      "tariff_rates": {
+        "electronics": 0.0,
+        "textiles": 0.09,
+        "chemicals": 0.02,
+        "machinery": 0.0,
+        "vehicles": 0.0
+      },
+      "gdelt_risk_score": 1.2,
+      "gdelt_event_count": 8,
+      "distance_cost_factor": 0.07
+    },
+    {
+      "id": "THA",
+      "country": "Thailand",
+      "countryCode": "764",
+      "lat": 15.87,
+      "lng": 100.99,
+      "export_volumes": {
+        "electronics": 28000000000,
+        "textiles": 6200000000,
+        "chemicals": 12000000000,
+        "machinery": 18000000000,
+        "vehicles": 22000000000
+      },
+      "tariff_rates": {
+        "electronics": 0.015,
+        "textiles": 0.10,
+        "chemicals": 0.04,
+        "machinery": 0.02,
+        "vehicles": 0.025
+      },
+      "gdelt_risk_score": 2.8,
+      "gdelt_event_count": 24,
+      "distance_cost_factor": 0.09
+    },
+    {
+      "id": "MYS",
+      "country": "Malaysia",
+      "countryCode": "458",
+      "lat": 4.21,
+      "lng": 101.98,
+      "export_volumes": {
+        "electronics": 45000000000,
+        "textiles": 2800000000,
+        "chemicals": 14000000000,
+        "machinery": 12000000000,
+        "vehicles": 3200000000
+      },
+      "tariff_rates": {
+        "electronics": 0.01,
+        "textiles": 0.08,
+        "chemicals": 0.03,
+        "machinery": 0.02,
+        "vehicles": 0.03
+      },
+      "gdelt_risk_score": 2.0,
+      "gdelt_event_count": 15,
+      "distance_cost_factor": 0.10
+    },
+    {
+      "id": "BRA",
+      "country": "Brazil",
+      "countryCode": "076",
+      "lat": -14.24,
+      "lng": -51.93,
+      "export_volumes": {
+        "electronics": 4500000000,
+        "textiles": 2200000000,
+        "chemicals": 18000000000,
+        "machinery": 8000000000,
+        "vehicles": 12000000000
+      },
+      "tariff_rates": {
+        "electronics": 0.04,
+        "textiles": 0.20,
+        "chemicals": 0.08,
+        "machinery": 0.06,
+        "vehicles": 0.18
+      },
+      "gdelt_risk_score": 4.2,
+      "gdelt_event_count": 52,
+      "distance_cost_factor": 0.11
+    }
+  ],
+  "edges": [
+    { "source": "CHN", "target": "USA", "category": "electronics", "volume": 156000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "CHN", "target": "USA", "category": "machinery", "volume": 82000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "VNM", "target": "USA", "category": "electronics", "volume": 22000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "KOR", "target": "USA", "category": "electronics", "volume": 38000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "MEX", "target": "USA", "category": "electronics", "volume": 18000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "MEX", "target": "USA", "category": "vehicles", "volume": 52000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "DEU", "target": "USA", "category": "vehicles", "volume": 28000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "DEU", "target": "USA", "category": "machinery", "volume": 42000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "JPN", "target": "USA", "category": "vehicles", "volume": 46000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "JPN", "target": "USA", "category": "electronics", "volume": 24000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "THA", "target": "USA", "category": "electronics", "volume": 14000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "MYS", "target": "USA", "category": "electronics", "volume": 26000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "IND", "target": "USA", "category": "textiles", "volume": 12000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "IND", "target": "USA", "category": "chemicals", "volume": 8000000000, "targetLat": 37.09, "targetLng": -95.71 },
+    { "source": "BRA", "target": "USA", "category": "vehicles", "volume": 4500000000, "targetLat": 37.09, "targetLng": -95.71 }
+  ],
+  "metadata": {
+    "comtrade_year": 2023,
+    "gdelt_window": "90d",
+    "last_updated": "2026-02-21"
+  }
+}
