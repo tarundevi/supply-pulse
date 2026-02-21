@@ -42,19 +42,42 @@ OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "data")
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "trade_flows.json")
 
 
-def fetch_exports(reporter_code, hs_code, period="2023"):
-    """Fetch export data for a single reporter + commodity combination."""
-    params = {
-        "reporterCode": reporter_code,
-        "cmdCode": hs_code,
-        "flowCode": "X",
-        "period": period,
-    }
-    # TODO: Implement actual API call and response parsing
-    # response = requests.get(API_BASE, params=params)
-    # response.raise_for_status()
-    # return response.json()
-    return {}
+def fetch_with_rate_limit_handling(url, params=None, max_retries=3):
+    """Make HTTP request with rate limit handling and friendly error messages."""
+    for attempt in range(max_retries):
+        try:
+            response = requests.get(url, params=params, timeout=30)
+            
+            if response.status_code == 429:
+                wait_time = int(response.headers.get('Retry-After', 60))
+                print(f"  ⚠ Rate limit hit. Waiting {wait_time} seconds before retry...")
+                time.sleep(wait_time)
+                continue
+                
+            if response.status_code == 403:
+                print("  ✕ Access forbidden. The API may require authentication.")
+                return None
+                
+            if response.status_code >= 500:
+                print(f"  ⚠ Server error ({response.status_code}). Retrying in 5 seconds...")
+                time.sleep(5)
+                continue
+                
+            response.raise_for_status()
+            return response.json()
+            
+        except requests.exceptions.Timeout:
+            print(f"  ⚠ Request timed out. Retrying ({attempt + 1}/{max_retries})...")
+            time.sleep(5)
+        except requests.exceptions.ConnectionError:
+            print("  ✕ Connection error. Please check your internet connection.")
+            return None
+        except requests.exceptions.HTTPError as e:
+            print(f"  ✕ HTTP error: {e}")
+            return None
+    
+    print("  ✕ Failed after all retries. Please try again later.")
+    return None
 
 
 def main(args):

@@ -8,7 +8,15 @@ export function useSupplierGraph() {
   useEffect(() => {
     fetch('/data/supplier_graph.json')
       .then((res) => {
-        if (!res.ok) throw new Error(`Failed to load graph: ${res.status}`);
+        if (!res.ok) {
+          if (res.status === 429) {
+            throw new Error('Rate limit exceeded. Please wait a moment and try again.');
+          }
+          if (res.status >= 500) {
+            throw new Error('Server error. The data service may be temporarily unavailable.');
+          }
+          throw new Error(`Failed to load graph: ${res.status}`);
+        }
         return res.json();
       })
       .then((data) => {
@@ -16,7 +24,11 @@ export function useSupplierGraph() {
         setLoading(false);
       })
       .catch((err) => {
-        setError(err.message);
+        if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
+          setError('Unable to connect to data service. Please check your internet connection.');
+        } else {
+          setError(err.message);
+        }
         setLoading(false);
       });
   }, []);

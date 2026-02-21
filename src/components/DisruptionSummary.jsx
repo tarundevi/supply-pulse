@@ -1,6 +1,7 @@
 import React from 'react';
 import { COLORS, COMMODITY_CATEGORIES, RISK_THRESHOLDS } from '../utils/constants';
 import { formatCurrency, formatPercent } from '../utils/formatters';
+import AnimatedNumber from './AnimatedNumber';
 
 function riskBar(eventCount) {
   const filled = Math.min(Math.round((eventCount / 150) * 10), 10);
@@ -50,7 +51,9 @@ export default function DisruptionSummary({ node, category, graph }) {
       <div className="space-y-1 text-xs">
         <div className="flex justify-between">
           <span style={{ color: COLORS.textMuted }}>Affected Export Volume:</span>
-          <span className="font-bold">{formatCurrency(volume)} / year</span>
+          <span className="font-bold">
+            <AnimatedNumber value={volume} formatter={formatCurrency} duration={1.5} />
+          </span>
         </div>
         <div className="flex justify-between">
           <span style={{ color: COLORS.textMuted }}>Category Disrupted:</span>
@@ -59,7 +62,14 @@ export default function DisruptionSummary({ node, category, graph }) {
         {dependencyPct > 0 && (
           <div className="flex justify-between">
             <span style={{ color: COLORS.textMuted }}>Import Dependency:</span>
-            <span className="font-bold">{formatPercent(dependencyPct)} of HS-{COMMODITY_CATEGORIES[category]?.hsCode} imports</span>
+            <span className="font-bold">
+              <AnimatedNumber
+                value={dependencyPct}
+                formatter={(v) => (v * 100).toFixed(0)}
+                suffix="%"
+                duration={1}
+              />
+            </span>
           </div>
         )}
         <div className="flex justify-between">

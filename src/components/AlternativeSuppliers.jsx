@@ -1,6 +1,7 @@
 import React from 'react';
 import { COLORS, COMMODITY_CATEGORIES } from '../utils/constants';
 import { formatCurrency, formatPercent } from '../utils/formatters';
+import AnimatedNumber from './AnimatedNumber';
 
 function riskBar(gdeltScore) {
   const filled = Math.min(Math.round(gdeltScore), 10);
@@ -36,11 +37,25 @@ export default function AlternativeSuppliers({ recommendations, category, isTari
           </div>
           <div className="flex justify-between">
             <span style={{ color: COLORS.textMuted }}>2023 Export Volume:</span>
-            <span>{formatCurrency(rec.export_volumes[category])} (HS-{COMMODITY_CATEGORIES[category]?.hsCode})</span>
+            <span>
+              <AnimatedNumber
+                value={rec.export_volumes[category]}
+                formatter={formatCurrency}
+                duration={1.2}
+              />
+              {' '}(HS-{COMMODITY_CATEGORIES[category]?.hsCode})
+            </span>
           </div>
           <div className="flex justify-between">
             <span style={{ color: COLORS.textMuted }}>Applied Tariff:</span>
-            <span>{formatPercent(rec.tariff_rates[category])}</span>
+            <span>
+              <AnimatedNumber
+                value={rec.tariff_rates[category]}
+                formatter={(v) => (v * 100).toFixed(1)}
+                suffix="%"
+                duration={0.8}
+              />
+            </span>
           </div>
           <div className="flex justify-between">
             <span style={{ color: COLORS.textMuted }}>GDELT Risk:</span>
@@ -60,15 +75,24 @@ export default function AlternativeSuppliers({ recommendations, category, isTari
                   : (rec.costDelta > 0 ? COLORS.riskMedium : COLORS.riskLow),
               }}
             >
-              {isTariffScenario 
-                ? (rec.costSavings >= 0 ? '+' : '') + (rec.costSavings * 100).toFixed(1) + '%'
-                : (rec.costDelta >= 0 ? '+' : '') + (rec.costDelta * 100).toFixed(1) + '%'
-              }
+              <AnimatedNumber
+                value={isTariffScenario ? rec.costSavings * 100 : rec.costDelta * 100}
+                formatter={(v) => (v >= 0 ? '+' : '') + v.toFixed(1)}
+                suffix="%"
+                duration={0.8}
+              />
             </span>
           </div>
           <div className="flex justify-between">
             <span style={{ color: COLORS.textMuted }}>Coverage:</span>
-            <span>{formatPercent(Math.min(rec.coveragePct, 1))}</span>
+            <span>
+              <AnimatedNumber
+                value={Math.min(rec.coveragePct, 1)}
+                formatter={(v) => (v * 100).toFixed(0)}
+                suffix="%"
+                duration={1}
+              />
+            </span>
           </div>
         </div>
       ))}
