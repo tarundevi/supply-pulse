@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { COLORS } from '../utils/constants';
 import { parseTariffInput } from '../utils/parseTariff';
 
-export default function TariffSimulator({ onSimulate, onClear, isActive }) {
+export default function TariffSimulator({ onSimulate, onClear, isActive, parserConfig, placeholder }) {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ export default function TariffSimulator({ onSimulate, onClear, isActive }) {
     setLoading(true);
     setError(null);
 
-    const result = await parseTariffInput(input.trim());
+    const result = await parseTariffInput(input.trim(), parserConfig);
 
     if (result.error) {
       setError(result.error);
@@ -41,7 +41,7 @@ export default function TariffSimulator({ onSimulate, onClear, isActive }) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="e.g. 25% tariff on Chinese electronics"
+        placeholder={placeholder || 'e.g. 25% tariff on China electronics'}
         disabled={loading}
         className="text-xs font-mono px-2 py-1 rounded border outline-none"
         style={{

@@ -1,111 +1,102 @@
-"""
-pull_gdelt.py — Fetch supply chain disruption signals from GDELT.
+﻿"""Fetch disruption signal counts from GDELT and cache normalized output."""
 
-Queries the GDELT DOC API for news articles related to supply chain
-disruptions, port closures, factory shutdowns, etc. for each country
-in the supplier graph. Returns event counts per country over a 90-day window.
-
-API: https://api.gdeltproject.org/api/v2/doc/doc
-No API key required. Free and unlimited.
-
-Output: pipeline/data/disruption_signals.json
-"""
+from __future__ import annotations
 
 import argparse
-import json
-import os
 import time
 
-import requests
-
-COUNTRIES = [
-    "China", "Vietnam", "South Korea", "Mexico", "India",
-    "Germany", "Japan", "Thailand", "Malaysia", "Brazil",
-]
+from common import COUNTRY_META, DATA_DIR, clamp, ensure_data_dir, json_dump, requests_session, today_iso
 
 API_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
-OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "data")
-OUTPUT_FILE = os.path.join(OUTPUT_DIR, "disruption_signals.json")
+OUTPUT_FILE = f"{DATA_DIR}/disruption_signals.json"
+
+# Keeps the demo usable when GDELT throttles.
+BASELINE_COUNTS = {
+    "China": 142,
+    "Vietnam": 18,
+    "South Korea": 34,
+    "Mexico": 72,
+    "India": 58,
+    "Germany": 12,
+    "Japan": 8,
+    "Thailand": 24,
+    "Malaysia": 15,
+    "Brazil": 52,
+    "Poland": 22,
+    "Sweden": 6,
+    "Netherlands": 10,
+    "Spain": 19,
+    "Italy": 16,
+}
 
 
-def fetch_with_rate_limit_handling(url, params=None, max_retries=3):
-    """Make HTTP request with rate limit handling and friendly error messages."""
-    for attempt in range(max_retries):
-        try:
-            response = requests.get(url, params=params, timeout=30)
-            
-            if response.status_code == 429:
-                wait_time = int(response.headers.get('Retry-After', 60))
-                print(f"  ⚠ Rate limit hit. Waiting {wait_time} seconds before retry...")
-                time.sleep(wait_time)
-                continue
-                
-            if response.status_code == 403:
-                print("  ✕ Access forbidden. The API may require authentication.")
-                return None
-                
-            if response.status_code >= 500:
-                print(f"  ⚠ Server error ({response.status_code}). Retrying in 5 seconds...")
-                time.sleep(5)
-                continue
-                
-            response.raise_for_status()
-            return response.json()
-            
-        except requests.exceptions.Timeout:
-            print(f"  ⚠ Request timed out. Retrying ({attempt + 1}/{max_retries})...")
-            time.sleep(5)
-        except requests.exceptions.ConnectionError:
-            print("  ✕ Connection error. Please check your internet connection.")
-            return None
-        except requests.exceptions.HTTPError as e:
-            print(f"  ✕ HTTP error: {e}")
-            return None
-    
-    print("  ✕ Failed after all retries. Please try again later.")
-    return None
-
-
-def fetch_disruption_count(country, timespan="90d"):
-    """Query GDELT for supply chain disruption articles mentioning a country."""
+def fetch_disruption_count(session, country: str, timespan: str) -> int:
     params = {
-        "query": f"supply chain disruption factory port {country}",
+        "query": f"\"supply chain\" disruption factory port {country}",
         "mode": "artlist",
         "format": "json",
         "TIMESPAN": timespan,
         "MAXRECORDS": "250",
     }
-    # TODO: Implement actual API call
-    # data = fetch_with_rate_limit_handling(API_URL, params)
-    # if data:
-    #     return len(data.get("articles", []))
-    return 0
+    response = session.get(API_URL, params=params, timeout=60)
+    response.raise_for_status()
+    payload = response.json()
+    articles = payload.get("articles", []) if isinstance(payload, dict) else []
+    return int(len(articles))
 
 
 def main(args):
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    risk_scores = {}
+    ensure_data_dir()
+    session = requests_session()
 
-    for country in COUNTRIES:
-        print(f"Querying GDELT for {country}...")
-        # TODO: Call fetch_disruption_count and store raw event count
-        # count = fetch_disruption_count(country, timespan=args.timespan)
-        # risk_scores[country] = count
-        risk_scores[country] = {"status": "stub", "event_count": 0}
-        time.sleep(1)
+    countries = [meta["country"] for _, meta in COUNTRY_META.items()]
+    if args.limit_countries:
+        countries = countries[: args.limit_countries]
+    raw_counts = {}
 
-    with open(OUTPUT_FILE, "w") as f:
-        json.dump(risk_scores, f, indent=2)
+    for country in countries:
+        print(f"GDELT fetch: {country}")
+        try:
+            count = fetch_disruption_count(session, country, args.timespan)
+            source = "live"
+        except Exception as exc:
+            count = int(BASELINE_COUNTS.get(country, 0))
+            source = "fallback"
+            print(f"  warning: failed {country}: {exc}; using fallback={count}")
 
-    print(f"Wrote disruption signals for {len(risk_scores)} countries to {OUTPUT_FILE}")
+        raw_counts[country] = {
+            "event_count": count,
+            "source": source,
+        }
+        time.sleep(args.sleep_seconds)
+
+    max_count = max((item["event_count"] for item in raw_counts.values()), default=1)
+    normalized = {}
+    for country, item in raw_counts.items():
+        score = clamp((item["event_count"] / max_count) * 10.0, 0.0, 10.0)
+        normalized[country] = {
+            "event_count": item["event_count"],
+            "risk_score": round(score, 2),
+            "source": item["source"],
+        }
+
+    payload = {
+        "metadata": {
+            "source": "GDELT DOC API",
+            "timespan": args.timespan,
+            "pulled_on": today_iso(),
+            "max_event_count": max_count,
+        },
+        "by_country": normalized,
+    }
+
+    json_dump(OUTPUT_FILE, payload)
+    print(f"Wrote {OUTPUT_FILE}")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Pull supply chain disruption signals from GDELT"
-    )
-    parser.add_argument(
-        "--timespan", default="90d", help="GDELT lookback window (default: 90d)"
-    )
-    args = parser.parse_args()
-    main(args)
+    parser = argparse.ArgumentParser(description="Pull disruption event counts from GDELT.")
+    parser.add_argument("--timespan", default="90d", help="Lookback window")
+    parser.add_argument("--sleep-seconds", type=float, default=1.0, help="Delay between API calls")
+    parser.add_argument("--limit-countries", type=int, default=0, help="Optional: only pull first N countries")
+    main(parser.parse_args())

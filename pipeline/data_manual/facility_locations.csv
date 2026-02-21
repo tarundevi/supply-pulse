@@ -1,0 +1,23 @@
+﻿facility_id,facility_name,parent_company,country_iso3,lat,lng,entity_type,sources
+FOX_SHZ,Foxconn Shenzhen,Foxconn,CHN,22.5431,114.0579,facility,manual
+FOX_ZHZ,Foxconn Zhengzhou,Foxconn,CHN,34.7473,113.6249,facility,manual
+PEG_SHA,Pegatron Shanghai,Pegatron,CHN,31.2304,121.4737,facility,manual
+LUX_KUN,Luxshare Kunshan,Luxshare,CHN,31.3855,120.9808,facility,manual
+TSM_HSC,TSMC Hsinchu,TSMC,TWN,24.8138,120.9675,facility,manual
+SMS_GIH,Samsung Giheung,Samsung Electro-Mechanics,KOR,37.2800,127.1100,facility,manual
+LGD_PAJ,LG Display Paju,LG Display,KOR,37.8150,126.7750,facility,manual
+BOE_CDU,BOE Chengdu,BOE,CHN,30.5728,104.0668,facility,manual
+MUR_KYO,Murata Kyoto,Murata,JPN,35.0116,135.7681,facility,manual
+SNY_KUM,Sony Kumamoto,Sony,JPN,32.8031,130.7079,facility,manual
+NID_AYU,Nidec Ayutthaya,Nidec,THA,14.3532,100.5689,facility,manual
+CTC_SUZ,Catcher Suzhou,Catcher Technology,CHN,31.2989,120.5853,facility,manual
+SWD_DON,Sunwoda Dongguan,Sunwoda,CHN,23.0489,113.7447,facility,manual
+ATL_NDG,ATL Ningde,ATL,CHN,26.6657,119.5479,facility,manual
+DSY_HUI,Desay Huizhou,Desay,CHN,23.0794,114.4126,facility,manual
+WIS_BLR,Wistron Bengaluru,Wistron,IND,12.9716,77.5946,facility,manual
+TAT_HOS,Tata Electronics Hosur,Tata Electronics,IND,12.7409,77.8253,facility,manual
+GRT_WEF,Goertek Weifang,Goertek,CHN,36.7069,119.1618,facility,manual
+AAC_SHZ,AAC Shenzhen,AAC Technologies,CHN,22.5554,114.0545,facility,manual
+FLX_PEN,Flex Penang,Flex,MYS,5.4164,100.3327,facility,manual
+USI_SHA,USI Shanghai,USI,CHN,31.2304,121.4737,facility,manual
+AAPL_HQ,Apple Cupertino,Apple,USA,37.3349,-122.0090,anchor_company,free_api

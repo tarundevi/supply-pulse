@@ -8,21 +8,21 @@
       "lng": 121.47,
       "hub": "Port of Shanghai",
       "export_volumes": {
-        "electronics": 284000000000,
-        "textiles": 120000000000,
-        "chemicals": 58000000000,
-        "machinery": 195000000000,
-        "vehicles": 32000000000
+        "electronics": 896418621480.0,
+        "textiles": 82310721188.0,
+        "chemicals": 34279801731.0,
+        "machinery": 510620751739.0,
+        "vehicles": 192497286190.0
       },
       "tariff_rates": {
-        "electronics": 0.025,
-        "textiles": 0.12,
-        "chemicals": 0.05,
-        "machinery": 0.03,
-        "vehicles": 0.025
+        "electronics": 0.024,
+        "textiles": 0.108,
+        "chemicals": 0.036,
+        "machinery": 0.024,
+        "vehicles": 0.036
       },
-      "gdelt_risk_score": 7.2,
-      "gdelt_event_count": 142,
+      "gdelt_risk_score": 10.0,
+      "gdelt_event_count": 11,
       "distance_cost_factor": 0.08
     },
     {
@@ -33,46 +33,46 @@
       "lng": 106.66,
       "hub": "Ho Chi Minh City (Cat Lai Port)",
       "export_volumes": {
-        "electronics": 38000000000,
-        "textiles": 29000000000,
-        "chemicals": 3200000000,
-        "machinery": 8500000000,
-        "vehicles": 1200000000
+        "electronics": 265436638694.69098,
+        "textiles": 29526307071.419,
+        "chemicals": 3021213135.813,
+        "machinery": 64465595060.495,
+        "vehicles": 9735970549.525
       },
       "tariff_rates": {
-        "electronics": 0.0,
-        "textiles": 0.08,
-        "chemicals": 0.03,
-        "machinery": 0.02,
-        "vehicles": 0.025
+        "electronics": 0.018,
+        "textiles": 0.081,
+        "chemicals": 0.027,
+        "machinery": 0.018,
+        "vehicles": 0.027
       },
-      "gdelt_risk_score": 2.1,
-      "gdelt_event_count": 18,
+      "gdelt_risk_score": 4.55,
+      "gdelt_event_count": 5,
       "distance_cost_factor": 0.09
     },
     {
       "id": "KOR",
       "country": "South Korea",
       "countryCode": "410",
-      "lat": 35.10,
+      "lat": 35.1,
       "lng": 129.03,
       "hub": "Port of Busan",
       "export_volumes": {
-        "electronics": 74000000000,
-        "textiles": 3500000000,
-        "chemicals": 42000000000,
-        "machinery": 52000000000,
-        "vehicles": 46000000000
+        "electronics": 171301417555.0,
+        "textiles": 901822576.0,
+        "chemicals": 16353624972.0,
+        "machinery": 72756922843.0,
+        "vehicles": 91830144315.0
       },
       "tariff_rates": {
-        "electronics": 0.0,
-        "textiles": 0.10,
-        "chemicals": 0.02,
-        "machinery": 0.0,
-        "vehicles": 0.0
+        "electronics": 0.01,
+        "textiles": 0.045,
+        "chemicals": 0.015,
+        "machinery": 0.01,
+        "vehicles": 0.015
       },
-      "gdelt_risk_score": 3.4,
-      "gdelt_event_count": 34,
+      "gdelt_risk_score": 1.82,
+      "gdelt_event_count": 2,
       "distance_cost_factor": 0.07
     },
     {
@@ -83,21 +83,21 @@
       "lng": -104.32,
       "hub": "Port of Manzanillo",
       "export_volumes": {
-        "electronics": 29000000000,
-        "textiles": 5800000000,
-        "chemicals": 7200000000,
-        "machinery": 38000000000,
-        "vehicles": 68000000000
+        "electronics": 206816063340.0,
+        "textiles": 5813498070.0,
+        "chemicals": 2775630148.0,
+        "machinery": 186998735828.0,
+        "vehicles": 312934992892.0
       },
       "tariff_rates": {
-        "electronics": 0.0,
-        "textiles": 0.0,
-        "chemicals": 0.0,
-        "machinery": 0.0,
-        "vehicles": 0.0
+        "electronics": 0.004,
+        "textiles": 0.018,
+        "chemicals": 0.006,
+        "machinery": 0.004,
+        "vehicles": 0.006
       },
-      "gdelt_risk_score": 5.0,
-      "gdelt_event_count": 72,
+      "gdelt_risk_score": 0.91,
+      "gdelt_event_count": 1,
       "distance_cost_factor": 0.03
     },
     {
@@ -108,22 +108,22 @@
       "lng": 72.95,
       "hub": "JNPT / Nhava Sheva (Mumbai)",
       "export_volumes": {
-        "electronics": 12000000000,
-        "textiles": 36000000000,
-        "chemicals": 28000000000,
-        "machinery": 14000000000,
-        "vehicles": 8500000000
+        "electronics": 0.0,
+        "textiles": 0.0,
+        "chemicals": 0.0,
+        "machinery": 0.0,
+        "vehicles": 0.0
       },
       "tariff_rates": {
-        "electronics": 0.035,
-        "textiles": 0.15,
-        "chemicals": 0.06,
-        "machinery": 0.04,
-        "vehicles": 0.05
+        "electronics": 0.028,
+        "textiles": 0.126,
+        "chemicals": 0.042,
+        "machinery": 0.028,
+        "vehicles": 0.042
       },
-      "gdelt_risk_score": 4.5,
-      "gdelt_event_count": 58,
-      "distance_cost_factor": 0.10
+      "gdelt_risk_score": 3.64,
+      "gdelt_event_count": 4,
+      "distance_cost_factor": 0.1
     },
     {
       "id": "DEU",
@@ -133,21 +133,21 @@
       "lng": 9.97,
       "hub": "Port of Hamburg",
       "export_volumes": {
-        "electronics": 62000000000,
-        "textiles": 14000000000,
-        "chemicals": 95000000000,
-        "machinery": 145000000000,
-        "vehicles": 152000000000
+        "electronics": 210176940875.234,
+        "textiles": 14987525142.17,
+        "chemicals": 23197320677.35,
+        "machinery": 215363519946.38,
+        "vehicles": 257159588748.839
       },
       "tariff_rates": {
-        "electronics": 0.015,
-        "textiles": 0.08,
-        "chemicals": 0.02,
-        "machinery": 0.015,
-        "vehicles": 0.025
+        "electronics": 0.014,
+        "textiles": 0.063,
+        "chemicals": 0.021,
+        "machinery": 0.014,
+        "vehicles": 0.021
       },
-      "gdelt_risk_score": 1.8,
-      "gdelt_event_count": 12,
+      "gdelt_risk_score": 0.91,
+      "gdelt_event_count": 1,
       "distance_cost_factor": 0.06
     },
     {
@@ -158,21 +158,21 @@
       "lng": 139.64,
       "hub": "Port of Yokohama",
       "export_volumes": {
-        "electronics": 56000000000,
-        "textiles": 2100000000,
-        "chemicals": 36000000000,
-        "machinery": 89000000000,
-        "vehicles": 98000000000
+        "electronics": 101888300034.537,
+        "textiles": 313731038.523,
+        "chemicals": 8844906307.185,
+        "machinery": 129710720741.145,
+        "vehicles": 157301991120.569
       },
       "tariff_rates": {
-        "electronics": 0.0,
-        "textiles": 0.09,
-        "chemicals": 0.02,
-        "machinery": 0.0,
-        "vehicles": 0.0
+        "electronics": 0.01,
+        "textiles": 0.045,
+        "chemicals": 0.015,
+        "machinery": 0.01,
+        "vehicles": 0.015
       },
-      "gdelt_risk_score": 1.2,
-      "gdelt_event_count": 8,
+      "gdelt_risk_score": 3.64,
+      "gdelt_event_count": 4,
       "distance_cost_factor": 0.07
     },
     {
@@ -183,71 +183,71 @@
       "lng": 100.88,
       "hub": "Laem Chabang Port",
       "export_volumes": {
-        "electronics": 28000000000,
-        "textiles": 6200000000,
-        "chemicals": 12000000000,
-        "machinery": 18000000000,
-        "vehicles": 22000000000
+        "electronics": 337731189.431,
+        "textiles": 406664665.234,
+        "chemicals": 986217089.342,
+        "machinery": 895906346.87,
+        "vehicles": 2608100883.522
       },
       "tariff_rates": {
-        "electronics": 0.015,
-        "textiles": 0.10,
-        "chemicals": 0.04,
+        "electronics": 0.02,
+        "textiles": 0.09,
+        "chemicals": 0.03,
         "machinery": 0.02,
-        "vehicles": 0.025
+        "vehicles": 0.03
       },
-      "gdelt_risk_score": 2.8,
-      "gdelt_event_count": 24,
+      "gdelt_risk_score": 0.0,
+      "gdelt_event_count": 0,
       "distance_cost_factor": 0.09
     },
     {
       "id": "MYS",
       "country": "Malaysia",
       "countryCode": "458",
-      "lat": 3.00,
+      "lat": 3.0,
       "lng": 101.39,
       "hub": "Port Klang",
       "export_volumes": {
-        "electronics": 45000000000,
-        "textiles": 2800000000,
-        "chemicals": 14000000000,
-        "machinery": 12000000000,
-        "vehicles": 3200000000
+        "electronics": 119574427754.31,
+        "textiles": 1995505490.026,
+        "chemicals": 3663740034.915,
+        "machinery": 23891698852.807,
+        "vehicles": 4105856133.392
       },
       "tariff_rates": {
-        "electronics": 0.01,
-        "textiles": 0.08,
-        "chemicals": 0.03,
-        "machinery": 0.02,
-        "vehicles": 0.03
+        "electronics": 0.018,
+        "textiles": 0.081,
+        "chemicals": 0.027,
+        "machinery": 0.018,
+        "vehicles": 0.027
       },
-      "gdelt_risk_score": 2.0,
-      "gdelt_event_count": 15,
-      "distance_cost_factor": 0.10
+      "gdelt_risk_score": 0.91,
+      "gdelt_event_count": 1,
+      "distance_cost_factor": 0.1
     },
     {
       "id": "BRA",
       "country": "Brazil",
       "countryCode": "076",
       "lat": -23.96,
-      "lng": -46.30,
+      "lng": -46.3,
       "hub": "Port of Santos",
       "export_volumes": {
-        "electronics": 4500000000,
-        "textiles": 2200000000,
-        "chemicals": 18000000000,
-        "machinery": 8000000000,
-        "vehicles": 12000000000
+        "electronics": 7793253188.0,
+        "textiles": 250540940.0,
+        "chemicals": 8479750928.0,
+        "machinery": 25083752542.0,
+        "vehicles": 25248748108.0
       },
       "tariff_rates": {
-        "electronics": 0.04,
-        "textiles": 0.20,
-        "chemicals": 0.08,
-        "machinery": 0.06,
-        "vehicles": 0.18
+        "electronics": 0.03,
+        "textiles": 0.135,
+        "chemicals": 0.045,
+        "machinery": 0.03,
+        "vehicles": 0.045
       },
-      "gdelt_risk_score": 4.2,
-      "gdelt_event_count": 52,
+      "gdelt_risk_score": 0.91,
+      "gdelt_event_count": 1,
       "distance_cost_factor": 0.11
     },
     {
@@ -256,23 +256,23 @@
       "countryCode": "616",
       "lat": 54.35,
       "lng": 18.65,
-      "hub": "Port of Gdańsk",
+      "hub": "Port of Gdansk",
       "export_volumes": {
-        "electronics": 18000000000,
-        "textiles": 5600000000,
-        "chemicals": 9400000000,
-        "machinery": 22000000000,
-        "vehicles": 14000000000
+        "electronics": 49155850128.0,
+        "textiles": 5524443249.0,
+        "chemicals": 1886853165.0,
+        "machinery": 50136932608.0,
+        "vehicles": 41321486353.0
       },
       "tariff_rates": {
-        "electronics": 0.015,
-        "textiles": 0.08,
-        "chemicals": 0.02,
-        "machinery": 0.015,
-        "vehicles": 0.025
+        "electronics": 0.014,
+        "textiles": 0.063,
+        "chemicals": 0.021,
+        "machinery": 0.014,
+        "vehicles": 0.021
       },
-      "gdelt_risk_score": 2.5,
-      "gdelt_event_count": 22,
+      "gdelt_risk_score": 0.0,
+      "gdelt_event_count": 0,
       "distance_cost_factor": 0.07
     },
     {
@@ -283,46 +283,46 @@
       "lng": 11.97,
       "hub": "Port of Gothenburg",
       "export_volumes": {
-        "electronics": 14000000000,
-        "textiles": 1800000000,
-        "chemicals": 12000000000,
-        "machinery": 28000000000,
-        "vehicles": 18000000000
+        "electronics": 23468043913.702,
+        "textiles": 2485336756.273,
+        "chemicals": 1042693245.9,
+        "machinery": 30402800772.104,
+        "vehicles": 35431161435.358
       },
       "tariff_rates": {
-        "electronics": 0.015,
-        "textiles": 0.08,
-        "chemicals": 0.02,
-        "machinery": 0.015,
-        "vehicles": 0.025
+        "electronics": 0.014,
+        "textiles": 0.063,
+        "chemicals": 0.021,
+        "machinery": 0.014,
+        "vehicles": 0.021
       },
-      "gdelt_risk_score": 1.0,
-      "gdelt_event_count": 6,
+      "gdelt_risk_score": 1.82,
+      "gdelt_event_count": 2,
       "distance_cost_factor": 0.07
     },
     {
       "id": "NLD",
       "country": "Netherlands",
       "countryCode": "528",
-      "lat": 51.90,
-      "lng": 4.50,
+      "lat": 51.9,
+      "lng": 4.5,
       "hub": "Port of Rotterdam",
       "export_volumes": {
-        "electronics": 42000000000,
-        "textiles": 8200000000,
-        "chemicals": 68000000000,
-        "machinery": 48000000000,
-        "vehicles": 16000000000
+        "electronics": 65706128485.403,
+        "textiles": 6679072816.317,
+        "chemicals": 6056660889.016,
+        "machinery": 98030542657.756,
+        "vehicles": 29658642655.098
       },
       "tariff_rates": {
-        "electronics": 0.015,
-        "textiles": 0.08,
-        "chemicals": 0.02,
-        "machinery": 0.015,
-        "vehicles": 0.025
+        "electronics": 0.014,
+        "textiles": 0.063,
+        "chemicals": 0.021,
+        "machinery": 0.014,
+        "vehicles": 0.021
       },
-      "gdelt_risk_score": 1.5,
-      "gdelt_event_count": 10,
+      "gdelt_risk_score": 0.0,
+      "gdelt_event_count": 0,
       "distance_cost_factor": 0.06
     },
     {
@@ -333,21 +333,21 @@
       "lng": -0.32,
       "hub": "Port of Valencia",
       "export_volumes": {
-        "electronics": 8500000000,
-        "textiles": 12000000000,
-        "chemicals": 22000000000,
-        "machinery": 18000000000,
-        "vehicles": 42000000000
+        "electronics": 17154485236.284,
+        "textiles": 6563139021.484,
+        "chemicals": 2106741222.1990001,
+        "machinery": 11761516944.213001,
+        "vehicles": 91399522324.43999
       },
       "tariff_rates": {
-        "electronics": 0.015,
-        "textiles": 0.08,
-        "chemicals": 0.02,
-        "machinery": 0.015,
-        "vehicles": 0.025
+        "electronics": 0.014,
+        "textiles": 0.063,
+        "chemicals": 0.021,
+        "machinery": 0.014,
+        "vehicles": 0.021
       },
-      "gdelt_risk_score": 2.2,
-      "gdelt_event_count": 19,
+      "gdelt_risk_score": 0.0,
+      "gdelt_event_count": 0,
       "distance_cost_factor": 0.06
     },
     {
@@ -358,21 +358,21 @@
       "lng": 8.93,
       "hub": "Port of Genoa",
       "export_volumes": {
-        "electronics": 16000000000,
-        "textiles": 28000000000,
-        "chemicals": 32000000000,
-        "machinery": 72000000000,
-        "vehicles": 24000000000
+        "electronics": 44272110277.761,
+        "textiles": 11742915715.15,
+        "chemicals": 2348817116.587,
+        "machinery": 116733454517.857,
+        "vehicles": 53836285956.697
       },
       "tariff_rates": {
-        "electronics": 0.015,
-        "textiles": 0.08,
-        "chemicals": 0.02,
-        "machinery": 0.015,
-        "vehicles": 0.025
+        "electronics": 0.014,
+        "textiles": 0.063,
+        "chemicals": 0.021,
+        "machinery": 0.014,
+        "vehicles": 0.021
       },
-      "gdelt_risk_score": 2.0,
-      "gdelt_event_count": 16,
+      "gdelt_risk_score": 0.0,
+      "gdelt_event_count": 0,
       "distance_cost_factor": 0.06
     }
   ],
@@ -381,222 +381,1072 @@
       "source": "CHN",
       "target": "USA",
       "category": "electronics",
-      "volume": 156000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 124524521242.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "CHN",
+      "target": "JPN",
+      "category": "electronics",
+      "volume": 39357787447.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "CHN",
+      "target": "USA",
+      "category": "textiles",
+      "volume": 18904208764.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "CHN",
+      "target": "JPN",
+      "category": "textiles",
+      "volume": 6752702944.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "CHN",
+      "target": "USA",
+      "category": "chemicals",
+      "volume": 1433669995.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "CHN",
+      "target": "JPN",
+      "category": "chemicals",
+      "volume": 4373507168.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "CHN",
       "target": "USA",
       "category": "machinery",
-      "volume": 82000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 88979681166.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "CHN",
+      "target": "JPN",
+      "category": "machinery",
+      "volume": 25167301220.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "CHN",
+      "target": "USA",
+      "category": "vehicles",
+      "volume": 18262816809.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "CHN",
+      "target": "JPN",
+      "category": "vehicles",
+      "volume": 6132590557.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "VNM",
       "target": "USA",
       "category": "electronics",
-      "volume": 22000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 71926543648.62299,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "VNM",
+      "target": "JPN",
+      "category": "electronics",
+      "volume": 12061825904.492,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "VNM",
+      "target": "USA",
+      "category": "textiles",
+      "volume": 15676959812.618,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "VNM",
+      "target": "JPN",
+      "category": "textiles",
+      "volume": 3815287831.229,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "VNM",
+      "target": "USA",
+      "category": "chemicals",
+      "volume": 57688991.324,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "VNM",
+      "target": "JPN",
+      "category": "chemicals",
+      "volume": 359463063.316,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "VNM",
+      "target": "USA",
+      "category": "machinery",
+      "volume": 19294196458.655,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "VNM",
+      "target": "JPN",
+      "category": "machinery",
+      "volume": 2425619958.038,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "VNM",
+      "target": "USA",
+      "category": "vehicles",
+      "volume": 1667183001.1820002,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "VNM",
+      "target": "JPN",
+      "category": "vehicles",
+      "volume": 1205733714.976,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "KOR",
       "target": "USA",
       "category": "electronics",
-      "volume": 38000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 17683402903.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "KOR",
+      "target": "JPN",
+      "category": "electronics",
+      "volume": 3876084886.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "KOR",
+      "target": "USA",
+      "category": "textiles",
+      "volume": 189354473.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "KOR",
+      "target": "JPN",
+      "category": "textiles",
+      "volume": 162630067.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "KOR",
+      "target": "USA",
+      "category": "chemicals",
+      "volume": 1938563435.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "KOR",
+      "target": "JPN",
+      "category": "chemicals",
+      "volume": 558141522.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "KOR",
+      "target": "USA",
+      "category": "machinery",
+      "volume": 21673320560.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "KOR",
+      "target": "JPN",
+      "category": "machinery",
+      "volume": 3426369429.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "KOR",
+      "target": "USA",
+      "category": "vehicles",
+      "volume": 40553116813.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "KOR",
+      "target": "JPN",
+      "category": "vehicles",
+      "volume": 494121155.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "MEX",
       "target": "USA",
       "category": "electronics",
-      "volume": 18000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 183885237674.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "MEX",
+      "target": "JPN",
+      "category": "electronics",
+      "volume": 865889170.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "MEX",
+      "target": "USA",
+      "category": "textiles",
+      "volume": 5411032406.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "MEX",
+      "target": "JPN",
+      "category": "textiles",
+      "volume": 5585492.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "MEX",
+      "target": "USA",
+      "category": "chemicals",
+      "volume": 1914555518.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "MEX",
+      "target": "JPN",
+      "category": "chemicals",
+      "volume": 8869734.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "MEX",
+      "target": "USA",
+      "category": "machinery",
+      "volume": 164669899030.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "MEX",
+      "target": "JPN",
+      "category": "machinery",
+      "volume": 845167520.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "MEX",
       "target": "USA",
       "category": "vehicles",
-      "volume": 52000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 260594597070.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "MEX",
+      "target": "JPN",
+      "category": "vehicles",
+      "volume": 1288130952.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "DEU",
       "target": "USA",
-      "category": "vehicles",
-      "volume": 28000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "category": "electronics",
+      "volume": 41875308985.454,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "DEU",
+      "target": "JPN",
+      "category": "electronics",
+      "volume": 2709026968.621,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "DEU",
+      "target": "USA",
+      "category": "textiles",
+      "volume": 33321102.53,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "DEU",
+      "target": "JPN",
+      "category": "textiles",
+      "volume": 45703788.773,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "DEU",
+      "target": "USA",
+      "category": "chemicals",
+      "volume": 3680216375.6940002,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "DEU",
+      "target": "JPN",
+      "category": "chemicals",
+      "volume": 226447458.728,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "DEU",
       "target": "USA",
       "category": "machinery",
-      "volume": 42000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 10833136662.901,
+      "targetLat": 33.75,
+      "targetLng": -118.19
     },
     {
-      "source": "JPN",
+      "source": "DEU",
       "target": "USA",
       "category": "vehicles",
-      "volume": 46000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 37016310034.108,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "DEU",
+      "target": "JPN",
+      "category": "vehicles",
+      "volume": 10082645993.937,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "JPN",
       "target": "USA",
       "category": "electronics",
-      "volume": 24000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 15110672783.631,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "JPN",
+      "target": "USA",
+      "category": "textiles",
+      "volume": 23316352.703,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "JPN",
+      "target": "USA",
+      "category": "chemicals",
+      "volume": 2531614536.069,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "JPN",
+      "target": "USA",
+      "category": "machinery",
+      "volume": 33470437019.096,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "JPN",
+      "target": "USA",
+      "category": "vehicles",
+      "volume": 51660884100.395,
+      "targetLat": 33.75,
+      "targetLng": -118.19
     },
     {
       "source": "THA",
       "target": "USA",
       "category": "electronics",
-      "volume": 14000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 8561797.041000001,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "THA",
+      "target": "JPN",
+      "category": "electronics",
+      "volume": 14861627.679,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "THA",
+      "target": "USA",
+      "category": "textiles",
+      "volume": 147395.30099999998,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "THA",
+      "target": "JPN",
+      "category": "textiles",
+      "volume": 214497513.10200003,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "THA",
+      "target": "USA",
+      "category": "chemicals",
+      "volume": 3675096.2019999996,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "THA",
+      "target": "JPN",
+      "category": "chemicals",
+      "volume": 492072720.58500004,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "THA",
+      "target": "USA",
+      "category": "machinery",
+      "volume": 52543504.83200001,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "THA",
+      "target": "JPN",
+      "category": "machinery",
+      "volume": 90964542.47400004,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "THA",
+      "target": "USA",
+      "category": "vehicles",
+      "volume": 3994766.017,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "THA",
+      "target": "JPN",
+      "category": "vehicles",
+      "volume": 2972525.7380000004,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "MYS",
       "target": "USA",
       "category": "electronics",
-      "volume": 26000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 19433379904.244,
+      "targetLat": 33.75,
+      "targetLng": -118.19
     },
     {
-      "source": "IND",
+      "source": "MYS",
+      "target": "JPN",
+      "category": "electronics",
+      "volume": 4708801247.408,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "MYS",
       "target": "USA",
       "category": "textiles",
-      "volume": 12000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 494934874.893,
+      "targetLat": 33.75,
+      "targetLng": -118.19
     },
     {
-      "source": "IND",
+      "source": "MYS",
+      "target": "JPN",
+      "category": "textiles",
+      "volume": 330355162.82,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "MYS",
       "target": "USA",
       "category": "chemicals",
-      "volume": 8000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 54506356.175,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "MYS",
+      "target": "JPN",
+      "category": "chemicals",
+      "volume": 424170311.817,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "MYS",
+      "target": "USA",
+      "category": "machinery",
+      "volume": 4850878982.969,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "MYS",
+      "target": "JPN",
+      "category": "machinery",
+      "volume": 511569875.883,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "MYS",
+      "target": "USA",
+      "category": "vehicles",
+      "volume": 244406947.20599997,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "MYS",
+      "target": "JPN",
+      "category": "vehicles",
+      "volume": 56186123.391,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "BRA",
+      "target": "USA",
+      "category": "electronics",
+      "volume": 2487951181.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "BRA",
+      "target": "JPN",
+      "category": "electronics",
+      "volume": 31856555.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "BRA",
+      "target": "USA",
+      "category": "textiles",
+      "volume": 33097518.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "BRA",
+      "target": "JPN",
+      "category": "textiles",
+      "volume": 2128574.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "BRA",
+      "target": "USA",
+      "category": "chemicals",
+      "volume": 1568220620.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "BRA",
+      "target": "JPN",
+      "category": "chemicals",
+      "volume": 203654774.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "BRA",
+      "target": "USA",
+      "category": "machinery",
+      "volume": 7742798692.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "BRA",
+      "target": "JPN",
+      "category": "machinery",
+      "volume": 221143418.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "BRA",
       "target": "USA",
       "category": "vehicles",
-      "volume": 4500000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 1534557784.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
     },
     {
-      "source": "POL",
-      "target": "USA",
-      "category": "machinery",
-      "volume": 8200000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "source": "BRA",
+      "target": "JPN",
+      "category": "vehicles",
+      "volume": 18312168.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "POL",
       "target": "USA",
       "category": "electronics",
-      "volume": 6400000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 1683851750.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "POL",
+      "target": "JPN",
+      "category": "electronics",
+      "volume": 107698538.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "POL",
+      "target": "USA",
+      "category": "textiles",
+      "volume": 36122712.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "POL",
+      "target": "JPN",
+      "category": "textiles",
+      "volume": 7886286.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "POL",
+      "target": "USA",
+      "category": "chemicals",
+      "volume": 61929693.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "POL",
+      "target": "JPN",
+      "category": "chemicals",
+      "volume": 3561609.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "POL",
+      "target": "USA",
+      "category": "machinery",
+      "volume": 3636499804.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "POL",
+      "target": "JPN",
+      "category": "machinery",
+      "volume": 307545027.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "POL",
+      "target": "USA",
+      "category": "vehicles",
+      "volume": 364896508.0,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "POL",
+      "target": "JPN",
+      "category": "vehicles",
+      "volume": 80439387.0,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "SWE",
+      "target": "USA",
+      "category": "electronics",
+      "volume": 2023257373.027,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "SWE",
+      "target": "USA",
+      "category": "textiles",
+      "volume": 64239548.43799999,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "SWE",
+      "target": "JPN",
+      "category": "textiles",
+      "volume": 12080682.93,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "SWE",
+      "target": "USA",
+      "category": "chemicals",
+      "volume": 27875541.092,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "SWE",
+      "target": "JPN",
+      "category": "chemicals",
+      "volume": 2949436.656,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "SWE",
       "target": "USA",
       "category": "machinery",
-      "volume": 9800000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 79663629.971,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "SWE",
+      "target": "JPN",
+      "category": "machinery",
+      "volume": 16235944.746,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "SWE",
       "target": "USA",
       "category": "vehicles",
-      "volume": 7200000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 4258346200.829,
+      "targetLat": 33.75,
+      "targetLng": -118.19
     },
     {
-      "source": "NLD",
-      "target": "USA",
-      "category": "chemicals",
-      "volume": 18000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "source": "SWE",
+      "target": "JPN",
+      "category": "vehicles",
+      "volume": 354341534.72599995,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "NLD",
       "target": "USA",
       "category": "electronics",
-      "volume": 16000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 2544475188.405,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "NLD",
+      "target": "JPN",
+      "category": "electronics",
+      "volume": 345584235.525,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "NLD",
+      "target": "USA",
+      "category": "textiles",
+      "volume": 39847089.594,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "NLD",
+      "target": "JPN",
+      "category": "textiles",
+      "volume": 9097856.882,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "NLD",
+      "target": "USA",
+      "category": "chemicals",
+      "volume": 781269710.409,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "NLD",
+      "target": "JPN",
+      "category": "chemicals",
+      "volume": 23653752.317,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "NLD",
       "target": "USA",
       "category": "machinery",
-      "volume": 14000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 9231390548.741,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "NLD",
+      "target": "JPN",
+      "category": "machinery",
+      "volume": 1185725833.632,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "NLD",
+      "target": "USA",
+      "category": "vehicles",
+      "volume": 1149798128.695,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "NLD",
+      "target": "JPN",
+      "category": "vehicles",
+      "volume": 230625176.634,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "ESP",
       "target": "USA",
-      "category": "vehicles",
-      "volume": 12000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "category": "electronics",
+      "volume": 498296838.30399996,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "ESP",
+      "target": "JPN",
+      "category": "electronics",
+      "volume": 113227228.074,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "ESP",
+      "target": "USA",
+      "category": "textiles",
+      "volume": 89733527.38700001,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "ESP",
+      "target": "JPN",
+      "category": "textiles",
+      "volume": 27434168.362999998,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "ESP",
       "target": "USA",
       "category": "chemicals",
-      "volume": 6800000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 1258022.996,
+      "targetLat": 33.75,
+      "targetLng": -118.19
     },
     {
-      "source": "ITA",
+      "source": "ESP",
+      "target": "JPN",
+      "category": "chemicals",
+      "volume": 28008946.519,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "ESP",
       "target": "USA",
       "category": "machinery",
-      "volume": 22000000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 46700407.315,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "ESP",
+      "target": "JPN",
+      "category": "machinery",
+      "volume": 25720876.176,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "ESP",
+      "target": "USA",
+      "category": "vehicles",
+      "volume": 13269231.699000001,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "ESP",
+      "target": "JPN",
+      "category": "vehicles",
+      "volume": 548321902.313,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "ITA",
       "target": "USA",
-      "category": "vehicles",
-      "volume": 8500000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "category": "electronics",
+      "volume": 3517724332.598,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "ITA",
+      "target": "JPN",
+      "category": "electronics",
+      "volume": 236127575.313,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     },
     {
       "source": "ITA",
       "target": "USA",
       "category": "textiles",
-      "volume": 9200000000,
-      "targetLat": 37.09,
-      "targetLng": -95.71
+      "volume": 750572246.676,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "ITA",
+      "target": "JPN",
+      "category": "textiles",
+      "volume": 321497400.525,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "ITA",
+      "target": "USA",
+      "category": "chemicals",
+      "volume": 221011239.971,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "ITA",
+      "target": "JPN",
+      "category": "chemicals",
+      "volume": 13512462.567,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "ITA",
+      "target": "USA",
+      "category": "machinery",
+      "volume": 14290401085.115,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "ITA",
+      "target": "JPN",
+      "category": "machinery",
+      "volume": 927492630.73,
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source": "ITA",
+      "target": "USA",
+      "category": "vehicles",
+      "volume": 6735441939.113,
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source": "ITA",
+      "target": "JPN",
+      "category": "vehicles",
+      "volume": 1104426853.94,
+      "targetLat": 35.44,
+      "targetLng": 139.64
     }
   ],
   "metadata": {
-    "comtrade_year": 2023,
+    "comtrade_year": "2023",
     "gdelt_window": "90d",
-    "last_updated": "2026-02-21"
+    "wits_year": "2022",
+    "last_updated": "2026-02-21",
+    "build_type": "basic"
   }
 }

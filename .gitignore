@@ -3,5 +3,7 @@ dist/
 .env
 __pycache__/
 pipeline/data/
+pipeline/data_raw/
+pipeline/data_staged/
 *.pyc
 .DS_Store

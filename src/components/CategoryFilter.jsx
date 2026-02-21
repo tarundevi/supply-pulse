@@ -1,7 +1,7 @@
-import React from 'react';
-import { COMMODITY_CATEGORIES, COLORS } from '../utils/constants';
+﻿import React from 'react';
+import { COMMODITY_CATEGORIES_COMPANY, COLORS } from '../utils/constants';
 
-export default function CategoryFilter({ value, onChange }) {
+export default function CategoryFilter({ value, onChange, categories = COMMODITY_CATEGORIES_COMPANY }) {
   return (
     <select
       value={value}
@@ -13,7 +13,7 @@ export default function CategoryFilter({ value, onChange }) {
         color: COLORS.textPrimary,
       }}
     >
-      {Object.entries(COMMODITY_CATEGORIES).map(([key, { label }]) => (
+      {Object.entries(categories).map(([key, { label }]) => (
         <option key={key} value={key}>
           {label}
         </option>

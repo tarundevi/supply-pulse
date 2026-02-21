@@ -1,57 +1,42 @@
-import React from 'react';
+﻿import React from 'react';
 import { COLORS } from '../utils/constants';
 import { formatPercent } from '../utils/formatters';
 
-export default function RecommendedAction({ recommendations }) {
-  if (!recommendations || recommendations.length < 2) return null;
+export default function RecommendedAction({ recommendations, scenarioMode = 'outage' }) {
+  if (!recommendations || recommendations.length < 1) return null;
 
   const primary = recommendations[0];
-  // Hedge = lowest cost delta among remaining
-  const hedge = recommendations
-    .slice(1)
-    .sort((a, b) => a.costDelta - b.costDelta)[0];
+  const hedge = recommendations.length > 1 ? recommendations[1] : null;
+  const totalCoverage = recommendations.reduce((s, r) => s + (r.coveragePct || 0), 0);
 
-  const totalCoverage = recommendations.reduce((s, r) => s + r.coveragePct, 0);
-
-  const primaryReason =
-    primary.costDelta <= 0
-      ? 'lowest cost delta'
-      : primary.riskLabel === 'LOW'
-        ? 'lowest risk'
-        : 'best overall score';
-
-  const hedgeReason =
-    hedge.costDelta <= primary.costDelta
-      ? 'lowest cost delta'
-      : hedge.riskLabel === 'LOW'
-        ? 'low risk'
-        : 'diversification';
+  const modeLabel =
+    scenarioMode === 'combined' ? 'Combined Tariff + Outage' :
+    scenarioMode === 'tariff' ? 'Tariff Shock' : 'Supplier Outage';
 
   return (
     <div className="space-y-2">
-      <div
-        className="text-xs tracking-widest uppercase"
-        style={{ color: COLORS.textMuted }}
-      >
+      <div className="text-xs tracking-widest uppercase" style={{ color: COLORS.textMuted }}>
         Recommended Action
       </div>
       <div className="border-t" style={{ borderColor: COLORS.separator }} />
 
       <div className="text-xs space-y-1">
+        <div style={{ color: COLORS.textMuted }}>Scenario: {modeLabel}</div>
         <div>
           <span style={{ color: COLORS.electricBlue }}>&rarr; Primary: </span>
-          <span className="font-bold">{primary.country}</span>
-          <span style={{ color: COLORS.textMuted }}> ({primaryReason})</span>
+          <span className="font-bold">{primary.name}</span>
+          <span style={{ color: COLORS.textMuted }}> ({primary.parent_company_id})</span>
         </div>
-        <div>
-          <span style={{ color: COLORS.electricBlue }}>&rarr; Hedge: </span>
-          <span className="font-bold">{hedge.country}</span>
-          <span style={{ color: COLORS.textMuted }}> ({hedgeReason})</span>
-        </div>
+        {hedge && (
+          <div>
+            <span style={{ color: COLORS.electricBlue }}>&rarr; Hedge: </span>
+            <span className="font-bold">{hedge.name}</span>
+            <span style={{ color: COLORS.textMuted }}> ({hedge.parent_company_id})</span>
+          </div>
+        )}
         {totalCoverage < 1 && (
           <div style={{ color: COLORS.riskMedium }}>
-            &rarr; Gap: {formatPercent(1 - totalCoverage)} of volume cannot be
-            covered by a single alternative — split sourcing required
+            &rarr; Coverage shortfall: {formatPercent(1 - totalCoverage)} remains uncovered.
           </div>
         )}
       </div>

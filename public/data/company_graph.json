@@ -1,0 +1,1247 @@
+{
+  "nodes": [
+    {
+      "id": "FOX_SHZ",
+      "name": "Foxconn Shenzhen",
+      "entity_type": "facility",
+      "parent_company_id": "Foxconn",
+      "lat": 22.5431,
+      "lng": 114.0579,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "assembly",
+        "chips"
+      ],
+      "capacity_index": 0.88,
+      "lead_time_days": 24.0,
+      "unit_cost_index": 1.02,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.22,
+      "confidence": 0.78,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 45.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 155.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "FOX_ZHZ",
+      "name": "Foxconn Zhengzhou",
+      "entity_type": "facility",
+      "parent_company_id": "Foxconn",
+      "lat": 34.7473,
+      "lng": 113.6249,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "assembly",
+        "chips"
+      ],
+      "capacity_index": 0.86,
+      "lead_time_days": 25.0,
+      "unit_cost_index": 1.01,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.18,
+      "confidence": 0.78,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 40.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 140.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "PEG_SHA",
+      "name": "Pegatron Shanghai",
+      "entity_type": "facility",
+      "parent_company_id": "Pegatron",
+      "lat": 31.2304,
+      "lng": 121.4737,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "assembly"
+      ],
+      "capacity_index": 0.74,
+      "lead_time_days": 27.0,
+      "unit_cost_index": 1.03,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.11,
+      "confidence": 0.72,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 90.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "LUX_KUN",
+      "name": "Luxshare Kunshan",
+      "entity_type": "facility",
+      "parent_company_id": "Luxshare",
+      "lat": 31.3855,
+      "lng": 120.9808,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "assembly",
+        "sensors"
+      ],
+      "capacity_index": 0.69,
+      "lead_time_days": 22.0,
+      "unit_cost_index": 0.99,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.1,
+      "confidence": 0.74,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 80.0,
+        "sensors": 48.0
+      }
+    },
+    {
+      "id": "TSM_HSC",
+      "name": "TSMC Hsinchu",
+      "entity_type": "facility",
+      "parent_company_id": "TSMC",
+      "lat": 24.8138,
+      "lng": 120.9675,
+      "country_iso3": "TWN",
+      "country": "TWN",
+      "categories": [
+        "chips"
+      ],
+      "capacity_index": 0.95,
+      "lead_time_days": 31.0,
+      "unit_cost_index": 1.08,
+      "tariff_rate_by_category": {
+        "chips": 0.048,
+        "displays": 0.042,
+        "batteries": 0.046,
+        "assembly": 0.04,
+        "sensors": 0.044
+      },
+      "risk_score": 3.33,
+      "risk_event_count": 40,
+      "concentration_share": 0.17,
+      "confidence": 0.86,
+      "sources": {
+        "source_type": "free_api",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 130.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "SMS_GIH",
+      "name": "Samsung Giheung",
+      "entity_type": "facility",
+      "parent_company_id": "Samsung Electro-Mechanics",
+      "lat": 37.28,
+      "lng": 127.11,
+      "country_iso3": "KOR",
+      "country": "KOR",
+      "categories": [
+        "chips",
+        "displays"
+      ],
+      "capacity_index": 0.81,
+      "lead_time_days": 29.0,
+      "unit_cost_index": 1.06,
+      "tariff_rate_by_category": {
+        "chips": 0.036,
+        "displays": 0.0315,
+        "batteries": 0.0345,
+        "assembly": 0.03,
+        "sensors": 0.033
+      },
+      "risk_score": 2.67,
+      "risk_event_count": 32,
+      "concentration_share": 0.1,
+      "confidence": 0.79,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 80.0,
+        "displays": 42.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "LGD_PAJ",
+      "name": "LG Display Paju",
+      "entity_type": "facility",
+      "parent_company_id": "LG Display",
+      "lat": 37.815,
+      "lng": 126.775,
+      "country_iso3": "KOR",
+      "country": "KOR",
+      "categories": [
+        "displays"
+      ],
+      "capacity_index": 0.77,
+      "lead_time_days": 28.0,
+      "unit_cost_index": 1.04,
+      "tariff_rate_by_category": {
+        "chips": 0.036,
+        "displays": 0.0315,
+        "batteries": 0.0345,
+        "assembly": 0.03,
+        "sensors": 0.033
+      },
+      "risk_score": 2.67,
+      "risk_event_count": 32,
+      "concentration_share": 0.08,
+      "confidence": 0.8,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 95.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "BOE_CDU",
+      "name": "BOE Chengdu",
+      "entity_type": "facility",
+      "parent_company_id": "BOE",
+      "lat": 30.5728,
+      "lng": 104.0668,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "displays"
+      ],
+      "capacity_index": 0.72,
+      "lead_time_days": 26.0,
+      "unit_cost_index": 0.98,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.07,
+      "confidence": 0.74,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 90.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "MUR_KYO",
+      "name": "Murata Kyoto",
+      "entity_type": "facility",
+      "parent_company_id": "Murata",
+      "lat": 35.0116,
+      "lng": 135.7681,
+      "country_iso3": "JPN",
+      "country": "JPN",
+      "categories": [
+        "sensors"
+      ],
+      "capacity_index": 0.68,
+      "lead_time_days": 23.0,
+      "unit_cost_index": 1.05,
+      "tariff_rate_by_category": {
+        "chips": 0.024,
+        "displays": 0.021,
+        "batteries": 0.023,
+        "assembly": 0.02,
+        "sensors": 0.022
+      },
+      "risk_score": 2.17,
+      "risk_event_count": 26,
+      "concentration_share": 0.06,
+      "confidence": 0.77,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 54.0
+      }
+    },
+    {
+      "id": "SNY_KUM",
+      "name": "Sony Kumamoto",
+      "entity_type": "facility",
+      "parent_company_id": "Sony",
+      "lat": 32.8031,
+      "lng": 130.7079,
+      "country_iso3": "JPN",
+      "country": "JPN",
+      "categories": [
+        "sensors"
+      ],
+      "capacity_index": 0.61,
+      "lead_time_days": 24.0,
+      "unit_cost_index": 1.07,
+      "tariff_rate_by_category": {
+        "chips": 0.024,
+        "displays": 0.021,
+        "batteries": 0.023,
+        "assembly": 0.02,
+        "sensors": 0.022
+      },
+      "risk_score": 2.17,
+      "risk_event_count": 26,
+      "concentration_share": 0.05,
+      "confidence": 0.75,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 45.0
+      }
+    },
+    {
+      "id": "NID_AYU",
+      "name": "Nidec Ayutthaya",
+      "entity_type": "facility",
+      "parent_company_id": "Nidec",
+      "lat": 14.3532,
+      "lng": 100.5689,
+      "country_iso3": "THA",
+      "country": "THA",
+      "categories": [
+        "sensors",
+        "assembly"
+      ],
+      "capacity_index": 0.58,
+      "lead_time_days": 21.0,
+      "unit_cost_index": 0.96,
+      "tariff_rate_by_category": {
+        "chips": 0.036,
+        "displays": 0.0315,
+        "batteries": 0.0345,
+        "assembly": 0.03,
+        "sensors": 0.033
+      },
+      "risk_score": 1.67,
+      "risk_event_count": 20,
+      "concentration_share": 0.04,
+      "confidence": 0.7,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 42.0,
+        "sensors": 30.0
+      }
+    },
+    {
+      "id": "CTC_SUZ",
+      "name": "Catcher Suzhou",
+      "entity_type": "facility",
+      "parent_company_id": "Catcher Technology",
+      "lat": 31.2989,
+      "lng": 120.5853,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "assembly"
+      ],
+      "capacity_index": 0.64,
+      "lead_time_days": 20.0,
+      "unit_cost_index": 0.94,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.05,
+      "confidence": 0.71,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 60.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "SWD_DON",
+      "name": "Sunwoda Dongguan",
+      "entity_type": "facility",
+      "parent_company_id": "Sunwoda",
+      "lat": 23.0489,
+      "lng": 113.7447,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "batteries"
+      ],
+      "capacity_index": 0.75,
+      "lead_time_days": 19.0,
+      "unit_cost_index": 0.97,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.08,
+      "confidence": 0.73,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 88.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "ATL_NDG",
+      "name": "ATL Ningde",
+      "entity_type": "facility",
+      "parent_company_id": "ATL",
+      "lat": 26.6657,
+      "lng": 119.5479,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "batteries"
+      ],
+      "capacity_index": 0.78,
+      "lead_time_days": 18.0,
+      "unit_cost_index": 0.95,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.09,
+      "confidence": 0.76,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 92.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "DSY_HUI",
+      "name": "Desay Huizhou",
+      "entity_type": "facility",
+      "parent_company_id": "Desay",
+      "lat": 23.0794,
+      "lng": 114.4126,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "batteries"
+      ],
+      "capacity_index": 0.62,
+      "lead_time_days": 20.0,
+      "unit_cost_index": 0.93,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.05,
+      "confidence": 0.7,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 60.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "WIS_BLR",
+      "name": "Wistron Bengaluru",
+      "entity_type": "facility",
+      "parent_company_id": "Wistron",
+      "lat": 12.9716,
+      "lng": 77.5946,
+      "country_iso3": "IND",
+      "country": "IND",
+      "categories": [
+        "assembly"
+      ],
+      "capacity_index": 0.56,
+      "lead_time_days": 23.0,
+      "unit_cost_index": 0.92,
+      "tariff_rate_by_category": {
+        "chips": 0.06,
+        "displays": 0.0525,
+        "batteries": 0.0575,
+        "assembly": 0.05,
+        "sensors": 0.055
+      },
+      "risk_score": 4.5,
+      "risk_event_count": 54,
+      "concentration_share": 0.03,
+      "confidence": 0.72,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 55.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "TAT_HOS",
+      "name": "Tata Electronics Hosur",
+      "entity_type": "facility",
+      "parent_company_id": "Tata Electronics",
+      "lat": 12.7409,
+      "lng": 77.8253,
+      "country_iso3": "IND",
+      "country": "IND",
+      "categories": [
+        "assembly",
+        "chips"
+      ],
+      "capacity_index": 0.52,
+      "lead_time_days": 24.0,
+      "unit_cost_index": 0.91,
+      "tariff_rate_by_category": {
+        "chips": 0.06,
+        "displays": 0.0525,
+        "batteries": 0.0575,
+        "assembly": 0.05,
+        "sensors": 0.055
+      },
+      "risk_score": 4.5,
+      "risk_event_count": 54,
+      "concentration_share": 0.03,
+      "confidence": 0.74,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 30.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 52.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "GRT_WEF",
+      "name": "Goertek Weifang",
+      "entity_type": "facility",
+      "parent_company_id": "Goertek",
+      "lat": 36.7069,
+      "lng": 119.1618,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "sensors"
+      ],
+      "capacity_index": 0.66,
+      "lead_time_days": 22.0,
+      "unit_cost_index": 0.97,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.05,
+      "confidence": 0.71,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 58.0
+      }
+    },
+    {
+      "id": "AAC_SHZ",
+      "name": "AAC Shenzhen",
+      "entity_type": "facility",
+      "parent_company_id": "AAC Technologies",
+      "lat": 22.5554,
+      "lng": 114.0545,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "sensors"
+      ],
+      "capacity_index": 0.63,
+      "lead_time_days": 21.0,
+      "unit_cost_index": 0.96,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.04,
+      "confidence": 0.7,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 55.0
+      }
+    },
+    {
+      "id": "FLX_PEN",
+      "name": "Flex Penang",
+      "entity_type": "facility",
+      "parent_company_id": "Flex",
+      "lat": 5.4164,
+      "lng": 100.3327,
+      "country_iso3": "MYS",
+      "country": "MYS",
+      "categories": [
+        "assembly",
+        "chips"
+      ],
+      "capacity_index": 0.59,
+      "lead_time_days": 22.0,
+      "unit_cost_index": 0.95,
+      "tariff_rate_by_category": {
+        "chips": 0.036,
+        "displays": 0.0315,
+        "batteries": 0.0345,
+        "assembly": 0.03,
+        "sensors": 0.033
+      },
+      "risk_score": 1.5,
+      "risk_event_count": 18,
+      "concentration_share": 0.04,
+      "confidence": 0.73,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 28.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 48.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "USI_SHA",
+      "name": "USI Shanghai",
+      "entity_type": "facility",
+      "parent_company_id": "USI",
+      "lat": 31.2304,
+      "lng": 121.4737,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "chips"
+      ],
+      "capacity_index": 0.57,
+      "lead_time_days": 24.0,
+      "unit_cost_index": 0.99,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.04,
+      "confidence": 0.69,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 38.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      }
+    },
+    {
+      "id": "AAPL_HQ",
+      "name": "Apple Cupertino",
+      "entity_type": "anchor_company",
+      "parent_company_id": "Apple Inc.",
+      "lat": 37.3349,
+      "lng": -122.009,
+      "country_iso3": "USA",
+      "country": "USA",
+      "categories": [
+        "chips",
+        "displays",
+        "batteries",
+        "assembly",
+        "sensors"
+      ],
+      "capacity_index": 1.0,
+      "lead_time_days": 0.0,
+      "unit_cost_index": 1.0,
+      "tariff_rate_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "risk_score": 1.0,
+      "risk_event_count": 2,
+      "concentration_share": 0.0,
+      "confidence": 0.95,
+      "sources": {
+        "source_type": "free_api",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source_id": "FOX_SHZ",
+      "target_id": "AAPL_HQ",
+      "category": "assembly",
+      "relationship_type": "supplies",
+      "baseline_volume": 155.0,
+      "baseline_share": 0.16,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "USA",
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source_id": "FOX_ZHZ",
+      "target_id": "AAPL_HQ",
+      "category": "assembly",
+      "relationship_type": "supplies",
+      "baseline_volume": 140.0,
+      "baseline_share": 0.14,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "USA",
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source_id": "PEG_SHA",
+      "target_id": "AAPL_HQ",
+      "category": "assembly",
+      "relationship_type": "supplies",
+      "baseline_volume": 90.0,
+      "baseline_share": 0.09,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "EU",
+      "targetLat": 51.9,
+      "targetLng": 4.5
+    },
+    {
+      "source_id": "LUX_KUN",
+      "target_id": "AAPL_HQ",
+      "category": "assembly",
+      "relationship_type": "supplies",
+      "baseline_volume": 80.0,
+      "baseline_share": 0.08,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "JPN",
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source_id": "WIS_BLR",
+      "target_id": "AAPL_HQ",
+      "category": "assembly",
+      "relationship_type": "supplies",
+      "baseline_volume": 55.0,
+      "baseline_share": 0.06,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "USA",
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source_id": "TAT_HOS",
+      "target_id": "AAPL_HQ",
+      "category": "assembly",
+      "relationship_type": "supplies",
+      "baseline_volume": 52.0,
+      "baseline_share": 0.05,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "EU",
+      "targetLat": 51.9,
+      "targetLng": 4.5
+    },
+    {
+      "source_id": "FLX_PEN",
+      "target_id": "AAPL_HQ",
+      "category": "assembly",
+      "relationship_type": "supplies",
+      "baseline_volume": 48.0,
+      "baseline_share": 0.05,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "JPN",
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source_id": "CTC_SUZ",
+      "target_id": "AAPL_HQ",
+      "category": "assembly",
+      "relationship_type": "supplies",
+      "baseline_volume": 60.0,
+      "baseline_share": 0.06,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "USA",
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source_id": "NID_AYU",
+      "target_id": "AAPL_HQ",
+      "category": "assembly",
+      "relationship_type": "supplies",
+      "baseline_volume": 42.0,
+      "baseline_share": 0.04,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "EU",
+      "targetLat": 51.9,
+      "targetLng": 4.5
+    },
+    {
+      "source_id": "TSM_HSC",
+      "target_id": "AAPL_HQ",
+      "category": "chips",
+      "relationship_type": "supplies",
+      "baseline_volume": 130.0,
+      "baseline_share": 0.23,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "USA",
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source_id": "SMS_GIH",
+      "target_id": "AAPL_HQ",
+      "category": "chips",
+      "relationship_type": "supplies",
+      "baseline_volume": 80.0,
+      "baseline_share": 0.14,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "USA",
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source_id": "FOX_SHZ",
+      "target_id": "AAPL_HQ",
+      "category": "chips",
+      "relationship_type": "supplies",
+      "baseline_volume": 45.0,
+      "baseline_share": 0.08,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "EU",
+      "targetLat": 51.9,
+      "targetLng": 4.5
+    },
+    {
+      "source_id": "FOX_ZHZ",
+      "target_id": "AAPL_HQ",
+      "category": "chips",
+      "relationship_type": "supplies",
+      "baseline_volume": 40.0,
+      "baseline_share": 0.07,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "JPN",
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source_id": "TAT_HOS",
+      "target_id": "AAPL_HQ",
+      "category": "chips",
+      "relationship_type": "supplies",
+      "baseline_volume": 30.0,
+      "baseline_share": 0.05,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "EU",
+      "targetLat": 51.9,
+      "targetLng": 4.5
+    },
+    {
+      "source_id": "FLX_PEN",
+      "target_id": "AAPL_HQ",
+      "category": "chips",
+      "relationship_type": "supplies",
+      "baseline_volume": 28.0,
+      "baseline_share": 0.05,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "JPN",
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source_id": "USI_SHA",
+      "target_id": "AAPL_HQ",
+      "category": "chips",
+      "relationship_type": "supplies",
+      "baseline_volume": 38.0,
+      "baseline_share": 0.07,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "USA",
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source_id": "LGD_PAJ",
+      "target_id": "AAPL_HQ",
+      "category": "displays",
+      "relationship_type": "supplies",
+      "baseline_volume": 95.0,
+      "baseline_share": 0.2,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "USA",
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source_id": "BOE_CDU",
+      "target_id": "AAPL_HQ",
+      "category": "displays",
+      "relationship_type": "supplies",
+      "baseline_volume": 90.0,
+      "baseline_share": 0.19,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "EU",
+      "targetLat": 51.9,
+      "targetLng": 4.5
+    },
+    {
+      "source_id": "SMS_GIH",
+      "target_id": "AAPL_HQ",
+      "category": "displays",
+      "relationship_type": "supplies",
+      "baseline_volume": 42.0,
+      "baseline_share": 0.09,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "JPN",
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source_id": "SWD_DON",
+      "target_id": "AAPL_HQ",
+      "category": "batteries",
+      "relationship_type": "supplies",
+      "baseline_volume": 88.0,
+      "baseline_share": 0.25,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "USA",
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source_id": "ATL_NDG",
+      "target_id": "AAPL_HQ",
+      "category": "batteries",
+      "relationship_type": "supplies",
+      "baseline_volume": 92.0,
+      "baseline_share": 0.26,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "EU",
+      "targetLat": 51.9,
+      "targetLng": 4.5
+    },
+    {
+      "source_id": "DSY_HUI",
+      "target_id": "AAPL_HQ",
+      "category": "batteries",
+      "relationship_type": "supplies",
+      "baseline_volume": 60.0,
+      "baseline_share": 0.17,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "JPN",
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source_id": "MUR_KYO",
+      "target_id": "AAPL_HQ",
+      "category": "sensors",
+      "relationship_type": "supplies",
+      "baseline_volume": 54.0,
+      "baseline_share": 0.13,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "USA",
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source_id": "SNY_KUM",
+      "target_id": "AAPL_HQ",
+      "category": "sensors",
+      "relationship_type": "supplies",
+      "baseline_volume": 45.0,
+      "baseline_share": 0.11,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "EU",
+      "targetLat": 51.9,
+      "targetLng": 4.5
+    },
+    {
+      "source_id": "GRT_WEF",
+      "target_id": "AAPL_HQ",
+      "category": "sensors",
+      "relationship_type": "supplies",
+      "baseline_volume": 58.0,
+      "baseline_share": 0.14,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "JPN",
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    },
+    {
+      "source_id": "AAC_SHZ",
+      "target_id": "AAPL_HQ",
+      "category": "sensors",
+      "relationship_type": "supplies",
+      "baseline_volume": 55.0,
+      "baseline_share": 0.13,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "USA",
+      "targetLat": 33.75,
+      "targetLng": -118.19
+    },
+    {
+      "source_id": "LUX_KUN",
+      "target_id": "AAPL_HQ",
+      "category": "sensors",
+      "relationship_type": "supplies",
+      "baseline_volume": 48.0,
+      "baseline_share": 0.11,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "EU",
+      "targetLat": 51.9,
+      "targetLng": 4.5
+    },
+    {
+      "source_id": "NID_AYU",
+      "target_id": "AAPL_HQ",
+      "category": "sensors",
+      "relationship_type": "supplies",
+      "baseline_volume": 30.0,
+      "baseline_share": 0.07,
+      "effective_cost_index": 1.0,
+      "lead_time_days": 0.0,
+      "target_market": "JPN",
+      "targetLat": 35.44,
+      "targetLng": 139.64
+    }
+  ],
+  "metadata": {
+    "anchor_company": "Apple Inc.",
+    "pull_date": "2026-02-21",
+    "gdelt_window": "90d",
+    "tariff_year": "2025-proxy",
+    "build_version": "company-v1",
+    "assumption_notes": "Hybrid free+manual sources. Baseline allocations curated for MVP."
+  }
+}

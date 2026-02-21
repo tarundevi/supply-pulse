@@ -1,100 +1,161 @@
-"""
-build_graph.py — Merge data sources into unified supplier_graph.json.
+﻿"""Merge pipeline outputs into public/data/supplier_graph.json."""
 
-Reads the outputs from pull_comtrade.py, pull_gdelt.py, and pull_wits.py,
-then merges them into a single supplier_graph.json file that the frontend
-reads at runtime.
-
-Steps:
-  1. Load trade_flows.json → build nodes with export volumes, build edges
-  2. Load disruption_signals.json → attach GDELT risk scores to nodes
-  3. Load tariff_matrix.json → attach tariff rates to nodes/edges
-  4. Compute composite edge weights: cost = trade_cost * tariff * distance
-  5. Write supplier_graph.json
-
-Output: public/data/supplier_graph.json
-"""
+from __future__ import annotations
 
 import argparse
-import json
 import os
+from typing import Dict, List
 
-PIPELINE_DATA = os.path.join(os.path.dirname(__file__), "data")
-OUTPUT_FILE = os.path.join(
-    os.path.dirname(__file__), "..", "public", "data", "supplier_graph.json"
+from common import (
+    COMMODITY_CODES,
+    COUNTRY_META,
+    DESTINATION_MARKETS,
+    DISTANCE_COST_FACTOR,
+    OUTPUT_GRAPH,
+    ensure_data_dir,
+    json_dump,
+    json_load,
+    today_iso,
 )
 
-# Country metadata (lat/lng for globe rendering)
-# Coordinates point to each country's primary manufacturer distribution hub / export port
-COUNTRY_META = {
-    "156": {"id": "CHN", "country": "China", "lat": 31.23, "lng": 121.47, "hub": "Port of Shanghai"},
-    "704": {"id": "VNM", "country": "Vietnam", "lat": 10.76, "lng": 106.66, "hub": "Ho Chi Minh City (Cat Lai Port)"},
-    "410": {"id": "KOR", "country": "South Korea", "lat": 35.10, "lng": 129.03, "hub": "Port of Busan"},
-    "484": {"id": "MEX", "country": "Mexico", "lat": 19.05, "lng": -104.32, "hub": "Port of Manzanillo"},
-    "356": {"id": "IND", "country": "India", "lat": 18.95, "lng": 72.95, "hub": "JNPT / Nhava Sheva (Mumbai)"},
-    "276": {"id": "DEU", "country": "Germany", "lat": 53.55, "lng": 9.97, "hub": "Port of Hamburg"},
-    "392": {"id": "JPN", "country": "Japan", "lat": 35.44, "lng": 139.64, "hub": "Port of Yokohama"},
-    "764": {"id": "THA", "country": "Thailand", "lat": 13.08, "lng": 100.88, "hub": "Laem Chabang Port"},
-    "458": {"id": "MYS", "country": "Malaysia", "lat": 3.00, "lng": 101.39, "hub": "Port Klang"},
-    "076": {"id": "BRA", "country": "Brazil", "lat": -23.96, "lng": -46.30, "hub": "Port of Santos"},
-    "616": {"id": "POL", "country": "Poland", "lat": 54.35, "lng": 18.65, "hub": "Port of Gdańsk"},
-    "752": {"id": "SWE", "country": "Sweden", "lat": 57.71, "lng": 11.97, "hub": "Port of Gothenburg"},
-    "528": {"id": "NLD", "country": "Netherlands", "lat": 51.90, "lng": 4.50, "hub": "Port of Rotterdam"},
-    "724": {"id": "ESP", "country": "Spain", "lat": 39.45, "lng": -0.32, "hub": "Port of Valencia"},
-    "380": {"id": "ITA", "country": "Italy", "lat": 44.41, "lng": 8.93, "hub": "Port of Genoa"},
-}
+TRADE_FILE = os.path.join(os.path.dirname(__file__), "data", "trade_flows.json")
+GDELT_FILE = os.path.join(os.path.dirname(__file__), "data", "disruption_signals.json")
+WITS_FILE = os.path.join(os.path.dirname(__file__), "data", "tariff_matrix.json")
 
 
-def load_json(filepath):
-    """Load a JSON file, returning empty dict if not found."""
-    if not os.path.exists(filepath):
-        print(f"Warning: {filepath} not found, using empty data")
-        return {}
-    with open(filepath) as f:
-        return json.load(f)
+def _empty_category_map(default: float = 0.0) -> Dict[str, float]:
+    return {category: float(default) for category in COMMODITY_CODES}
 
 
-def main(args):
-    # TODO: Load pipeline outputs
-    # trade_flows = load_json(os.path.join(PIPELINE_DATA, "trade_flows.json"))
-    # disruption_signals = load_json(os.path.join(PIPELINE_DATA, "disruption_signals.json"))
-    # tariff_matrix = load_json(os.path.join(PIPELINE_DATA, "tariff_matrix.json"))
+def _build_nodes(trade_data: dict, gdelt_data: dict, wits_data: dict) -> List[dict]:
+    by_reporter = trade_data.get("by_reporter", {})
+    gdelt_by_country = gdelt_data.get("by_country", {})
+    wits_by_partner = wits_data.get("by_partner", {})
 
-    # TODO: Build nodes from trade_flows + disruption_signals + tariff_matrix
-    # nodes = []
-    # for code, meta in COUNTRY_META.items():
-    #     node = {**meta, "countryCode": code}
-    #     node["export_volumes"] = extract_volumes(trade_flows, code)
-    #     node["gdelt_risk_score"] = compute_risk(disruption_signals, meta["country"])
-    #     node["tariff_rates"] = extract_tariffs(tariff_matrix, code)
-    #     node["distance_cost_factor"] = estimate_distance_cost(code)
-    #     nodes.append(node)
+    nodes = []
+    for numeric_code, meta in COUNTRY_META.items():
+        reporter_item = by_reporter.get(numeric_code, {})
+        categories_item = reporter_item.get("categories", {})
 
-    # TODO: Build edges from trade_flows bilateral data
-    # edges = build_edges(trade_flows, nodes)
+        export_volumes = _empty_category_map(0.0)
+        for category in COMMODITY_CODES:
+            export_volumes[category] = float(
+                categories_item.get(category, {}).get("total_export_value", 0.0)
+            )
 
-    # TODO: Assemble and write final graph
-    # graph = {
-    #     "nodes": nodes,
-    #     "edges": edges,
-    #     "metadata": {
-    #         "comtrade_year": 2023,
-    #         "gdelt_window": "90d",
-    #         "last_updated": datetime.now().isoformat()[:10],
-    #     },
-    # }
+        tariffs = _empty_category_map(0.0)
+        partner_item = wits_by_partner.get(meta["id"], {})
+        for category in COMMODITY_CODES:
+            tariffs[category] = float(partner_item.get("tariff_rates", {}).get(category, 0.0))
 
-    # os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-    # with open(OUTPUT_FILE, "w") as f:
-    #     json.dump(graph, f, indent=2)
+        gdelt_item = gdelt_by_country.get(meta["country"], {})
+        gdelt_event_count = int(gdelt_item.get("event_count", 0))
+        gdelt_risk_score = float(gdelt_item.get("risk_score", 0.0))
 
-    print("build_graph.py: stub — run pipeline scripts first, then implement merge logic")
-    print(f"Output would be written to: {OUTPUT_FILE}")
+        nodes.append(
+            {
+                "id": meta["id"],
+                "country": meta["country"],
+                "countryCode": numeric_code,
+                "lat": meta["lat"],
+                "lng": meta["lng"],
+                "hub": meta["hub"],
+                "export_volumes": export_volumes,
+                "tariff_rates": tariffs,
+                "gdelt_risk_score": gdelt_risk_score,
+                "gdelt_event_count": gdelt_event_count,
+                "distance_cost_factor": DISTANCE_COST_FACTOR.get(meta["id"], 0.08),
+            }
+        )
+
+    return nodes
+
+
+def _build_edges(trade_data: dict) -> List[dict]:
+    by_reporter = trade_data.get("by_reporter", {})
+    edges = []
+
+    for numeric_code, meta in COUNTRY_META.items():
+        reporter_item = by_reporter.get(numeric_code, {})
+        categories_item = reporter_item.get("categories", {})
+
+        for category in COMMODITY_CODES:
+            destination_exports = categories_item.get(category, {}).get("destination_exports", {})
+            for market_name, market in DESTINATION_MARKETS.items():
+                volume = float(destination_exports.get(market_name, 0.0))
+                if volume <= 0:
+                    continue
+                edges.append(
+                    {
+                        "source": meta["id"],
+                        "target": market_name,
+                        "category": category,
+                        "volume": volume,
+                        "targetLat": market["lat"],
+                        "targetLng": market["lng"],
+                    }
+                )
+
+    return edges
+
+
+def _validate_graph(graph: dict) -> None:
+    nodes = graph.get("nodes", [])
+    edges = graph.get("edges", [])
+    assert isinstance(nodes, list) and len(nodes) > 0, "Graph must include non-empty nodes"
+    assert isinstance(edges, list), "Graph edges must be a list"
+
+    required_node_fields = {
+        "id",
+        "country",
+        "lat",
+        "lng",
+        "export_volumes",
+        "tariff_rates",
+        "gdelt_risk_score",
+        "gdelt_event_count",
+        "distance_cost_factor",
+    }
+    for node in nodes:
+        missing = required_node_fields - set(node.keys())
+        assert not missing, f"Node missing fields: {missing}"
+
+    required_edge_fields = {"source", "target", "category", "volume", "targetLat", "targetLng"}
+    for edge in edges:
+        missing = required_edge_fields - set(edge.keys())
+        assert not missing, f"Edge missing fields: {missing}"
+
+
+def main(_args):
+    ensure_data_dir()
+    trade_data = json_load(TRADE_FILE, default={})
+    gdelt_data = json_load(GDELT_FILE, default={})
+    wits_data = json_load(WITS_FILE, default={})
+
+    nodes = _build_nodes(trade_data, gdelt_data, wits_data)
+    edges = _build_edges(trade_data)
+
+    graph = {
+        "nodes": nodes,
+        "edges": edges,
+        "metadata": {
+            "comtrade_year": trade_data.get("metadata", {}).get("period", "2023"),
+            "gdelt_window": gdelt_data.get("metadata", {}).get("timespan", "90d"),
+            "wits_year": wits_data.get("metadata", {}).get("year", "2022"),
+            "last_updated": today_iso(),
+            "build_type": "basic",
+        },
+    }
+
+    _validate_graph(graph)
+    os.makedirs(os.path.dirname(OUTPUT_GRAPH), exist_ok=True)
+    json_dump(OUTPUT_GRAPH, graph)
+
+    print(f"Wrote {OUTPUT_GRAPH}")
+    print(f"Nodes: {len(nodes)}")
+    print(f"Edges: {len(edges)}")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Merge Comtrade, GDELT, and WITS data into supplier_graph.json"
-    )
-    args = parser.parse_args()
-    main(args)
+    parser = argparse.ArgumentParser(description="Build unified supplier graph JSON")
+    main(parser.parse_args())

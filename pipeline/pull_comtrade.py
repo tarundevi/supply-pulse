@@ -1,111 +1,127 @@
-"""
-pull_comtrade.py — Fetch bilateral trade flow data from UN Comtrade API.
+﻿"""Fetch bilateral trade flow data from UN Comtrade and cache normalized output."""
 
-For each commodity category (HS codes 85, 61, 28, 84, 87) and each of the
-top 15 exporting countries, pulls export volumes to US, EU, and Japan.
-
-API: https://comtradeapi.un.org/public/v1/preview/C/A/HS
-Rate limit: 500 records/day on free preview tier (no API key required).
-
-Output: pipeline/data/trade_flows.json
-"""
+from __future__ import annotations
 
 import argparse
-import json
-import os
 import time
+from collections import defaultdict
+from typing import Dict, List
 
-import requests
-
-COMMODITY_CODES = {
-    "electronics": "85",
-    "textiles": "61",
-    "chemicals": "28",
-    "machinery": "84",
-    "vehicles": "87",
-}
-
-TOP_EXPORTERS = [
-    "156", "704", "410", "484", "356",
-    "276", "392", "764", "458", "076",
-    "616", "752", "528", "724", "380",
-]
-
-DESTINATION_MARKETS = {
-    "USA": "842",
-    "EU": "918",
-    "JPN": "392",
-}
+from common import (
+    COMMODITY_CODES,
+    COUNTRY_META,
+    DESTINATION_MARKETS,
+    DATA_DIR,
+    ensure_data_dir,
+    json_dump,
+    requests_session,
+    today_iso,
+)
 
 API_BASE = "https://comtradeapi.un.org/public/v1/preview/C/A/HS"
-OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "data")
-OUTPUT_FILE = os.path.join(OUTPUT_DIR, "trade_flows.json")
+OUTPUT_FILE = f"{DATA_DIR}/trade_flows.json"
 
 
-def fetch_with_rate_limit_handling(url, params=None, max_retries=3):
-    """Make HTTP request with rate limit handling and friendly error messages."""
-    for attempt in range(max_retries):
-        try:
-            response = requests.get(url, params=params, timeout=30)
-            
-            if response.status_code == 429:
-                wait_time = int(response.headers.get('Retry-After', 60))
-                print(f"  ⚠ Rate limit hit. Waiting {wait_time} seconds before retry...")
-                time.sleep(wait_time)
-                continue
-                
-            if response.status_code == 403:
-                print("  ✕ Access forbidden. The API may require authentication.")
-                return None
-                
-            if response.status_code >= 500:
-                print(f"  ⚠ Server error ({response.status_code}). Retrying in 5 seconds...")
-                time.sleep(5)
-                continue
-                
-            response.raise_for_status()
-            return response.json()
-            
-        except requests.exceptions.Timeout:
-            print(f"  ⚠ Request timed out. Retrying ({attempt + 1}/{max_retries})...")
-            time.sleep(5)
-        except requests.exceptions.ConnectionError:
-            print("  ✕ Connection error. Please check your internet connection.")
-            return None
-        except requests.exceptions.HTTPError as e:
-            print(f"  ✕ HTTP error: {e}")
-            return None
-    
-    print("  ✕ Failed after all retries. Please try again later.")
-    return None
+def _sum_partner_values(rows: List[dict]) -> Dict[str, float]:
+    partner_values: Dict[str, float] = defaultdict(float)
+    for row in rows:
+        partner_code = str(row.get("partnerCode") or "").strip()
+        value = float(row.get("primaryValue") or 0.0)
+        if not partner_code or partner_code in {"0", "all", "ALL"}:
+            continue
+        if value > 0:
+            partner_values[partner_code] += value
+    return dict(partner_values)
+
+
+def fetch_exports(session, reporter_code: str, hs_code: str, period: str = "2023") -> List[dict]:
+    params = {
+        "reporterCode": reporter_code,
+        "cmdCode": hs_code,
+        "flowCode": "X",
+        "period": period,
+    }
+    response = session.get(API_BASE, params=params, timeout=60)
+    response.raise_for_status()
+    payload = response.json()
+    return payload.get("data", []) if isinstance(payload, dict) else []
 
 
 def main(args):
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    results = {}
+    ensure_data_dir()
+    session = requests_session()
+    by_reporter = {}
+    pulls = []
 
-    for country_code in TOP_EXPORTERS:
+    country_items = list(COUNTRY_META.items())
+    if args.limit_countries:
+        country_items = country_items[: args.limit_countries]
+
+    for reporter_code, meta in country_items:
+        reporter_item = {
+            "country_code": reporter_code,
+            "country_iso3": meta["id"],
+            "country_name": meta["country"],
+            "categories": {},
+        }
+
         for category, hs_code in COMMODITY_CODES.items():
-            key = f"{country_code}_{category}"
-            print(f"Fetching {key}...")
-            # TODO: Call fetch_exports, parse response, aggregate by partner
-            # data = fetch_exports(country_code, hs_code, period=args.period)
-            # results[key] = parse_comtrade_response(data)
-            results[key] = {"status": "stub", "reporter": country_code, "hs": hs_code}
-            time.sleep(1)  # Respect rate limits
+            key = f"{reporter_code}_{category}"
+            print(f"Comtrade fetch: {key}")
+            try:
+                rows = fetch_exports(session, reporter_code, hs_code, args.period)
+            except Exception as exc:
+                rows = []
+                print(f"  warning: failed {key}: {exc}")
 
-    with open(OUTPUT_FILE, "w") as f:
-        json.dump(results, f, indent=2)
+            partner_values = _sum_partner_values(rows)
+            destination_exports = {}
+            for market_name, market in DESTINATION_MARKETS.items():
+                destination_exports[market_name] = float(partner_values.get(market["code"], 0.0))
 
-    print(f"Wrote {len(results)} entries to {OUTPUT_FILE}")
+            sorted_partners = sorted(partner_values.items(), key=lambda x: x[1], reverse=True)
+            total_export_value = float(sum(partner_values.values()))
+
+            reporter_item["categories"][category] = {
+                "hs_code": hs_code,
+                "total_export_value": total_export_value,
+                "destination_exports": destination_exports,
+                "top_partners": [{"partner_code": p, "value": v} for p, v in sorted_partners[:15]],
+                "row_count": len(rows),
+            }
+
+            pulls.append(
+                {
+                    "reporter_code": reporter_code,
+                    "country_iso3": meta["id"],
+                    "category": category,
+                    "hs_code": hs_code,
+                    "total_export_value": total_export_value,
+                    "destination_exports": destination_exports,
+                    "row_count": len(rows),
+                }
+            )
+            time.sleep(args.sleep_seconds)
+
+        by_reporter[reporter_code] = reporter_item
+
+    payload = {
+        "metadata": {
+            "source": "UN Comtrade preview API",
+            "period": str(args.period),
+            "pulled_on": today_iso(),
+            "rows": len(pulls),
+        },
+        "by_reporter": by_reporter,
+        "pulls": pulls,
+    }
+    json_dump(OUTPUT_FILE, payload)
+    print(f"Wrote {OUTPUT_FILE}")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Pull bilateral trade flow data from UN Comtrade API"
-    )
-    parser.add_argument(
-        "--period", default="2023", help="Trade data year (default: 2023)"
-    )
-    args = parser.parse_args()
-    main(args)
+    parser = argparse.ArgumentParser(description="Pull bilateral trade flow data from UN Comtrade API.")
+    parser.add_argument("--period", default="2023", help="Trade data year")
+    parser.add_argument("--sleep-seconds", type=float, default=1.0, help="Delay between API calls")
+    parser.add_argument("--limit-countries", type=int, default=0, help="Optional: only pull first N countries")
+    main(parser.parse_args())

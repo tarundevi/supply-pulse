@@ -1,134 +1,101 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+﻿import React, { useRef, useEffect, useMemo } from 'react';
 import GlobeGL from 'react-globe.gl';
-import { COLORS, RISK_THRESHOLDS, DESTINATION_MARKETS } from '../utils/constants';
+import { COLORS, RISK_THRESHOLDS } from '../utils/constants';
 
 const DESTINATION_COORDS = {
-  USA: { lat: 33.75, lng: -118.19, hub: 'Port of Long Beach', label: 'United States' },
-  EU: { lat: 51.90, lng: 4.50, hub: 'Port of Rotterdam', label: 'European Union' },
-  JPN: { lat: 35.44, lng: 139.64, hub: 'Port of Yokohama', label: 'Japan' },
+  USA: { lat: 33.75, lng: -118.19, hub: 'US Distribution', label: 'United States' },
+  EU: { lat: 51.90, lng: 4.50, hub: 'EU Distribution', label: 'European Union' },
+  JPN: { lat: 35.44, lng: 139.64, hub: 'Japan Distribution', label: 'Japan' },
 };
 
-function riskColor(gdeltEventCount) {
-  if (gdeltEventCount > RISK_THRESHOLDS.medium) return COLORS.riskHigh;
-  if (gdeltEventCount > RISK_THRESHOLDS.low) return COLORS.riskMedium;
+function riskColor(eventCount) {
+  if (eventCount > RISK_THRESHOLDS.medium) return COLORS.riskHigh;
+  if (eventCount > RISK_THRESHOLDS.low) return COLORS.riskMedium;
   return COLORS.riskLow;
 }
 
 export default function Globe({
   graph,
   activeCategory,
-  disruptedCountry,
+  disruptedNodeId,
   onNodeClick,
   recommendations,
   destinationMarket,
 }) {
   const globeRef = useRef();
-  const containerRef = useRef();
 
-  // Set initial camera position on mount
   useEffect(() => {
     if (!globeRef.current) return;
     globeRef.current.controls().autoRotate = true;
-    globeRef.current.controls().autoRotateSpeed = 0.4;
-    setTimeout(() => {
-      if (globeRef.current) {
-        globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 });
-      }
-    }, 100);
+    globeRef.current.controls().autoRotateSpeed = 0.35;
+    globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 });
   }, []);
 
-  // Re-center globe when container size changes (e.g., sidebar opens/closes)
-  useEffect(() => {
-    if (!globeRef.current || !containerRef.current) return;
-
-    const recenter = () => {
-      if (globeRef.current) {
-        globeRef.current.resize();
-        globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 });
-      }
-    };
-
-    const resizeObserver = new ResizeObserver(recenter);
-    resizeObserver.observe(containerRef.current);
-    
-    // Also try window resize
-    window.addEventListener('resize', recenter);
-    
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener('resize', recenter);
-    };
-  }, []);
-
-  // Fly to disrupted country, or resume auto-rotate on reset
   useEffect(() => {
     if (!globeRef.current) return;
-    if (disruptedCountry && graph) {
-      const node = graph.nodes.find((n) => n.id === disruptedCountry);
+    if (disruptedNodeId && graph) {
+      const node = graph.nodes.find((n) => n.id === disruptedNodeId);
       if (node) {
         globeRef.current.controls().autoRotate = false;
-        globeRef.current.pointOfView(
-          { lat: node.lat, lng: node.lng, altitude: 2.0 },
-          800
-        );
+        globeRef.current.pointOfView({ lat: node.lat, lng: node.lng, altitude: 2.0 }, 800);
       }
     } else {
       globeRef.current.controls().autoRotate = true;
-      globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 }, 500);
     }
-  }, [disruptedCountry, graph]);
+  }, [disruptedNodeId, graph]);
 
-  // Build point data from nodes + active destination market
   const points = useMemo(() => {
     if (!graph) return [];
-    const supplierPoints = graph.nodes.map((node) => {
-      const vol = node.export_volumes[activeCategory] || 0;
-      const isDisrupted = node.id === disruptedCountry;
-      return {
-        ...node,
-        size: Math.max(0.3, Math.log10(vol / 1e8 + 1) * 0.5),
-        color: isDisrupted ? COLORS.arcDisrupted : riskColor(node.gdelt_event_count),
-        ringColor: isDisrupted ? COLORS.arcDisrupted : riskColor(node.gdelt_event_count),
-      };
-    });
 
-    // Add the active destination market as a visible node
+    const supplierPoints = graph.nodes
+      .filter((n) => n.entity_type !== 'anchor_company')
+      .map((node) => {
+        const vol = node.baseline_volume_by_category?.[activeCategory] || 0;
+        const isDisrupted = node.id === disruptedNodeId;
+        return {
+          ...node,
+          size: Math.max(0.28, Math.log10(vol + 1) * 0.23),
+          color: isDisrupted ? COLORS.arcDisrupted : riskColor(node.risk_event_count || 0),
+          ringColor: isDisrupted ? COLORS.arcDisrupted : riskColor(node.risk_event_count || 0),
+          isDestination: false,
+        };
+      });
+
     const dest = DESTINATION_COORDS[destinationMarket] || DESTINATION_COORDS.USA;
-    const destPoint = {
-      id: destinationMarket,
-      country: dest.label,
-      hub: dest.hub,
-      lat: dest.lat,
-      lng: dest.lng,
-      size: 0.8,
-      color: COLORS.electricBlue,
-      ringColor: COLORS.electricBlue,
-      isDestination: true,
-    };
+    return [
+      ...supplierPoints,
+      {
+        id: destinationMarket,
+        name: dest.label,
+        country_iso3: destinationMarket,
+        lat: dest.lat,
+        lng: dest.lng,
+        size: 0.82,
+        color: COLORS.electricBlue,
+        ringColor: COLORS.electricBlue,
+        isDestination: true,
+      },
+    ];
+  }, [graph, activeCategory, disruptedNodeId, destinationMarket]);
 
-    return [...supplierPoints, destPoint];
-  }, [graph, activeCategory, disruptedCountry, destinationMarket]);
-
-  // Build arcs from edges
   const arcs = useMemo(() => {
     if (!graph) return [];
 
-    const baseArcs = graph.edges
+    const nodeById = new Map((graph.nodes || []).map((n) => [n.id, n]));
+    const baseArcs = (graph.edges || [])
       .filter((e) => e.category === activeCategory)
       .map((edge) => {
-        const srcNode = graph.nodes.find((n) => n.id === edge.source);
-        if (!srcNode) return null;
-        const isDisrupted = edge.source === disruptedCountry;
+        const src = nodeById.get(edge.source_id);
+        if (!src) return null;
+        const isDisrupted = edge.source_id === disruptedNodeId;
         return {
-          startLat: srcNode.lat,
-          startLng: srcNode.lng,
+          startLat: src.lat,
+          startLng: src.lng,
           endLat: edge.targetLat,
           endLng: edge.targetLng,
-          color: isDisrupted
-            ? 'rgba(239,68,68,0.3)'
-            : COLORS.arcDefault,
-          stroke: Math.max(0.5, Math.log10(edge.volume / 1e9 + 1) * 1.5),
-          label: `${edge.source} → ${edge.target}`,
+          color: isDisrupted ? 'rgba(239,68,68,0.25)' : COLORS.arcDefault,
+          stroke: Math.max(0.45, Math.log10((edge.baseline_volume || 0) + 1) * 0.75),
+          label: `${src.name} -> ${edge.target_market || edge.target_id}`,
         };
       })
       .filter(Boolean);
@@ -141,32 +108,31 @@ export default function Globe({
       endLng: dest.lng,
       color: COLORS.arcRecommended,
       stroke: 2.5,
-      label: `Recommended: ${rec.country}`,
+      label: `Recommended: ${rec.name}`,
       isRecommended: true,
     }));
 
     return [...baseArcs, ...recArcs];
-  }, [graph, activeCategory, disruptedCountry, recommendations, destinationMarket]);
+  }, [graph, activeCategory, disruptedNodeId, recommendations, destinationMarket]);
 
   if (!graph) return null;
 
   return (
-    <div ref={containerRef} className="absolute inset-0 w-full h-full">
-      <GlobeGL
+    <GlobeGL
       ref={globeRef}
       globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
       backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
-      // Points layer
       pointsData={points}
       pointLat="lat"
       pointLng="lng"
       pointAltitude={0.01}
-      pointRadius={(d) => d.size * 1.5}
+      pointRadius={(d) => d.size * 1.45}
       pointColor="color"
-      pointLabel={(d) => d.hub ? `${d.country} — ${d.hub}` : `${d.country} (${d.id})`}
-      onPointClick={(point) => point.isDestination ? null : onNodeClick(point.id)}
+      pointLabel={(d) =>
+        d.isDestination ? `${d.name}` : `${d.name} (${d.country_iso3})<br/>${d.parent_company_id || 'Supplier'}`
+      }
+      onPointClick={(point) => (point.isDestination ? null : onNodeClick(point.id))}
       onGlobeClick={() => onNodeClick(null)}
-      // Arcs layer
       arcsData={arcs}
       arcStartLat="startLat"
       arcStartLng="startLng"
@@ -174,22 +140,19 @@ export default function Globe({
       arcEndLng="endLng"
       arcColor="color"
       arcStroke="stroke"
-      arcDashLength={(d) => d.isRecommended ? 0.4 : undefined}
-      arcDashGap={(d) => d.isRecommended ? 0.2 : undefined}
-      arcDashAnimateTime={(d) => d.isRecommended ? 1500 : 0}
+      arcDashLength={(d) => (d.isRecommended ? 0.4 : undefined)}
+      arcDashGap={(d) => (d.isRecommended ? 0.2 : undefined)}
+      arcDashAnimateTime={(d) => (d.isRecommended ? 1500 : 0)}
       arcLabel="label"
-      // Rings on disrupted node
-      ringsData={disruptedCountry ? points.filter((p) => p.id === disruptedCountry) : []}
+      ringsData={disruptedNodeId ? points.filter((p) => p.id === disruptedNodeId) : []}
       ringLat="lat"
       ringLng="lng"
       ringColor="ringColor"
       ringMaxRadius={4}
       ringPropagationSpeed={2}
       ringRepeatPeriod={800}
-      // Globe style
       atmosphereColor="#4da6ff"
       atmosphereAltitude={0.2}
     />
-    </div>
   );
 }

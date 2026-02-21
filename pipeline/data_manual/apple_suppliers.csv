@@ -1,0 +1,22 @@
+﻿supplier_id,parent_company,categories,capacity_index,lead_time_days,unit_cost_index,concentration_share,confidence,source_type
+FOX_SHZ,Foxconn,assembly|chips,0.88,24,1.02,0.22,0.78,manual
+FOX_ZHZ,Foxconn,assembly|chips,0.86,25,1.01,0.18,0.78,manual
+PEG_SHA,Pegatron,assembly,0.74,27,1.03,0.11,0.72,manual
+LUX_KUN,Luxshare,assembly|sensors,0.69,22,0.99,0.10,0.74,manual
+TSM_HSC,TSMC,chips,0.95,31,1.08,0.17,0.86,free_api
+SMS_GIH,Samsung Electro-Mechanics,chips|displays,0.81,29,1.06,0.10,0.79,manual
+LGD_PAJ,LG Display,displays,0.77,28,1.04,0.08,0.8,manual
+BOE_CDU,BOE,displays,0.72,26,0.98,0.07,0.74,manual
+MUR_KYO,Murata,sensors,0.68,23,1.05,0.06,0.77,manual
+SNY_KUM,Sony,sensors,0.61,24,1.07,0.05,0.75,manual
+NID_AYU,Nidec,sensors|assembly,0.58,21,0.96,0.04,0.7,manual
+CTC_SUZ,Catcher Technology,assembly,0.64,20,0.94,0.05,0.71,manual
+SWD_DON,Sunwoda,batteries,0.75,19,0.97,0.08,0.73,manual
+ATL_NDG,ATL,batteries,0.78,18,0.95,0.09,0.76,manual
+DSY_HUI,Desay,batteries,0.62,20,0.93,0.05,0.7,manual
+WIS_BLR,Wistron,assembly,0.56,23,0.92,0.03,0.72,manual
+TAT_HOS,Tata Electronics,assembly|chips,0.52,24,0.91,0.03,0.74,manual
+GRT_WEF,Goertek,sensors,0.66,22,0.97,0.05,0.71,manual
+AAC_SHZ,AAC Technologies,sensors,0.63,21,0.96,0.04,0.7,manual
+FLX_PEN,Flex,assembly|chips,0.59,22,0.95,0.04,0.73,manual
+USI_SHA,USI,chips,0.57,24,0.99,0.04,0.69,manual
