@@ -2,7 +2,10 @@
 import Globe from './components/Globe';
 import TerminalSidebar from './components/TerminalSidebar';
 import CategoryFilter from './components/CategoryFilter';
+import IndustryFilter from './components/IndustryFilter';
+import CompanyFilter from './components/CompanyFilter';
 import DestinationFilter from './components/DestinationFilter';
+import { INDUSTRY_COMPANY_MAP } from './utils/industries';
 import TariffSimulator from './components/TariffSimulator';
 import { useSupplierGraph } from './hooks/useSupplierGraph';
 import {
@@ -28,6 +31,9 @@ export default function App() {
   const [weights, setWeights] = useState(DEFAULT_WEIGHTS);
   const [tariffSim, setTariffSim] = useState(null);
   const [autoRotate, setAutoRotate] = useState(true);
+  // New for company mode
+  const [selectedIndustry, setSelectedIndustry] = useState(Object.keys(INDUSTRY_COMPANY_MAP)[0]);
+  const [selectedCompany, setSelectedCompany] = useState(INDUSTRY_COMPANY_MAP[Object.keys(INDUSTRY_COMPANY_MAP)[0]].companies[0].key);
 
   const graph = useMemo(() => {
     if (mode === 'company' && graphs.company) return graphs.company;
@@ -47,6 +53,11 @@ export default function App() {
     }
     setDisruptedNodeId(null);
     setTariffSim(null);
+    // Reset industry/company on mode switch
+    if (mode === 'company') {
+      setSelectedIndustry(Object.keys(INDUSTRY_COMPANY_MAP)[0]);
+      setSelectedCompany(INDUSTRY_COMPANY_MAP[Object.keys(INDUSTRY_COMPANY_MAP)[0]].companies[0].key);
+    }
   }, [mode, categories]);
 
   const simulatedGraph = useMemo(() => {
@@ -136,7 +147,6 @@ export default function App() {
           </span>
         </div>
         <div className="flex items-center gap-3">
-
           <select
             value={mode}
             onChange={(e) => setMode(e.target.value)}
@@ -146,9 +156,28 @@ export default function App() {
             <option value="company" disabled={!graphs.company}>Company Mode</option>
             <option value="country" disabled={!graphs.country}>Country Mode</option>
           </select>
-
-          <CategoryFilter value={activeCategory} onChange={setActiveCategory} categories={categories} />
-          <DestinationFilter value={destinationMarket} onChange={setDestinationMarket} />
+          {mode === 'company' ? (
+            <>
+              <IndustryFilter
+                value={selectedIndustry}
+                onChange={(ind) => {
+                  setSelectedIndustry(ind);
+                  setSelectedCompany(INDUSTRY_COMPANY_MAP[ind].companies[0].key);
+                }}
+                industries={INDUSTRY_COMPANY_MAP}
+              />
+              <CompanyFilter
+                value={selectedCompany}
+                onChange={setSelectedCompany}
+                companies={INDUSTRY_COMPANY_MAP[selectedIndustry].companies}
+              />
+            </>
+          ) : (
+            <>
+              <CategoryFilter value={activeCategory} onChange={setActiveCategory} categories={categories} />
+              <DestinationFilter value={destinationMarket} onChange={setDestinationMarket} />
+            </>
+          )}
           <TariffSimulator
             onSimulate={setTariffSim}
             onClear={() => setTariffSim(null)}
