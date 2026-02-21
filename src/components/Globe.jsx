@@ -1,6 +1,12 @@
 import React, { useRef, useEffect, useMemo } from 'react';
 import GlobeGL from 'react-globe.gl';
-import { COLORS, RISK_THRESHOLDS } from '../utils/constants';
+import { COLORS, RISK_THRESHOLDS, DESTINATION_MARKETS } from '../utils/constants';
+
+const DESTINATION_COORDS = {
+  USA: { lat: 37.09, lng: -95.71 },
+  EU: { lat: 50.11, lng: 9.68 },
+  JPN: { lat: 36.20, lng: 138.25 },
+};
 
 function riskColor(gdeltEventCount) {
   if (gdeltEventCount > RISK_THRESHOLDS.medium) return COLORS.riskHigh;
@@ -14,6 +20,7 @@ export default function Globe({
   disruptedCountry,
   onNodeClick,
   recommendations,
+  destinationMarket,
 }) {
   const globeRef = useRef();
 
@@ -26,11 +33,22 @@ export default function Globe({
     globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 });
   }, []);
 
-  // Stop auto-rotate when a disruption is active
+  // Fly to disrupted country, or resume auto-rotate on reset
   useEffect(() => {
     if (!globeRef.current) return;
-    globeRef.current.controls().autoRotate = !disruptedCountry;
-  }, [disruptedCountry]);
+    if (disruptedCountry && graph) {
+      const node = graph.nodes.find((n) => n.id === disruptedCountry);
+      if (node) {
+        globeRef.current.controls().autoRotate = false;
+        globeRef.current.pointOfView(
+          { lat: node.lat, lng: node.lng, altitude: 2.0 },
+          800
+        );
+      }
+    } else {
+      globeRef.current.controls().autoRotate = true;
+    }
+  }, [disruptedCountry, graph]);
 
   // Build point data from nodes
   const points = useMemo(() => {
@@ -71,19 +89,20 @@ export default function Globe({
       })
       .filter(Boolean);
 
-    // TODO: Add animated recommended route arcs in electric blue
+    const dest = DESTINATION_COORDS[destinationMarket] || DESTINATION_COORDS.USA;
     const recArcs = (recommendations || []).map((rec) => ({
       startLat: rec.lat,
       startLng: rec.lng,
-      endLat: 37.09, // TODO: Use actual destination coordinates
-      endLng: -95.71,
+      endLat: dest.lat,
+      endLng: dest.lng,
       color: COLORS.arcRecommended,
       stroke: 2.5,
       label: `Recommended: ${rec.country}`,
+      isRecommended: true,
     }));
 
     return [...baseArcs, ...recArcs];
-  }, [graph, activeCategory, disruptedCountry, recommendations]);
+  }, [graph, activeCategory, disruptedCountry, recommendations, destinationMarket]);
 
   if (!graph) return null;
 
@@ -109,9 +128,9 @@ export default function Globe({
       arcEndLng="endLng"
       arcColor="color"
       arcStroke="stroke"
-      arcDashLength={() => undefined}
-      arcDashGap={() => undefined}
-      arcDashAnimateTime={0}
+      arcDashLength={(d) => d.isRecommended ? 0.4 : undefined}
+      arcDashGap={(d) => d.isRecommended ? 0.2 : undefined}
+      arcDashAnimateTime={(d) => d.isRecommended ? 1500 : 0}
       arcLabel="label"
       // Rings on disrupted node
       ringsData={disruptedCountry ? points.filter((p) => p.id === disruptedCountry) : []}

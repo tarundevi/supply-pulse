@@ -3,6 +3,7 @@ import { COLORS } from '../utils/constants';
 import DisruptionSummary from './DisruptionSummary';
 import AlternativeSuppliers from './AlternativeSuppliers';
 import OptimizationSliders from './OptimizationSliders';
+import RecommendedAction from './RecommendedAction';
 import DataSourceBadges from './DataSourceBadges';
 
 export default function TerminalSidebar({
@@ -11,6 +12,8 @@ export default function TerminalSidebar({
   recommendations,
   weights,
   onWeightsChange,
+  graph,
+  tariffSim,
 }) {
   return (
     <div
@@ -22,14 +25,30 @@ export default function TerminalSidebar({
         TERMINAL
       </div>
 
+      {/* Tariff simulation banner */}
+      {tariffSim && (
+        <div
+          className="text-xs px-3 py-2 rounded border"
+          style={{
+            borderColor: COLORS.riskMedium,
+            color: COLORS.riskMedium,
+            background: 'rgba(245, 158, 11, 0.08)',
+          }}
+        >
+          TARIFF SIM: {Math.round(tariffSim.tariffRate * 100)}%{tariffSim.isIncrement ? ' additional' : ''} on{' '}
+          {tariffSim.categories.join(', ')} from {tariffSim.countries.join(', ')}
+        </div>
+      )}
+
       {/* Disruption info — shown when a country is clicked */}
       {disruptedNode ? (
         <>
-          <DisruptionSummary node={disruptedNode} category={activeCategory} />
+          <DisruptionSummary node={disruptedNode} category={activeCategory} graph={graph} />
           <AlternativeSuppliers
             recommendations={recommendations}
             category={activeCategory}
           />
+          <RecommendedAction recommendations={recommendations} />
         </>
       ) : (
         <div className="text-xs" style={{ color: COLORS.textMuted }}>
