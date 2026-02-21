@@ -134,13 +134,6 @@ export default function App() {
           <span className="text-base font-bold tracking-wide" style={{ color: COLORS.electricBlue }}>
             SourceShift
           </span>
-          <button
-            onClick={() => setAutoRotate((r) => !r)}
-            className="text-xs font-mono px-2 py-1 rounded border cursor-pointer w-fit"
-            style={{ background: COLORS.panelBg, borderColor: COLORS.separator, color: COLORS.textPrimary }}
-          >
-            {autoRotate ? 'Pause Globe Rotation' : 'Resume Globe Rotation'}
-          </button>
         </div>
         <div className="flex items-center gap-3">
 
@@ -180,8 +173,21 @@ export default function App() {
         </div>
       )}
 
-      <div className="flex-1 relative overflow-hidden">
-        <div className="absolute inset-0">
+      <div className="flex-1 flex flex-row overflow-hidden">
+        <div className="flex-1 min-w-0 bg-black relative">
+          {/* Floating Pause Button */}
+          <div
+            style={{ position: 'absolute', top: 20, left: 20, zIndex: 20 }}
+            className="pointer-events-auto"
+          >
+            <button
+              onClick={() => setAutoRotate((r) => !r)}
+              className="text-xs font-mono px-3 py-2 rounded border shadow-lg bg-slate-900/90 hover:bg-slate-800 transition-colors cursor-pointer"
+              style={{ borderColor: COLORS.separator, color: COLORS.textPrimary }}
+            >
+              {autoRotate ? 'Pause Globe Rotation' : 'Resume Globe Rotation'}
+            </button>
+          </div>
           <Globe
             graph={simulatedGraph}
             activeCategory={activeCategory}
@@ -193,21 +199,18 @@ export default function App() {
             autoRotate={autoRotate}
           />
         </div>
-
-        <div className="absolute top-0 right-0 bottom-0 pointer-events-none flex flex-col z-10 text-right">
-          <TerminalSidebar
-            disruptedNode={disruptedNode}
-            activeCategory={activeCategory}
-            recommendations={recommendations}
-            weights={weights}
-            onWeightsChange={setWeights}
-            graph={simulatedGraph}
-            tariffSim={tariffSim}
-            tariffAffectedNodes={tariffAffectedNodes}
-            scenarioMode={scenarioMode}
-            mode={mode}
-          />
-        </div>
+        <TerminalSidebar
+          disruptedNode={disruptedNode}
+          activeCategory={activeCategory}
+          recommendations={recommendations}
+          weights={weights}
+          onWeightsChange={setWeights}
+          graph={simulatedGraph}
+          tariffSim={tariffSim}
+          tariffAffectedNodes={tariffAffectedNodes}
+          scenarioMode={scenarioMode}
+          mode={mode}
+        />
       </div>
     </div>
   );

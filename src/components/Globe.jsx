@@ -133,41 +133,45 @@ export default function Globe({
   if (!graph) return null;
 
   return (
-    <GlobeGL
-      ref={globeRef}
-      globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-      backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
-      pointsData={points}
-      pointLat="lat"
-      pointLng="lng"
-      pointAltitude={0.01}
-      pointRadius={(d) => d.size * 1.45}
-      pointColor="color"
-      pointLabel={(d) =>
-        d.isDestination ? `${d.name}` : `${d.name} (${d.country_iso3})<br/>${d.parent_company_id || 'Supplier'}`
-      }
-      onPointClick={(point) => (point.isDestination ? null : onNodeClick(point.id))}
-      onGlobeClick={() => onNodeClick(null)}
-      arcsData={arcs}
-      arcStartLat="startLat"
-      arcStartLng="startLng"
-      arcEndLat="endLat"
-      arcEndLng="endLng"
-      arcColor="color"
-      arcStroke="stroke"
-      arcDashLength={(d) => (d.isRecommended ? 0.4 : undefined)}
-      arcDashGap={(d) => (d.isRecommended ? 0.2 : undefined)}
-      arcDashAnimateTime={(d) => (d.isRecommended ? 1500 : 0)}
-      arcLabel="label"
-      ringsData={disruptedNodeId ? points.filter((p) => p.id === disruptedNodeId) : []}
-      ringLat="lat"
-      ringLng="lng"
-      ringColor="ringColor"
-      ringMaxRadius={4}
-      ringPropagationSpeed={2}
-      ringRepeatPeriod={800}
-      atmosphereColor="#4da6ff"
-      atmosphereAltitude={0.2}
-    />
+    <div style={{ width: '100%', height: '100%' }}>
+      <GlobeGL
+        ref={globeRef}
+        globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
+        backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
+        pointsData={points}
+        pointLat="lat"
+        pointLng="lng"
+        pointAltitude={0.01}
+        pointRadius={(d) => d.size * 1.45}
+        pointColor="color"
+        pointLabel={(d) =>
+          d.isDestination ? `${d.name}` : `${d.name} (${d.country_iso3})<br/>${d.parent_company_id || 'Supplier'}`
+        }
+        onPointClick={(point) => (point.isDestination ? null : onNodeClick(point.id))}
+        onGlobeClick={() => onNodeClick(null)}
+        arcsData={arcs}
+        arcStartLat="startLat"
+        arcStartLng="startLng"
+        arcEndLat="endLat"
+        arcEndLng="endLng"
+        arcColor="color"
+        arcStroke="stroke"
+        arcDashLength={(d) => (d.isRecommended ? 0.4 : undefined)}
+        arcDashGap={(d) => (d.isRecommended ? 0.2 : undefined)}
+        arcDashAnimateTime={(d) => (d.isRecommended ? 1500 : 0)}
+        arcLabel="label"
+        ringsData={disruptedNodeId ? points.filter((p) => p.id === disruptedNodeId) : []}
+        ringLat="lat"
+        ringLng="lng"
+        ringColor="ringColor"
+        ringMaxRadius={4}
+        ringPropagationSpeed={2}
+        ringRepeatPeriod={800}
+        atmosphereColor="#4da6ff"
+        atmosphereAltitude={0.2}
+        width={"100%"}
+        height={"100%"}
+      />
+    </div>
   );
 }
