@@ -43,6 +43,7 @@ export default function TerminalSidebar({
       {disruptedNode ? (
         <>
           <DisruptionSummary node={disruptedNode} category={activeCategory} graph={graph} mode={mode} />
+          <ConsumerImpact impact={consumerImpact} />
           <AlternativeSuppliers
             recommendations={recommendations}
             category={activeCategory}
@@ -50,14 +51,13 @@ export default function TerminalSidebar({
             mode={mode}
           />
           <RecommendedAction recommendations={recommendations} scenarioMode={scenarioMode} />
-          <ConsumerImpact impact={consumerImpact} />
         </>
       ) : tariffSim && tariffAffectedNodes.length > 0 ? (
         <>
           <TariffImpactSummary affectedNodes={tariffAffectedNodes} category={activeCategory} tariffSim={tariffSim} mode={mode} />
+          <ConsumerImpact impact={consumerImpact} />
           <AlternativeSuppliers recommendations={recommendations} category={activeCategory} isTariffScenario={true} mode={mode} />
           <RecommendedAction recommendations={recommendations} scenarioMode={scenarioMode} />
-          <ConsumerImpact impact={consumerImpact} />
         </>
       ) : (
         <div className="text-xs" style={{ color: COLORS.textMuted }}>

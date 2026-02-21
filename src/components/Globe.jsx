@@ -82,7 +82,9 @@ export default function Globe({
         const isDisrupted = node.id === disruptedNodeId;
         return {
           ...node,
-          size: Math.max(0.28, Math.log10(vol + 1) * 0.23),
+          size: mode === 'country'
+            ? Math.max(0.1, Math.log10(vol + 1) * 0.08)
+            : Math.max(0.28, Math.log10(vol + 1) * 0.23),
           color: isDisrupted ? COLORS.arcDisrupted : riskColor(node.risk_event_count || 0),
           ringColor: isDisrupted ? COLORS.arcDisrupted : riskColor(node.risk_event_count || 0),
           isDestination: false,
@@ -119,7 +121,7 @@ export default function Globe({
         // Make country mode arcs thinner, matching company mode style
         let strokeWidth = Math.max(0.45, Math.log10((edge.baseline_volume || 0) + 1) * 0.75);
         if (mode === 'country') {
-          strokeWidth = Math.max(0.25, Math.log10((edge.baseline_volume || 0) + 1) * 0.35);
+          strokeWidth = Math.max(0.12, Math.log10((edge.baseline_volume || 0) + 1) * 0.18);
         }
         return {
           startLat: src.lat,
