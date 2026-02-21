@@ -7,7 +7,7 @@ function riskBar(gdeltScore) {
   return '█'.repeat(filled) + '░'.repeat(10 - filled);
 }
 
-export default function AlternativeSuppliers({ recommendations, category }) {
+export default function AlternativeSuppliers({ recommendations, category, isTariffScenario = false }) {
   if (!recommendations || recommendations.length === 0) return null;
 
   const categoryLabel = COMMODITY_CATEGORIES[category]?.label || category;
@@ -50,14 +50,20 @@ export default function AlternativeSuppliers({ recommendations, category }) {
             </span>
           </div>
           <div className="flex justify-between">
-            <span style={{ color: COLORS.textMuted }}>Est. Cost Delta:</span>
+            <span style={{ color: COLORS.textMuted }}>
+              {isTariffScenario ? 'Est. Cost Savings:' : 'Est. Cost Delta:'}
+            </span>
             <span
               style={{
-                color: rec.costDelta > 0 ? COLORS.riskMedium : COLORS.riskLow,
+                color: isTariffScenario 
+                  ? (rec.costSavings > 0 ? COLORS.riskLow : COLORS.riskMedium)
+                  : (rec.costDelta > 0 ? COLORS.riskMedium : COLORS.riskLow),
               }}
             >
-              {rec.costDelta >= 0 ? '+' : ''}
-              {(rec.costDelta * 100).toFixed(1)}%
+              {isTariffScenario 
+                ? (rec.costSavings >= 0 ? '+' : '') + (rec.costSavings * 100).toFixed(1) + '%'
+                : (rec.costDelta >= 0 ? '+' : '') + (rec.costDelta * 100).toFixed(1) + '%'
+              }
             </span>
           </div>
           <div className="flex justify-between">
@@ -76,8 +82,10 @@ export default function AlternativeSuppliers({ recommendations, category }) {
         if (totalCoverage < 1) {
           return (
             <div className="text-xs p-2 rounded" style={{ background: 'rgba(239,68,68,0.1)', color: COLORS.riskMedium }}>
-              Gap: {formatPercent(1 - totalCoverage)} of disrupted volume cannot
-              be covered by top alternatives — split sourcing required.
+              {isTariffScenario 
+                ? `Gap: ${formatPercent(1 - totalCoverage)} of affected volume could shift to alternatives — consider split sourcing.`
+                : `Gap: ${formatPercent(1 - totalCoverage)} of disrupted volume cannot be covered by top alternatives — split sourcing required.`
+              }
             </div>
           );
         }
