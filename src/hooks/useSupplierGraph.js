@@ -74,21 +74,23 @@ function toCompanyLikeFromCountry(legacyGraph) {
   };
 }
 
-export function useSupplierGraph() {
-  const [graphs, setGraphs] = useState({ company: null, country: null });
+export function useSupplierGraph(selectedCompany) {
+  const [graphs, setGraphs] = useState({ company: null, country: null, nvidia: null });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     async function loadGraphs() {
       try {
-        const [companyRes, countryRes] = await Promise.all([
+        const [companyRes, countryRes, nvidiaRes] = await Promise.all([
           fetch('/data/company_graph.json').catch(() => null),
           fetch('/data/supplier_graph.json').catch(() => null),
+          fetch('/data/nvidia_supply_chain.json').catch(() => null),
         ]);
 
         let companyGraph = null;
         let countryGraph = null;
+        let nvidiaGraph = null;
         let warning = null;
 
         if (companyRes && companyRes.ok) {
@@ -102,11 +104,15 @@ export function useSupplierGraph() {
           countryGraph = toCompanyLikeFromCountry(rawCountry);
         }
 
-        if (!companyGraph && !countryGraph) {
+        if (nvidiaRes && nvidiaRes.ok) {
+          nvidiaGraph = await nvidiaRes.json();
+        }
+
+        if (!companyGraph && !countryGraph && !nvidiaGraph) {
           throw new Error('No graph data found. Expected /data/company_graph.json or /data/supplier_graph.json');
         }
 
-        setGraphs({ company: companyGraph, country: countryGraph });
+        setGraphs({ company: companyGraph, country: countryGraph, nvidia: nvidiaGraph });
         if (warning) setError(warning);
       } catch (err) {
         setError(err.message);

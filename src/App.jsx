@@ -37,10 +37,11 @@ export default function App() {
   const [selectedCompany, setSelectedCompany] = useState(INDUSTRY_COMPANY_MAP[Object.keys(INDUSTRY_COMPANY_MAP)[0]].companies[0].key);
 
   const graph = useMemo(() => {
+    if (mode === 'company' && selectedCompany === 'nvidia' && graphs.nvidia) return graphs.nvidia;
     if (mode === 'company' && graphs.company) return graphs.company;
     if (mode === 'country' && graphs.country) return graphs.country;
-    return graphs.company || graphs.country || null;
-  }, [mode, graphs]);
+    return graphs.company || graphs.country || graphs.nvidia || null;
+  }, [mode, selectedCompany, graphs]);
 
   const categories = useMemo(() => MODE_CATEGORY_MAP[mode], [mode]);
   const parserConfig = useMemo(() => PARSER_CONFIG_BY_MODE[mode], [mode]);

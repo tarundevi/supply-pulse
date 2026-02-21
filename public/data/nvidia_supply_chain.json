@@ -1,0 +1,384 @@
+{
+  "nodes": [
+    {
+      "id": "NVDA_SC",
+      "name": "NVIDIA Santa Clara HQ",
+      "entity_type": "anchor_company",
+      "parent_company_id": "NVIDIA",
+      "lat": 37.3688,
+      "lng": -121.9738,
+      "country_iso3": "USA",
+      "country": "USA",
+      "categories": ["semiconductors", "ai_chips", "graphics_cards"],
+      "capacity_index": 1.0,
+      "lead_time_days": 0,
+      "unit_cost_index": 1.0,
+      "tariff_rate_by_category": {},
+      "risk_score": 0.1,
+      "risk_event_count": 0,
+      "concentration_share": 0,
+      "confidence": 0.95,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {}
+    },
+    {
+      "id": "NVDA_TW_MFG",
+      "name": "NVIDIA Taiwan Manufacturing (TSMC)",
+      "entity_type": "facility",
+      "parent_company_id": "NVIDIA",
+      "lat": 24.1504,
+      "lng": 120.6674,
+      "country_iso3": "TWN",
+      "country": "Taiwan",
+      "categories": ["semiconductors", "ai_chips", "graphics_cards"],
+      "capacity_index": 0.95,
+      "lead_time_days": 18,
+      "unit_cost_index": 0.92,
+      "tariff_rate_by_category": {
+        "semiconductors": 0.05,
+        "ai_chips": 0.05,
+        "graphics_cards": 0.08
+      },
+      "risk_score": 6.5,
+      "risk_event_count": 45,
+      "concentration_share": 0.65,
+      "confidence": 0.88,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "semiconductors": 180.0,
+        "ai_chips": 150.0,
+        "graphics_cards": 95.0
+      }
+    },
+    {
+      "id": "NVDA_KR_MEMORY",
+      "name": "NVIDIA Korea Memory (HBM)",
+      "entity_type": "facility",
+      "parent_company_id": "NVIDIA",
+      "lat": 37.3695,
+      "lng": 127.4063,
+      "country_iso3": "KOR",
+      "country": "South Korea",
+      "categories": ["memory", "hbm", "ai_chips"],
+      "capacity_index": 0.88,
+      "lead_time_days": 15,
+      "unit_cost_index": 0.95,
+      "tariff_rate_by_category": {
+        "memory": 0.04,
+        "hbm": 0.06,
+        "ai_chips": 0.05
+      },
+      "risk_score": 2.5,
+      "risk_event_count": 12,
+      "concentration_share": 0.28,
+      "confidence": 0.85,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "memory": 85.0,
+        "hbm": 72.0,
+        "ai_chips": 45.0
+      }
+    },
+    {
+      "id": "NVDA_VN_ASSEMBLY",
+      "name": "NVIDIA Vietnam Assembly",
+      "entity_type": "facility",
+      "parent_company_id": "NVIDIA",
+      "lat": 10.8231,
+      "lng": 106.6297,
+      "country_iso3": "VNM",
+      "country": "Vietnam",
+      "categories": ["graphics_cards", "ai_chips", "packaging"],
+      "capacity_index": 0.72,
+      "lead_time_days": 22,
+      "unit_cost_index": 0.78,
+      "tariff_rate_by_category": {
+        "graphics_cards": 0.03,
+        "ai_chips": 0.04,
+        "packaging": 0.02
+      },
+      "risk_score": 3.2,
+      "risk_event_count": 18,
+      "concentration_share": 0.15,
+      "confidence": 0.75,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "graphics_cards": 65.0,
+        "ai_chips": 38.0,
+        "packaging": 55.0
+      }
+    },
+    {
+      "id": "NVDA_DE_AUTO",
+      "name": "NVIDIA Germany Automotive AI",
+      "entity_type": "facility",
+      "parent_company_id": "NVIDIA",
+      "lat": 48.1372,
+      "lng": 11.5756,
+      "country_iso3": "DEU",
+      "country": "Germany",
+      "categories": ["ai_chips", "automotive"],
+      "capacity_index": 0.68,
+      "lead_time_days": 20,
+      "unit_cost_index": 1.08,
+      "tariff_rate_by_category": {
+        "ai_chips": 0.04,
+        "automotive": 0.06
+      },
+      "risk_score": 1.8,
+      "risk_event_count": 8,
+      "concentration_share": 0.12,
+      "confidence": 0.82,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "ai_chips": 28.0,
+        "automotive": 35.0
+      }
+    },
+    {
+      "id": "NVDA_JP_SUBSTRATE",
+      "name": "NVIDIA Japan Substrate",
+      "entity_type": "facility",
+      "parent_company_id": "NVIDIA",
+      "lat": 34.6937,
+      "lng": 135.5023,
+      "country_iso3": "JPN",
+      "country": "Japan",
+      "categories": ["substrate", "materials"],
+      "capacity_index": 0.82,
+      "lead_time_days": 12,
+      "unit_cost_index": 1.05,
+      "tariff_rate_by_category": {
+        "substrate": 0.03,
+        "materials": 0.02
+      },
+      "risk_score": 1.2,
+      "risk_event_count": 5,
+      "concentration_share": 0.18,
+      "confidence": 0.80,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "substrate": 48.0,
+        "materials": 42.0
+      }
+    },
+    {
+      "id": "NVDA_USA",
+      "name": "NVIDIA USA Distribution",
+      "entity_type": "facility",
+      "parent_company_id": "NVIDIA",
+      "lat": 37.3349,
+      "lng": -122.0090,
+      "country_iso3": "USA",
+      "country": "USA",
+      "categories": ["semiconductors", "ai_chips", "graphics_cards"],
+      "capacity_index": 1.0,
+      "lead_time_days": 5,
+      "unit_cost_index": 1.15,
+      "tariff_rate_by_category": {},
+      "risk_score": 0.5,
+      "risk_event_count": 2,
+      "concentration_share": 0,
+      "confidence": 0.92,
+      "sources": {
+        "source_type": "manual",
+        "facility": "manual",
+        "risk": "manual"
+      },
+      "baseline_volume_by_category": {
+        "semiconductors": 55.0,
+        "ai_chips": 48.0,
+        "graphics_cards": 42.0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source_id": "NVDA_TW_MFG",
+      "target_id": "NVDA_SC",
+      "category": "semiconductors",
+      "relationship_type": "supplies",
+      "baseline_volume": 180.0,
+      "baseline_share": 0.65,
+      "effective_cost_index": 0.95,
+      "lead_time_days": 18,
+      "targetLat": 37.3688,
+      "targetLng": -121.9738,
+      "target_market": "USA"
+    },
+    {
+      "source_id": "NVDA_TW_MFG",
+      "target_id": "NVDA_SC",
+      "category": "ai_chips",
+      "relationship_type": "supplies",
+      "baseline_volume": 150.0,
+      "baseline_share": 0.60,
+      "effective_cost_index": 0.94,
+      "lead_time_days": 18,
+      "targetLat": 37.3688,
+      "targetLng": -121.9738,
+      "target_market": "USA"
+    },
+    {
+      "source_id": "NVDA_KR_MEMORY",
+      "target_id": "NVDA_SC",
+      "category": "hbm",
+      "relationship_type": "supplies",
+      "baseline_volume": 72.0,
+      "baseline_share": 0.55,
+      "effective_cost_index": 0.96,
+      "lead_time_days": 15,
+      "targetLat": 37.3688,
+      "targetLng": -121.9738,
+      "target_market": "USA"
+    },
+    {
+      "source_id": "NVDA_VN_ASSEMBLY",
+      "target_id": "NVDA_SC",
+      "category": "graphics_cards",
+      "relationship_type": "supplies",
+      "baseline_volume": 65.0,
+      "baseline_share": 0.45,
+      "effective_cost_index": 0.82,
+      "lead_time_days": 22,
+      "targetLat": 37.3688,
+      "targetLng": -121.9738,
+      "target_market": "USA"
+    },
+    {
+      "source_id": "NVDA_DE_AUTO",
+      "target_id": "NVDA_SC",
+      "category": "automotive",
+      "relationship_type": "supplies",
+      "baseline_volume": 35.0,
+      "baseline_share": 0.30,
+      "effective_cost_index": 1.10,
+      "lead_time_days": 20,
+      "targetLat": 37.3688,
+      "targetLng": -121.9738,
+      "target_market": "USA"
+    },
+    {
+      "source_id": "NVDA_JP_SUBSTRATE",
+      "target_id": "NVDA_TW_MFG",
+      "category": "substrate",
+      "relationship_type": "supplies",
+      "baseline_volume": 48.0,
+      "baseline_share": 0.70,
+      "effective_cost_index": 1.07,
+      "lead_time_days": 12,
+      "targetLat": 24.1504,
+      "targetLng": 120.6674,
+      "target_market": "Taiwan"
+    },
+    {
+      "source_id": "NVDA_JP_SUBSTRATE",
+      "target_id": "NVDA_KR_MEMORY",
+      "category": "materials",
+      "relationship_type": "supplies",
+      "baseline_volume": 42.0,
+      "baseline_share": 0.50,
+      "effective_cost_index": 1.06,
+      "lead_time_days": 12,
+      "targetLat": 37.3695,
+      "targetLng": 127.4063,
+      "target_market": "South Korea"
+    },
+    {
+      "source_id": "NVDA_TW_MFG",
+      "target_id": "NVDA_VN_ASSEMBLY",
+      "category": "semiconductors",
+      "relationship_type": "supplies",
+      "baseline_volume": 55.0,
+      "baseline_share": 0.40,
+      "effective_cost_index": 0.93,
+      "lead_time_days": 10,
+      "targetLat": 10.8231,
+      "targetLng": 106.6297,
+      "target_market": "Vietnam"
+    },
+    {
+      "source_id": "NVDA_TW_MFG",
+      "target_id": "NVDA_DE_AUTO",
+      "category": "ai_chips",
+      "relationship_type": "supplies",
+      "baseline_volume": 28.0,
+      "baseline_share": 0.35,
+      "effective_cost_index": 0.98,
+      "lead_time_days": 14,
+      "targetLat": 48.1372,
+      "targetLng": 11.5756,
+      "target_market": "Germany"
+    },
+    {
+      "source_id": "NVDA_USA",
+      "target_id": "NVDA_SC",
+      "category": "semiconductors",
+      "relationship_type": "supplies",
+      "baseline_volume": 55.0,
+      "baseline_share": 0.35,
+      "effective_cost_index": 1.15,
+      "lead_time_days": 5,
+      "targetLat": 37.3688,
+      "targetLng": -121.9738,
+      "target_market": "USA"
+    },
+    {
+      "source_id": "NVDA_KR_MEMORY",
+      "target_id": "NVDA_VN_ASSEMBLY",
+      "category": "memory",
+      "relationship_type": "supplies",
+      "baseline_volume": 32.0,
+      "baseline_share": 0.28,
+      "effective_cost_index": 0.97,
+      "lead_time_days": 8,
+      "targetLat": 10.8231,
+      "targetLng": 106.6297,
+      "target_market": "Vietnam"
+    },
+    {
+      "source_id": "NVDA_TW_MFG",
+      "target_id": "NVDA_USA",
+      "category": "graphics_cards",
+      "relationship_type": "supplies",
+      "baseline_volume": 42.0,
+      "baseline_share": 0.38,
+      "effective_cost_index": 0.94,
+      "lead_time_days": 16,
+      "targetLat": 37.3349,
+      "targetLng": -122.0090,
+      "target_market": "USA"
+    }
+  ],
+  "metadata": {
+    "mode": "company",
+    "anchor_company": "NVIDIA",
+    "build_version": "nvidia-v1",
+    "assumption_notes": "NVIDIA-specific supply chain with manufacturing facilities as green nodes",
+    "company_key": "nvidia"
+  }
+}

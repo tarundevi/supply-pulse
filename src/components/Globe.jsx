@@ -26,6 +26,8 @@ function rotationSpeedFromAltitude(altitude) {
   return 0.008 + t * 0.045;
 }
 
+const NVIDIA_GREEN = '#22c55e';
+
 export default function Globe({
   graph,
   activeCategory,
@@ -35,6 +37,7 @@ export default function Globe({
   destinationMarket,
   mode = 'company',
   autoRotate = true,
+  selectedCompany = null,
 }) {
   const globeRef = useRef();
   const containerRef = useRef();
@@ -75,49 +78,77 @@ export default function Globe({
   const points = useMemo(() => {
     if (!graph) return [];
 
-    const supplierPoints = graph.nodes
-      .filter((n) => n.entity_type !== 'anchor_company')
-      .map((node) => {
-        const vol = node.baseline_volume_by_category?.[activeCategory] || 0;
-        const isDisrupted = node.id === disruptedNodeId;
-        return {
-          ...node,
-          size: mode === 'country'
-            ? Math.max(0.1, Math.log10(vol + 1) * 0.08)
+    const isNvidia = selectedCompany === 'nvidia';
+    const nvidiaNodes = isNvidia
+      ? graph.nodes.filter((n) => n.parent_company_id === 'NVIDIA' && n.entity_type !== 'anchor_company')
+      : [];
+
+    const nodesToRender = isNvidia
+      ? nvidiaNodes
+      : graph.nodes.filter((n) => n.entity_type !== 'anchor_company');
+
+    const supplierPoints = nodesToRender.map((node) => {
+      const vol = node.baseline_volume_by_category?.[activeCategory] || 0;
+      const isDisrupted = node.id === disruptedNodeId;
+      const isNvidiaFacility = isNvidia && node.parent_company_id === 'NVIDIA';
+      return {
+        ...node,
+        size: mode === 'country'
+          ? Math.max(0.1, Math.log10(vol + 1) * 0.08)
+          : isNvidiaFacility
+            ? Math.max(0.35, Math.log10(vol + 1) * 0.28)
             : Math.max(0.28, Math.log10(vol + 1) * 0.23),
-          color: isDisrupted ? COLORS.arcDisrupted : riskColor(node.risk_event_count || 0),
-          ringColor: isDisrupted ? COLORS.arcDisrupted : riskColor(node.risk_event_count || 0),
-          isDestination: false,
-        };
-      });
+        color: isDisrupted
+          ? COLORS.arcDisrupted
+          : isNvidiaFacility
+            ? NVIDIA_GREEN
+            : riskColor(node.risk_event_count || 0),
+        ringColor: isDisrupted ? COLORS.arcDisrupted : isNvidiaFacility ? NVIDIA_GREEN : riskColor(node.risk_event_count || 0),
+        isDestination: false,
+        isNvidiaFacility: isNvidiaFacility,
+      };
+    });
 
     const dest = DESTINATION_COORDS[destinationMarket] || DESTINATION_COORDS.USA;
-    return [
-      ...supplierPoints,
-      {
-        id: destinationMarket,
-        name: dest.label,
-        country_iso3: destinationMarket,
-        lat: dest.lat,
-        lng: dest.lng,
-        size: 0.82,
-        color: COLORS.electricBlue,
-        ringColor: COLORS.electricBlue,
-        isDestination: true,
-      },
-    ];
-  }, [graph, activeCategory, disruptedNodeId, destinationMarket]);
+    const destPoint = {
+      id: destinationMarket,
+      name: dest.label,
+      country_iso3: destinationMarket,
+      lat: dest.lat,
+      lng: dest.lng,
+      size: 0.82,
+      color: COLORS.electricBlue,
+      ringColor: COLORS.electricBlue,
+      isDestination: true,
+    };
+
+    return isNvidia
+      ? [...supplierPoints]
+      : [...supplierPoints, destPoint];
+  }, [graph, activeCategory, disruptedNodeId, destinationMarket, selectedCompany, mode]);
 
   const arcs = useMemo(() => {
     if (!graph) return [];
 
+    const isNvidia = selectedCompany === 'nvidia';
     const nodeById = new Map((graph.nodes || []).map((n) => [n.id, n]));
-    const baseArcs = (graph.edges || [])
+    
+    let filteredEdges = graph.edges || [];
+    if (isNvidia) {
+      filteredEdges = filteredEdges.filter((e) => {
+        const src = nodeById.get(e.source_id);
+        const target = nodeById.get(e.target_id);
+        return src?.parent_company_id === 'NVIDIA' || target?.parent_company_id === 'NVIDIA';
+      });
+    }
+
+    const baseArcs = filteredEdges
       .filter((e) => e.category === activeCategory)
       .map((edge) => {
         const src = nodeById.get(edge.source_id);
         if (!src) return null;
         const isDisrupted = edge.source_id === disruptedNodeId;
+        const isNvidiaArc = isNvidia && (src.parent_company_id === 'NVIDIA' || nodeById.get(edge.target_id)?.parent_company_id === 'NVIDIA');
         // Make country mode arcs thinner, matching company mode style
         let strokeWidth = Math.max(0.45, Math.log10((edge.baseline_volume || 0) + 1) * 0.75);
         if (mode === 'country') {
@@ -128,15 +159,22 @@ export default function Globe({
           startLng: src.lng,
           endLat: edge.targetLat,
           endLng: edge.targetLng,
-          color: isDisrupted ? 'rgba(239,68,68,0.25)' : COLORS.arcDefault,
+          color: isDisrupted
+            ? 'rgba(239,68,68,0.25)'
+            : isNvidiaArc
+              ? 'rgba(34,197,94,0.6)'
+              : COLORS.arcDefault,
           stroke: strokeWidth,
-          label: `${src.name} -> ${edge.target_market || edge.target_id}`,
+          label: isNvidiaArc
+            ? `${edge.category}: ${src.name} -> ${edge.target_market || edge.target_id}`
+            : `${src.name} -> ${edge.target_market || edge.target_id}`,
+          isNvidiaArc: isNvidiaArc,
         };
       })
       .filter(Boolean);
 
     const dest = DESTINATION_COORDS[destinationMarket] || DESTINATION_COORDS.USA;
-    const recArcs = (recommendations || []).map((rec) => ({
+    const recArcs = !isNvidia && (recommendations || []).map((rec) => ({
       startLat: rec.lat,
       startLng: rec.lng,
       endLat: dest.lat,
@@ -147,8 +185,21 @@ export default function Globe({
       isRecommended: true,
     }));
 
-    return [...baseArcs, ...recArcs];
-  }, [graph, activeCategory, disruptedNodeId, recommendations, destinationMarket]);
+    return isNvidia
+      ? baseArcs
+      : [...baseArcs, ...(recArcs || [])];
+  }, [graph, activeCategory, disruptedNodeId, recommendations, destinationMarket, selectedCompany, mode]);
+
+  const nvidiaLabel = useMemo(() => {
+    if (selectedCompany !== 'nvidia') return null;
+    const nvidiaNode = points.find(p => p.id === 'NVDA_SC');
+    if (!nvidiaNode) return null;
+    return {
+      lat: nvidiaNode.lat,
+      lng: nvidiaNode.lng,
+      text: 'NVIDIA HQ',
+    };
+  }, [points, selectedCompany]);
 
   if (!graph) return null;
 
@@ -165,7 +216,11 @@ export default function Globe({
         pointRadius={(d) => d.size * 1.45}
         pointColor="color"
         pointLabel={(d) =>
-          d.isDestination ? `${d.name}` : `${d.name} (${d.country_iso3})<br/>${d.parent_company_id || 'Supplier'}`
+          d.isDestination
+            ? `${d.name}`
+            : d.isNvidiaFacility
+              ? `<b>${d.name}</b><br/>${d.country_iso3}<br/>NVIDIA Manufacturing Facility`
+              : `${d.name} (${d.country_iso3})<br/>${d.parent_company_id || 'Supplier'}`
         }
         onPointClick={(point) => (point.isDestination ? null : onNodeClick(point.id))}
         onGlobeClick={() => onNodeClick(null)}
