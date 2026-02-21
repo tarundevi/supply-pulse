@@ -32,14 +32,14 @@
 | Framer Motion | `npm install framer-motion` | Panel slide-in animations, node pulse effects — one line of code |
 | Lucide React | `npm install lucide-react` | Icons — already included with shadcn |
 
-### 3D Visualization
+### Map Visualization
 | Tool | Install | Why |
 |------|---------|-----|
-| react-force-graph | `npm install react-force-graph` | 3D force-directed graph — nodes + edges in 3D space, Three.js under the hood but you never touch Three.js directly. Give it JSON, it handles everything. |
-| three | `npm install three` | Peer dependency of react-force-graph — install it but don't import it directly |
+| Mapbox GL JS | `npm install mapbox-gl react-map-gl` | Interactive 2D/3D globe with real geographic coordinates, built-in shipping route rendering via LineString layers, company markers with hover states. Professional cartography out of the box. |
+| @types/mapbox-gl | `npm install -D @types/mapbox-gl` | TypeScript definitions for Mapbox |
 
-> **Why react-force-graph instead of raw Three.js:**
-> Raw Three.js globe = 3-4 days of work getting coordinates right. react-force-graph = paste a JSON of nodes and edges, it renders a beautiful 3D network in 30 minutes. You still get the 3D visual wow. You don't get the debugging hell.
+> **Why Mapbox instead of raw Three.js:**
+> Mapbox handles all the cartography — projections, zoom levels, panning, and geographic coordinate systems work out of the box. Rendering shipping lanes is one GeoJSON layer. Company HQ pins are markers. You get a production-ready map in 30 minutes without touching WebGL math.
 
 ### Charts
 | Tool | Install | Why |
@@ -173,7 +173,7 @@ This is the most important section. Your entire product is only as good as this 
 ---
 
 ### Dataset 2: Shipping Lane GeoJSON
-**What it is:** Geographic coordinates of major shipping routes for the 3D visualization.
+**What it is:** Geographic coordinates of major shipping routes for the map visualization.
 **Where to get it:** Two options:
 
 **Option A (fastest — 30 min):** Ask Claude to generate it.
@@ -504,7 +504,7 @@ supplypulse/
 │   │   └── actions/
 │   │       └── simulate.ts            # Server action calling FastAPI
 │   ├── components/
-│   │   ├── ConstellationGraph.tsx     # react-force-graph 3D visualization
+│   │   ├── MapView.tsx                 # Mapbox GL interactive map visualization
 │   │   ├── ShockSelector.tsx          # Dropdown + severity slider + days input
 │   │   ├── ResultsPanel.tsx           # Right panel with all output numbers
 │   │   ├── MonteCarloChart.tsx        # Recharts histogram of 500 samples
@@ -545,7 +545,8 @@ supplypulse/
 # 1. Create the project
 npx create-next-app@latest supplypulse/frontend --typescript --tailwind --app
 cd supplypulse/frontend
-npm install react-force-graph three recharts zustand framer-motion
+npm install mapbox-gl react-map-gl recharts zustand framer-motion
+npm install -D @types/mapbox-gl
 npx shadcn@latest init
 npx shadcn@latest add card select slider badge table button
 
@@ -615,28 +616,34 @@ Write a complete FastAPI main.py for SupplyPulse with:
 - Full Pydantic models for all request/response types
 ```
 
-### Prompt 3 — ConstellationGraph component
+### Prompt 3 — MapView component
 ```
-Write a React TypeScript component ConstellationGraph.tsx using react-force-graph (import ForceGraph3D from 'react-force-graph').
+Write a React TypeScript component MapView.tsx using react-map-gl and mapbox-gl.
 
 Props:
 - companies: Company[] (each has ticker, name, hq_lat, hq_lng, route_dependencies)
 - activeShock: Scenario | null
 - simulationResults: Record<string, SimulationResult> (keyed by ticker)
 - onCompanyClick: (ticker: string) => void
+- lanesGeoJSON: GeoJSON FeatureCollection with shipping lane LineStrings
 
 Behavior:
-- Render each company as a node. Node color: green (#00ff88) by default, 
-  orange if RaR > $500M in results, red if RaR > $1B
-- Node size scales with the company's annual_revenue_B
-- Draw edges between companies that share affected routes in the active shock
-- Node label shows ticker symbol
-- On click: call onCompanyClick with the ticker
-- Nodes pulse with a slow animation using nodeThreeObject with a glowing sphere material
-- Background color: #0a0a1a (dark space)
-- Use width={window.innerWidth * 0.6} height={window.innerHeight}
+- Initialize Mapbox with mapboxAccessToken from env var NEXT_PUBLIC_MAPBOX_TOKEN
+- Use mapStyle: "mapbox://styles/mapbox/dark-v11" for dark theme
+- Initial view state: center on Pacific Ocean (lng: 150, lat: 20), zoom: 2
+- Render shipping lanes as a GeoJSON Source + Layer with line color based on active shock:
+  * Affected routes: red (#ff4444) with width 3px
+  * Non-affected routes: blue (#4488ff) with width 2px, 50% opacity
+- Render company HQ markers as CircleLayer:
+  * Color: green (#00ff88) by default, orange (#ff8800) if RaR > $500M, red (#ff4444) if RaR > $1B
+  * Radius scales with annual_revenue_B (use paint property with data-driven styling)
+- Add Popup on marker click showing ticker, name, and RaR if available
+- On marker click: call onCompanyClick with ticker
+- Enable navigation controls (zoom, rotate)
+- Use 'use client' directive at top
+- Set container style to width: 100%, height: 100vh
 
-Use 'use client' directive at top.
+Note: User must sign up for free Mapbox account and set NEXT_PUBLIC_MAPBOX_TOKEN in .env.local
 ```
 
 ### Prompt 4 — ResultsPanel component  
@@ -735,11 +742,14 @@ Add `?demo=true` to the URL to load these instantly without calling the backend.
 - [ ] Build FastAPI main.py (Prompt 2 above)
 - [ ] Test `/docs` endpoint — verify simulate returns correct numbers manually
 
-### Hour 4–8: 3D Visualization
-- [ ] Build ConstellationGraph.tsx (Prompt 3 above)
-- [ ] Verify nodes render with company names
-- [ ] Verify color changes when results load
-- [ ] Verify click handler works
+### Hour 4–8: Map Visualization
+- [ ] Sign up for free Mapbox account at mapbox.com (get access token)
+- [ ] Add NEXT_PUBLIC_MAPBOX_TOKEN to .env.local
+- [ ] Build MapView.tsx (Prompt 3 above)
+- [ ] Verify company markers render at correct lat/lng coordinates
+- [ ] Verify shipping lanes render from GeoJSON
+- [ ] Verify marker colors change based on simulation results
+- [ ] Verify click handler and popups work
 
 ### Hour 8–12: Simulation UI
 - [ ] Build Zustand store (Prompt 5 above)
