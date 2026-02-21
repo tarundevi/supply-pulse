@@ -14,6 +14,18 @@ function riskColor(eventCount) {
   return COLORS.riskLow;
 }
 
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function rotationSpeedFromAltitude(altitude) {
+  // Significantly slower rotation overall; zoom in = slower.
+  const minAlt = 1.2;
+  const maxAlt = 3.2;
+  const t = clamp((altitude - minAlt) / (maxAlt - minAlt), 0, 1);
+  return 0.008 + t * 0.045;
+}
+
 export default function Globe({
   graph,
   activeCategory,
@@ -33,13 +45,6 @@ export default function Globe({
     globeRef.current.controls().autoRotateSpeed = 0.35;
     globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 });
   }, []);
-
-  // Only update autoRotate and speed when toggled, don't reset view
-  useEffect(() => {
-    if (!globeRef.current) return;
-    globeRef.current.controls().autoRotate = autoRotate;
-    globeRef.current.controls().autoRotateSpeed = 0.35;
-  }, [autoRotate]);
 
   useEffect(() => {
     if (!globeRef.current) return;
