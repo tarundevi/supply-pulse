@@ -21,15 +21,25 @@ export default function Globe({
   onNodeClick,
   recommendations,
   destinationMarket,
+  mode = 'company',
+  autoRotate = true,
 }) {
   const globeRef = useRef();
 
+  // Only set initial view on mount
   useEffect(() => {
     if (!globeRef.current) return;
-    globeRef.current.controls().autoRotate = true;
+    globeRef.current.controls().autoRotate = autoRotate;
     globeRef.current.controls().autoRotateSpeed = 0.35;
     globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 });
   }, []);
+
+  // Only update autoRotate and speed when toggled, don't reset view
+  useEffect(() => {
+    if (!globeRef.current) return;
+    globeRef.current.controls().autoRotate = autoRotate;
+    globeRef.current.controls().autoRotateSpeed = 0.35;
+  }, [autoRotate]);
 
   useEffect(() => {
     if (!globeRef.current) return;
@@ -40,9 +50,9 @@ export default function Globe({
         globeRef.current.pointOfView({ lat: node.lat, lng: node.lng, altitude: 2.0 }, 800);
       }
     } else {
-      globeRef.current.controls().autoRotate = true;
+      globeRef.current.controls().autoRotate = autoRotate;
     }
-  }, [disruptedNodeId, graph]);
+  }, [disruptedNodeId, graph, autoRotate]);
 
   const points = useMemo(() => {
     if (!graph) return [];
@@ -88,13 +98,18 @@ export default function Globe({
         const src = nodeById.get(edge.source_id);
         if (!src) return null;
         const isDisrupted = edge.source_id === disruptedNodeId;
+        // Make country mode arcs thinner, matching company mode style
+        let strokeWidth = Math.max(0.45, Math.log10((edge.baseline_volume || 0) + 1) * 0.75);
+        if (mode === 'country') {
+          strokeWidth = Math.max(0.25, Math.log10((edge.baseline_volume || 0) + 1) * 0.35);
+        }
         return {
           startLat: src.lat,
           startLng: src.lng,
           endLat: edge.targetLat,
           endLng: edge.targetLng,
           color: isDisrupted ? 'rgba(239,68,68,0.25)' : COLORS.arcDefault,
-          stroke: Math.max(0.45, Math.log10((edge.baseline_volume || 0) + 1) * 0.75),
+          stroke: strokeWidth,
           label: `${src.name} -> ${edge.target_market || edge.target_id}`,
         };
       })

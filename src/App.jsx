@@ -27,6 +27,7 @@ export default function App() {
   const [destinationMarket, setDestinationMarket] = useState('USA');
   const [weights, setWeights] = useState(DEFAULT_WEIGHTS);
   const [tariffSim, setTariffSim] = useState(null);
+  const [autoRotate, setAutoRotate] = useState(true);
 
   const graph = useMemo(() => {
     if (mode === 'company' && graphs.company) return graphs.company;
@@ -129,10 +130,19 @@ export default function App() {
   return (
     <div className="h-screen flex flex-col" style={{ background: COLORS.background }}>
       <header className="flex items-center justify-between px-4 py-2 border-b" style={{ borderColor: COLORS.separator }}>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col gap-1">
           <span className="text-base font-bold tracking-wide" style={{ color: COLORS.electricBlue }}>
             SourceShift
           </span>
+          <button
+            onClick={() => setAutoRotate((r) => !r)}
+            className="text-xs font-mono px-2 py-1 rounded border cursor-pointer w-fit"
+            style={{ background: COLORS.panelBg, borderColor: COLORS.separator, color: COLORS.textPrimary }}
+          >
+            {autoRotate ? 'Pause Globe Rotation' : 'Resume Globe Rotation'}
+          </button>
+        </div>
+        <div className="flex items-center gap-3">
 
           <select
             value={mode}
@@ -179,6 +189,8 @@ export default function App() {
             onNodeClick={handleNodeClick}
             recommendations={recommendations}
             destinationMarket={destinationMarket}
+            mode={mode}
+            autoRotate={autoRotate}
           />
         </div>
 
