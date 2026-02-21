@@ -35,7 +35,7 @@ export const COLORS = {
   riskLow: '#22c55e',
   riskMedium: '#f59e0b',
   riskHigh: '#ef4444',
-  arcDefault: 'rgba(255,255,255,0.15)',
+  arcDefault: 'rgba(255,255,255,0.6)',
   arcRecommended: '#00c8ff',
   arcDisrupted: '#ef4444',
   textPrimary: '#e0e0e0',

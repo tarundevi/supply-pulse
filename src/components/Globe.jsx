@@ -90,7 +90,7 @@ export default function Globe({
   return (
     <GlobeGL
       ref={globeRef}
-      globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+      globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
       backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
       // Points layer
       pointsData={points}
@@ -109,9 +109,9 @@ export default function Globe({
       arcEndLng="endLng"
       arcColor="color"
       arcStroke="stroke"
-      arcDashLength={0.5}
-      arcDashGap={0.2}
-      arcDashAnimateTime={2000}
+      arcDashLength={() => undefined}
+      arcDashGap={() => undefined}
+      arcDashAnimateTime={0}
       arcLabel="label"
       // Rings on disrupted node
       ringsData={disruptedCountry ? points.filter((p) => p.id === disruptedCountry) : []}
@@ -122,8 +122,8 @@ export default function Globe({
       ringPropagationSpeed={2}
       ringRepeatPeriod={800}
       // Globe style
-      atmosphereColor="#1e40af"
-      atmosphereAltitude={0.15}
+      atmosphereColor="#4da6ff"
+      atmosphereAltitude={0.2}
     />
   );
 }
