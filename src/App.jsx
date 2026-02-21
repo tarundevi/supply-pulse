@@ -3,6 +3,7 @@ import Globe from './components/Globe';
 import TerminalSidebar from './components/TerminalSidebar';
 import CategoryFilter from './components/CategoryFilter';
 import DestinationFilter from './components/DestinationFilter';
+import TariffSimulator from './components/TariffSimulator';
 import { useSupplierGraph } from './hooks/useSupplierGraph';
 import { rerouteSupply } from './engine/optimizer';
 import { DEFAULT_WEIGHTS, COLORS } from './utils/constants';
@@ -13,16 +14,36 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState('electronics');
   const [destinationMarket, setDestinationMarket] = useState('USA');
   const [weights, setWeights] = useState(DEFAULT_WEIGHTS);
+  const [tariffSim, setTariffSim] = useState(null);
+
+  const simulatedGraph = useMemo(() => {
+    if (!graph || !tariffSim) return graph;
+    return {
+      ...graph,
+      nodes: graph.nodes.map((node) => {
+        if (!tariffSim.countries.includes(node.id)) return node;
+        const newRates = { ...node.tariff_rates };
+        for (const cat of tariffSim.categories) {
+          if (tariffSim.isIncrement) {
+            newRates[cat] = (newRates[cat] || 0) + tariffSim.tariffRate;
+          } else {
+            newRates[cat] = tariffSim.tariffRate;
+          }
+        }
+        return { ...node, tariff_rates: newRates };
+      }),
+    };
+  }, [graph, tariffSim]);
 
   const disruptedNode = useMemo(() => {
-    if (!graph || !disruptedCountry) return null;
-    return graph.nodes.find((n) => n.id === disruptedCountry) || null;
-  }, [graph, disruptedCountry]);
+    if (!simulatedGraph || !disruptedCountry) return null;
+    return simulatedGraph.nodes.find((n) => n.id === disruptedCountry) || null;
+  }, [simulatedGraph, disruptedCountry]);
 
   const recommendations = useMemo(() => {
-    if (!graph || !disruptedCountry) return [];
-    return rerouteSupply(disruptedCountry, activeCategory, graph, weights);
-  }, [graph, disruptedCountry, activeCategory, weights]);
+    if (!simulatedGraph || !disruptedCountry) return [];
+    return rerouteSupply(disruptedCountry, activeCategory, simulatedGraph, weights);
+  }, [simulatedGraph, disruptedCountry, activeCategory, weights]);
 
   const handleNodeClick = useCallback((nodeId) => {
     setDisruptedCountry((prev) => (prev === nodeId ? null : nodeId));
@@ -63,6 +84,11 @@ export default function App() {
           </span>
           <CategoryFilter value={activeCategory} onChange={setActiveCategory} />
           <DestinationFilter value={destinationMarket} onChange={setDestinationMarket} />
+          <TariffSimulator
+            onSimulate={setTariffSim}
+            onClear={() => setTariffSim(null)}
+            isActive={!!tariffSim}
+          />
         </div>
         <button
           onClick={handleReset}
@@ -82,11 +108,12 @@ export default function App() {
         {/* Globe — 65% */}
         <div className="w-[65%] relative">
           <Globe
-            graph={graph}
+            graph={simulatedGraph}
             activeCategory={activeCategory}
             disruptedCountry={disruptedCountry}
             onNodeClick={handleNodeClick}
             recommendations={recommendations}
+            destinationMarket={destinationMarket}
           />
         </div>
 
@@ -98,6 +125,8 @@ export default function App() {
             recommendations={recommendations}
             weights={weights}
             onWeightsChange={setWeights}
+            graph={simulatedGraph}
+            tariffSim={tariffSim}
           />
         </div>
       </div>

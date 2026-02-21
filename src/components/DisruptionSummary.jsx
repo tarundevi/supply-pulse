@@ -1,6 +1,6 @@
 import React from 'react';
 import { COLORS, COMMODITY_CATEGORIES, RISK_THRESHOLDS } from '../utils/constants';
-import { formatCurrency } from '../utils/formatters';
+import { formatCurrency, formatPercent } from '../utils/formatters';
 
 function riskBar(eventCount) {
   const filled = Math.min(Math.round((eventCount / 150) * 10), 10);
@@ -13,11 +13,19 @@ function riskLabel(eventCount) {
   return 'LOW';
 }
 
-export default function DisruptionSummary({ node, category }) {
+export default function DisruptionSummary({ node, category, graph }) {
   if (!node) return null;
 
   const volume = node.export_volumes[category] || 0;
   const categoryLabel = COMMODITY_CATEGORIES[category]?.label || category;
+
+  // Compute import dependency: this country's flow / total flows for this category
+  const allEdges = (graph?.edges || []).filter((e) => e.category === category);
+  const totalFlow = allEdges.reduce((s, e) => s + e.volume, 0);
+  const countryFlow = allEdges
+    .filter((e) => e.source === node.id)
+    .reduce((s, e) => s + e.volume, 0);
+  const dependencyPct = totalFlow > 0 ? countryFlow / totalFlow : 0;
 
   return (
     <div className="space-y-2">
@@ -48,6 +56,12 @@ export default function DisruptionSummary({ node, category }) {
           <span style={{ color: COLORS.textMuted }}>Category Disrupted:</span>
           <span>{categoryLabel}</span>
         </div>
+        {dependencyPct > 0 && (
+          <div className="flex justify-between">
+            <span style={{ color: COLORS.textMuted }}>Import Dependency:</span>
+            <span className="font-bold">{formatPercent(dependencyPct)} of HS-{COMMODITY_CATEGORIES[category]?.hsCode} imports</span>
+          </div>
+        )}
         <div className="flex justify-between">
           <span style={{ color: COLORS.textMuted }}>GDELT Risk Signal:</span>
           <span>
