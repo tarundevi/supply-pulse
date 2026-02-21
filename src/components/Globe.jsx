@@ -14,6 +14,18 @@ function riskColor(eventCount) {
   return COLORS.riskLow;
 }
 
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function rotationSpeedFromAltitude(altitude) {
+  // Significantly slower rotation overall; zoom in = slower.
+  const minAlt = 1.2;
+  const maxAlt = 3.2;
+  const t = clamp((altitude - minAlt) / (maxAlt - minAlt), 0, 1);
+  return 0.008 + t * 0.045;
+}
+
 export default function Globe({
   graph,
   activeCategory,
@@ -27,8 +39,28 @@ export default function Globe({
   useEffect(() => {
     if (!globeRef.current) return;
     globeRef.current.controls().autoRotate = true;
-    globeRef.current.controls().autoRotateSpeed = 0.35;
+    globeRef.current.controls().autoRotateSpeed = rotationSpeedFromAltitude(2.5);
     globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 });
+  }, []);
+
+  useEffect(() => {
+    if (!globeRef.current) return;
+    let rafId = null;
+
+    const tick = () => {
+      const controls = globeRef.current?.controls?.();
+      if (controls?.autoRotate) {
+        const pov = globeRef.current.pointOfView();
+        const altitude = typeof pov?.altitude === 'number' ? pov.altitude : 2.5;
+        controls.autoRotateSpeed = rotationSpeedFromAltitude(altitude);
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   useEffect(() => {
