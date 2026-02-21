@@ -17,11 +17,13 @@ export default function TerminalSidebar({
 }) {
   return (
     <div
-      className="h-full flex flex-col gap-4 p-4 overflow-y-auto font-mono"
-      style={{ background: COLORS.panelBg }}
+      className="flex flex-col gap-3 p-3 mb-4 w-72 max-h-[60vh] overflow-y-auto font-mono pointer-events-auto rounded-lg border shadow-xl backdrop-blur-md bg-slate-900/85"
+      style={{
+        borderColor: COLORS.separator
+      }}
     >
       {/* Header */}
-      <div className="text-lg font-bold tracking-wide" style={{ color: COLORS.electricBlue }}>
+      <div className="text-base font-bold tracking-wide" style={{ color: COLORS.electricBlue }}>
         TERMINAL
       </div>
 

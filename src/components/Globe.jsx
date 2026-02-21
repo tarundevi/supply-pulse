@@ -116,10 +116,11 @@ export default function Globe({
       pointLat="lat"
       pointLng="lng"
       pointAltitude={0.01}
-      pointRadius="size"
+      pointRadius={(d) => d.size * 1.5}
       pointColor="color"
       pointLabel={(d) => `${d.country} (${d.id})`}
       onPointClick={(point) => onNodeClick(point.id)}
+      onGlobeClick={() => onNodeClick(null)}
       // Arcs layer
       arcsData={arcs}
       arcStartLat="startLat"

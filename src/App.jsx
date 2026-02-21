@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import Globe from './components/Globe';
 import TerminalSidebar from './components/TerminalSidebar';
+import TariffInput from './components/TariffInput';
 import CategoryFilter from './components/CategoryFilter';
 import DestinationFilter from './components/DestinationFilter';
 import TariffSimulator from './components/TariffSimulator';
@@ -103,10 +104,10 @@ export default function App() {
         </button>
       </header>
 
-      {/* Main content: Globe + Sidebar */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Globe — 65% */}
-        <div className="w-[65%] relative">
+      {/* Main content: Globe + Overlay Modals */}
+      <div className="flex-1 relative overflow-hidden">
+        {/* Globe — 100% */}
+        <div className="absolute inset-0">
           <Globe
             graph={simulatedGraph}
             activeCategory={activeCategory}
@@ -117,8 +118,8 @@ export default function App() {
           />
         </div>
 
-        {/* Sidebar — 35% */}
-        <div className="w-[35%] border-l" style={{ borderColor: COLORS.separator }}>
+        {/* Sidebar Modal — Floating Top Right */}
+        <div className="absolute top-4 right-4 bottom-4 w-80 pointer-events-none flex flex-col items-end z-10">
           <TerminalSidebar
             disruptedNode={disruptedNode}
             activeCategory={activeCategory}
@@ -129,6 +130,9 @@ export default function App() {
             tariffSim={tariffSim}
           />
         </div>
+
+        {/* Tariff Input Modal — Floating Bottom Right */}
+        <TariffInput />
       </div>
     </div>
   );

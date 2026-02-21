@@ -23,16 +23,16 @@ export default function OptimizationSliders({ weights, onWeightsChange }) {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       <div
-        className="text-xs tracking-widest uppercase mb-2"
+        className="text-[10px] tracking-widest uppercase mb-1"
         style={{ color: COLORS.textMuted }}
       >
         Optimize By
       </div>
       {SLIDER_LABELS.map(({ key, label }) => (
-        <div key={key} className="flex items-center gap-3">
-          <span className="w-12 text-xs" style={{ color: COLORS.textMuted }}>
+        <div key={key} className="flex items-center gap-2">
+          <span className="w-10 text-[10px]" style={{ color: COLORS.textMuted }}>
             {label}
           </span>
           <input
@@ -44,7 +44,7 @@ export default function OptimizationSliders({ weights, onWeightsChange }) {
             onChange={(e) => handleChange(key, e.target.value)}
             className="flex-1 accent-[#00c8ff] h-1"
           />
-          <span className="w-10 text-right text-xs font-mono">
+          <span className="w-8 text-right text-[10px] font-mono">
             {Math.round(weights[key] * 100)}%
           </span>
         </div>
