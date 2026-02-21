@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import Globe from './components/Globe';
 import TerminalSidebar from './components/TerminalSidebar';
-import TariffInput from './components/TariffInput';
 import CategoryFilter from './components/CategoryFilter';
 import DestinationFilter from './components/DestinationFilter';
 import TariffSimulator from './components/TariffSimulator';
@@ -118,8 +117,8 @@ export default function App() {
           />
         </div>
 
-        {/* Sidebar Modal — Floating Top Right */}
-        <div className="absolute top-4 right-4 bottom-4 w-80 pointer-events-none flex flex-col items-end z-10">
+        {/* Sidebar Modal — Full Height Right Side */}
+        <div className="absolute top-0 right-0 bottom-0 pointer-events-none flex flex-col z-10 text-right">
           <TerminalSidebar
             disruptedNode={disruptedNode}
             activeCategory={activeCategory}
@@ -130,9 +129,6 @@ export default function App() {
             tariffSim={tariffSim}
           />
         </div>
-
-        {/* Tariff Input Modal — Floating Bottom Right */}
-        <TariffInput />
       </div>
     </div>
   );

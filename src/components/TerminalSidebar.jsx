@@ -17,7 +17,7 @@ export default function TerminalSidebar({
 }) {
   return (
     <div
-      className="flex flex-col gap-3 p-3 mb-4 w-72 max-h-[60vh] overflow-y-auto font-mono pointer-events-auto rounded-lg border shadow-xl backdrop-blur-md bg-slate-900/85"
+      className="flex flex-col gap-3 p-4 w-96 h-full overflow-y-auto font-mono pointer-events-auto border-l shadow-xl backdrop-blur-md bg-slate-900/85 text-left"
       style={{
         borderColor: COLORS.separator
       }}

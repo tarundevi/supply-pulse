@@ -19,6 +19,11 @@ export const COUNTRY_CODES = {
   '764': 'Thailand',
   '458': 'Malaysia',
   '076': 'Brazil',
+  '616': 'Poland',
+  '752': 'Sweden',
+  '528': 'Netherlands',
+  '724': 'Spain',
+  '380': 'Italy',
 };
 
 // Destination markets
