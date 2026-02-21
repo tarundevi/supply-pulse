@@ -23,14 +23,41 @@ export default function Globe({
   destinationMarket,
 }) {
   const globeRef = useRef();
+  const containerRef = useRef();
 
+  // Set initial camera position on mount
   useEffect(() => {
     if (!globeRef.current) return;
-    // Auto-rotate
     globeRef.current.controls().autoRotate = true;
     globeRef.current.controls().autoRotateSpeed = 0.4;
-    // Initial camera position
-    globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 });
+    setTimeout(() => {
+      if (globeRef.current) {
+        globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 });
+      }
+    }, 100);
+  }, []);
+
+  // Re-center globe when container size changes (e.g., sidebar opens/closes)
+  useEffect(() => {
+    if (!globeRef.current || !containerRef.current) return;
+
+    const recenter = () => {
+      if (globeRef.current) {
+        globeRef.current.resize();
+        globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 });
+      }
+    };
+
+    const resizeObserver = new ResizeObserver(recenter);
+    resizeObserver.observe(containerRef.current);
+    
+    // Also try window resize
+    window.addEventListener('resize', recenter);
+    
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', recenter);
+    };
   }, []);
 
   // Fly to disrupted country, or resume auto-rotate on reset
@@ -47,6 +74,7 @@ export default function Globe({
       }
     } else {
       globeRef.current.controls().autoRotate = true;
+      globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 }, 500);
     }
   }, [disruptedCountry, graph]);
 
@@ -123,7 +151,8 @@ export default function Globe({
   if (!graph) return null;
 
   return (
-    <GlobeGL
+    <div ref={containerRef} className="absolute inset-0 w-full h-full">
+      <GlobeGL
       ref={globeRef}
       globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
       backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
@@ -161,5 +190,6 @@ export default function Globe({
       atmosphereColor="#4da6ff"
       atmosphereAltitude={0.2}
     />
+    </div>
   );
 }
