@@ -103,10 +103,10 @@ export default function App() {
         </button>
       </header>
 
-      {/* Main content: Globe + Sidebar */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Globe — 65% */}
-        <div className="w-[65%] relative">
+      {/* Main content: Globe + Overlay Modals */}
+      <div className="flex-1 relative overflow-hidden">
+        {/* Globe — 100% */}
+        <div className="absolute inset-0">
           <Globe
             graph={simulatedGraph}
             activeCategory={activeCategory}
@@ -117,8 +117,8 @@ export default function App() {
           />
         </div>
 
-        {/* Sidebar — 35% */}
-        <div className="w-[35%] border-l" style={{ borderColor: COLORS.separator }}>
+        {/* Sidebar Modal — Full Height Right Side */}
+        <div className="absolute top-0 right-0 bottom-0 pointer-events-none flex flex-col z-10 text-right">
           <TerminalSidebar
             disruptedNode={disruptedNode}
             activeCategory={activeCategory}

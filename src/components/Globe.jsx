@@ -3,9 +3,9 @@ import GlobeGL from 'react-globe.gl';
 import { COLORS, RISK_THRESHOLDS, DESTINATION_MARKETS } from '../utils/constants';
 
 const DESTINATION_COORDS = {
-  USA: { lat: 37.09, lng: -95.71 },
-  EU: { lat: 50.11, lng: 9.68 },
-  JPN: { lat: 36.20, lng: 138.25 },
+  USA: { lat: 33.75, lng: -118.19, hub: 'Port of Long Beach', label: 'United States' },
+  EU: { lat: 51.90, lng: 4.50, hub: 'Port of Rotterdam', label: 'European Union' },
+  JPN: { lat: 35.44, lng: 139.64, hub: 'Port of Yokohama', label: 'Japan' },
 };
 
 function riskColor(gdeltEventCount) {
@@ -50,10 +50,10 @@ export default function Globe({
     }
   }, [disruptedCountry, graph]);
 
-  // Build point data from nodes
+  // Build point data from nodes + active destination market
   const points = useMemo(() => {
     if (!graph) return [];
-    return graph.nodes.map((node) => {
+    const supplierPoints = graph.nodes.map((node) => {
       const vol = node.export_volumes[activeCategory] || 0;
       const isDisrupted = node.id === disruptedCountry;
       return {
@@ -63,7 +63,23 @@ export default function Globe({
         ringColor: isDisrupted ? COLORS.arcDisrupted : riskColor(node.gdelt_event_count),
       };
     });
-  }, [graph, activeCategory, disruptedCountry]);
+
+    // Add the active destination market as a visible node
+    const dest = DESTINATION_COORDS[destinationMarket] || DESTINATION_COORDS.USA;
+    const destPoint = {
+      id: destinationMarket,
+      country: dest.label,
+      hub: dest.hub,
+      lat: dest.lat,
+      lng: dest.lng,
+      size: 0.8,
+      color: COLORS.electricBlue,
+      ringColor: COLORS.electricBlue,
+      isDestination: true,
+    };
+
+    return [...supplierPoints, destPoint];
+  }, [graph, activeCategory, disruptedCountry, destinationMarket]);
 
   // Build arcs from edges
   const arcs = useMemo(() => {
@@ -116,10 +132,11 @@ export default function Globe({
       pointLat="lat"
       pointLng="lng"
       pointAltitude={0.01}
-      pointRadius="size"
+      pointRadius={(d) => d.size * 1.5}
       pointColor="color"
-      pointLabel={(d) => `${d.country} (${d.id})`}
-      onPointClick={(point) => onNodeClick(point.id)}
+      pointLabel={(d) => d.hub ? `${d.country} — ${d.hub}` : `${d.country} (${d.id})`}
+      onPointClick={(point) => point.isDestination ? null : onNodeClick(point.id)}
+      onGlobeClick={() => onNodeClick(null)}
       // Arcs layer
       arcsData={arcs}
       arcStartLat="startLat"

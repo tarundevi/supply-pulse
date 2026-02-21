@@ -221,6 +221,125 @@ Three sliders adjusting re-ranking priority in real time:
 - **Speed/Capacity Weight** (default 35%) — prioritizes countries with high existing export volume (proxy for supply readiness)
 - **Risk Weight** (default 25%) — prioritizes low GDELT disruption signal
 
+### 4.5 Consumer Impact Prediction Engine
+
+The app shows supply chain disruptions and alternative sourcing, but lacks the "so what" for manufacturers/companies — **how tariffs and disruptions hit the consumer's wallet**. This feature adds a predictive financial engine that computes retail price increases, demand drops, revenue at risk, and margin-preserving recommendations. This is the core differentiator that elevates the tool from visualization to **actionable trade intelligence**.
+
+#### Data Flow
+
+```
+tariffSim and/or disruptedCountry
+  → computeConsumerImpact(disruptedNode, category, simulatedGraph, originalGraph, tariffSim, recommendations)
+  → { retailPriceIncrease, demandDrop, revenueAtRisk, recommendedAction }
+  → ConsumerImpact component renders in sidebar
+```
+
+Shows for **BOTH** tariff-only and click-to-disrupt scenarios (and both combined).
+
+#### Economic Constants
+
+```javascript
+// Pass-through: fraction of tariff cost reaching retail (Amiti et al. 2019 AER)
+TARIFF_PASS_THROUGH_RATES = {
+  electronics: 0.85, textiles: 0.95, chemicals: 0.50, machinery: 0.45, vehicles: 0.70
+}
+
+// Own-price elasticity of demand (negative; % demand drop per 1% price increase)
+PRICE_ELASTICITY_OF_DEMAND = {
+  electronics: -1.0, textiles: -0.8, chemicals: -0.3, machinery: -0.4, vehicles: -0.6
+}
+
+// Baseline US retail price and supply chain markup factor (FOB → shelf)
+RETAIL_PRICE_BASELINE = {
+  electronics: { avgUnitPrice: 420, markupFactor: 3.5 },
+  textiles:    { avgUnitPrice: 65,  markupFactor: 4.0 },
+  chemicals:   { avgUnitPrice: 180, markupFactor: 2.0 },
+  machinery:   { avgUnitPrice: 8500, markupFactor: 2.5 },
+  vehicles:    { avgUnitPrice: 38000, markupFactor: 1.4 },
+}
+
+// Gross margin rates (NYU Stern/Damodaran sector averages 2023)
+GROSS_MARGIN_RATES = {
+  electronics: 0.38, textiles: 0.52, chemicals: 0.31, machinery: 0.35, vehicles: 0.14
+}
+```
+
+#### Calculation Engine (`src/engine/consumerImpact.js` — ~80 lines)
+
+Export `computeConsumerImpact(disruptedNode, category, simulatedGraph, originalGraph, tariffSim, recommendations)`.
+
+**Calculation steps:**
+- **Tariff delta:** `simulatedNode.tariff_rates[cat] - originalNode.tariff_rates[cat]`
+- **Reroute delta:** `recommendations[0].costDelta` (clamped to 0 if negative)
+- **effectiveCostDelta** = tariffDelta + rerouteDelta
+- **Retail price increase:** `(effectiveCostDelta / markupFactor) * passThroughRate` → multiply by `avgUnitPrice` for dollar amount
+- **Demand drop:** `elasticity * priceIncreasePct`
+- **Revenue at risk:** `disruptedNode.export_volumes[cat] * |demandDropPct| * grossMargin`
+- **Recommended action:** margin preserved = fraction of cost delta avoided by switching to top recommendation
+
+Returns `null` if `effectiveCostDelta <= 0`.
+
+#### UI Component (`src/components/ConsumerImpact.jsx` — ~90 lines)
+
+Terminal-style panel matching existing sidebar aesthetic. Displays:
+
+```
+CONSUMER IMPACT FORECAST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Projected Retail Price:      +$25.49 (+6.1%)     [green/amber/red by severity]
+Forecasted Demand Drop:      -6.1%               [always red]
+Gross Revenue at Risk:       $6.6B               [always red]
+Recommended Action:          Shift sourcing to Vietnam to preserve 100% of current margins
+```
+
+Color thresholds for retail price: green < 3%, amber 3–8%, red > 8%.
+
+Uses existing `formatCurrency`, `formatPercent` from `src/utils/formatters.js` and `COLORS` from constants.
+
+#### Integration Points
+
+| File | Action |
+|---|---|
+| `src/utils/constants.js` | Append 4 economic constant objects |
+| `src/engine/consumerImpact.js` | Create — calculation engine |
+| `src/components/ConsumerImpact.jsx` | Create — display component |
+| `src/App.jsx` | Add `useMemo` + pass `consumerImpact` prop to sidebar |
+| `src/components/TerminalSidebar.jsx` | Render `ConsumerImpact` in both disrupted and tariff-only states |
+
+**App.jsx specifics:**
+- Import `computeConsumerImpact`
+- Add `consumerImpact` `useMemo` after recommendations memo
+- When `disruptedNode` is null but `tariffSim` is active, pick the largest-volume affected node as proxy
+- Pass `consumerImpact` prop to `TerminalSidebar`
+
+**TerminalSidebar.jsx specifics:**
+- Render after `RecommendedAction` when country is disrupted
+- Render below tariff banner when tariff-sim-only (no country clicked)
+
+#### Worked Example (25% tariff on Chinese electronics)
+
+```
+tariffDelta     = 0.25
+passThroughRate = 0.85
+markupFactor    = 3.5
+
+priceIncreasePct  = (0.25 / 3.5) × 0.85 = 6.1%
+absoluteIncrease  = $420 × 0.061         = +$25.49
+demandDrop        = -1.0 × 0.061         = -6.1%
+revenueAtRisk     = $284B × 0.061 × 0.38 = $6.6B
+marginPreserved   = 100% (VNM is cheaper)
+```
+
+#### Verification
+
+1. `npm run build` compiles without errors
+2. Type "25% tariff on Chinese electronics" → ConsumerImpact panel shows all 4 metrics
+3. Click China without tariff → ConsumerImpact shows rerouting cost impact
+4. Both active simultaneously → combined impact displayed
+5. Clear tariff / reset → ConsumerImpact disappears
+
+**No changes to:** `optimizer.js`, `Globe.jsx`, `parseTariff.js`, `formatters.js`
+
 ---
 
 ## 5. UI Layout
