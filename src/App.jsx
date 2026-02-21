@@ -13,6 +13,7 @@ import {
   rerouteTariffShock,
   simulateCombinedScenario,
 } from './engine/optimizer';
+import { computeConsumerImpact } from './engine/consumerImpact';
 import {
   DEFAULT_WEIGHTS,
   COLORS,
@@ -111,6 +112,11 @@ export default function App() {
     return [];
   }, [simulatedGraph, graph, disruptedNodeId, tariffSim, activeCategory, weights]);
 
+  const consumerImpact = useMemo(() => {
+    if (!simulatedGraph) return null;
+    return computeConsumerImpact(disruptedNode, activeCategory, simulatedGraph, graph, tariffSim, recommendations);
+  }, [disruptedNode, activeCategory, simulatedGraph, graph, tariffSim, recommendations]);
+
   const handleNodeClick = useCallback((nodeId) => {
     setDisruptedNodeId((prev) => (prev === nodeId ? null : nodeId));
   }, []);
@@ -143,7 +149,7 @@ export default function App() {
       <header className="flex items-center justify-between px-4 py-2 border-b" style={{ borderColor: COLORS.separator }}>
         <div className="flex flex-col gap-1">
           <span className="text-base font-bold tracking-wide" style={{ color: COLORS.electricBlue }}>
-            SourceShift
+            &lt;suppl.ai&gt;
           </span>
         </div>
         <div className="flex items-center gap-3">
@@ -239,6 +245,7 @@ export default function App() {
           tariffAffectedNodes={tariffAffectedNodes}
           scenarioMode={scenarioMode}
           mode={mode}
+          consumerImpact={consumerImpact}
         />
       </div>
     </div>

@@ -1,4 +1,4 @@
-﻿import React, { useRef, useEffect, useMemo } from 'react';
+﻿import React, { useRef, useEffect, useMemo, useState, useCallback } from 'react';
 import GlobeGL from 'react-globe.gl';
 import { COLORS, RISK_THRESHOLDS } from '../utils/constants';
 
@@ -37,6 +37,19 @@ export default function Globe({
   autoRotate = true,
 }) {
   const globeRef = useRef();
+  const containerRef = useRef();
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setDimensions({ width: Math.round(width), height: Math.round(height) });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   // Only set initial view on mount
   useEffect(() => {
@@ -138,8 +151,8 @@ export default function Globe({
   if (!graph) return null;
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <GlobeGL
+    <div ref={containerRef} style={{ width: '100%', height: '100%' }}>
+      {dimensions.width > 0 && <GlobeGL
         ref={globeRef}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
@@ -174,9 +187,9 @@ export default function Globe({
         ringRepeatPeriod={800}
         atmosphereColor="#4da6ff"
         atmosphereAltitude={0.2}
-        width={"100%"}
-        height={"100%"}
-      />
+        width={dimensions.width}
+        height={dimensions.height}
+      />}
     </div>
   );
 }

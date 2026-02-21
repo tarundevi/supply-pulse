@@ -106,3 +106,33 @@ export const RISK_THRESHOLDS = {
   low: 30,
   medium: 100,
 };
+
+export const TARIFF_PASS_THROUGH_RATES = {
+  // Country mode
+  electronics: 0.75, textiles: 0.90, chemicals: 0.60, machinery: 0.65, vehicles: 0.70,
+  // Company mode
+  chips: 0.80, displays: 0.75, batteries: 0.70, assembly: 0.85, sensors: 0.78,
+};
+
+export const PRICE_ELASTICITY_OF_DEMAND = {
+  electronics: -1.0, textiles: -0.8, chemicals: -0.3, machinery: -0.5, vehicles: -0.6,
+  chips: -0.9, displays: -1.1, batteries: -0.7, assembly: -1.0, sensors: -0.8,
+};
+
+export const RETAIL_PRICE_BASELINE = {
+  electronics: { avgUnitPrice: 420, markupFactor: 2.4 },
+  textiles:    { avgUnitPrice: 35,  markupFactor: 3.0 },
+  chemicals:   { avgUnitPrice: 180, markupFactor: 1.8 },
+  machinery:   { avgUnitPrice: 2500, markupFactor: 1.6 },
+  vehicles:    { avgUnitPrice: 32000, markupFactor: 1.4 },
+  chips:       { avgUnitPrice: 85,  markupFactor: 2.8 },
+  displays:    { avgUnitPrice: 220, markupFactor: 2.2 },
+  batteries:   { avgUnitPrice: 150, markupFactor: 2.0 },
+  assembly:    { avgUnitPrice: 950, markupFactor: 1.5 },
+  sensors:     { avgUnitPrice: 45,  markupFactor: 2.5 },
+};
+
+export const GROSS_MARGIN_RATES = {
+  electronics: 0.38, textiles: 0.52, chemicals: 0.30, machinery: 0.28, vehicles: 0.22,
+  chips: 0.55, displays: 0.35, batteries: 0.32, assembly: 0.18, sensors: 0.45,
+};
