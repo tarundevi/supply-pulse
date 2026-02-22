@@ -120,6 +120,39 @@ export default function DataUploadPanel({ onUploadSuccess }) {
 
       const parsedGraph = JSON.parse(jsonStr.trim());
 
+      // Assign distinct vibrant colors for custom uploads instead of using the single blue prompt color
+      const distinctColors = [
+        'rgba(56,189,248,0.7)',  // electric blue
+        'rgba(34,197,94,0.7)',   // green
+        'rgba(168,85,247,0.7)',  // purple
+        'rgba(251,191,36,0.7)',  // yellow
+        'rgba(244,114,182,0.7)', // pink
+        'rgba(45,212,191,0.7)',  // teal
+        'rgba(251,146,60,0.7)',  // orange
+        'rgba(129,140,248,0.7)', // indigo
+        'rgba(163,230,53,0.7)',  // lime
+        'rgba(248,113,113,0.7)'  // red
+      ];
+
+      if (parsedGraph.metadata) {
+        const discoveredCats = new Set();
+        (parsedGraph.nodes || []).forEach(n => {
+          (n.categories || []).forEach(c => discoveredCats.add(c));
+          Object.keys(n.baseline_volume_by_category || {}).forEach(c => discoveredCats.add(c));
+        });
+
+        const catArray = Array.from(discoveredCats).sort();
+        const newArcColors = {};
+        catArray.forEach((cat, index) => {
+          newArcColors[cat] = distinctColors[index % distinctColors.length];
+        });
+
+        parsedGraph.metadata.arc_colors = newArcColors;
+        parsedGraph.metadata.accent_color = catArray.length > 0
+          ? distinctColors[0].replace(/rgba\((\d+),(\d+),(\d+),.*?\)/, 'rgb($1,$2,$3)')
+          : '#4da6ff';
+      }
+
       onUploadSuccess(parsedGraph);
       setIsOpen(false);
     } catch (err) {
