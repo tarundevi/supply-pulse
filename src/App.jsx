@@ -7,7 +7,8 @@ import CompanyFilter from './components/CompanyFilter';
 import DestinationFilter from './components/DestinationFilter';
 import { INDUSTRY_COMPANY_MAP } from './utils/industries';
 import MacroEventSimulator from './components/MacroEventSimulator';
-import { useSupplierGraph } from './hooks/useSupplierGraph';
+import DataUploadPanel from './components/DataUploadPanel';
+import { useSupplierGraph, saveCustomGraph } from './hooks/useSupplierGraph';
 import {
   rerouteSupplierOutage,
   rerouteMacroEventShock,
@@ -38,8 +39,35 @@ export default function App() {
   // New for company mode
   const [selectedIndustry, setSelectedIndustry] = useState(Object.keys(INDUSTRY_COMPANY_MAP)[0]);
   const [selectedCompany, setSelectedCompany] = useState(INDUSTRY_COMPANY_MAP[Object.keys(INDUSTRY_COMPANY_MAP)[0]].companies[0].key);
+  const [customCompanies, setCustomCompanies] = useState([]);
+
+  // Load custom companies from localStorage on boot
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem('supplyPulseCustomGraphs') || '[]');
+      setCustomCompanies(saved);
+    } catch (e) {
+      console.error('Failed to load custom graphs.', e);
+    }
+  }, []);
 
   const { graphs, loading, error } = useSupplierGraph(selectedCompany);
+
+  // Dynamically build the Industry map to include Custom Uploads
+  const currentIndustryMap = useMemo(() => {
+    if (customCompanies.length === 0) return INDUSTRY_COMPANY_MAP;
+    return {
+      custom_uploads: {
+        label: 'Custom Uploads',
+        description: 'User-uploaded custom supply chain data.',
+        companies: customCompanies.map(g => ({
+          key: g.metadata.company_key,
+          label: g.metadata.anchor_company || g.metadata.company_key
+        }))
+      },
+      ...INDUSTRY_COMPANY_MAP
+    };
+  }, [customCompanies]);
 
   const graph = useMemo(() => {
     if (mode === 'company' && graphs.companyChain) return graphs.companyChain;
@@ -62,10 +90,46 @@ export default function App() {
     setMacroEvent(null);
     // Reset industry/company on mode switch
     if (mode === 'company') {
-      setSelectedIndustry(Object.keys(INDUSTRY_COMPANY_MAP)[0]);
-      setSelectedCompany(INDUSTRY_COMPANY_MAP[Object.keys(INDUSTRY_COMPANY_MAP)[0]].companies[0].key);
+      const firstIndustry = Object.keys(currentIndustryMap)[0];
+      setSelectedIndustry(firstIndustry);
+      setSelectedCompany(currentIndustryMap[firstIndustry].companies[0].key);
     }
-  }, [mode, categories]);
+  }, [mode, categories, currentIndustryMap]);
+
+  const handleCustomUpload = useCallback((parsedGraph) => {
+    // Determine a new unique company_key
+    let key = parsedGraph.metadata?.company_key || 'custom_' + Date.now();
+
+    // Check if exists
+    if (customCompanies.find(c => c.metadata?.company_key === key) || Object.values(INDUSTRY_COMPANY_MAP).some(ind => ind.companies.some(c => c.key === key))) {
+      key = key + '_' + Date.now();
+    }
+
+    // Ensure metadata is completely setup
+    const graphToSave = {
+      ...parsedGraph,
+      metadata: {
+        ...parsedGraph.metadata,
+        company_key: key,
+        mode: 'company',
+      }
+    };
+
+    saveCustomGraph(graphToSave);
+
+    setCustomCompanies(prev => {
+      const updated = [graphToSave, ...prev];
+      localStorage.setItem('supplyPulseCustomGraphs', JSON.stringify(updated.map(g => g.metadata.company_key)));
+      // Actually we just need to save the keys to local storage in app state, but the actual graphs are saved inside hook localStorage.
+      // Wait, let's just save the minimal metadata to app state.
+      return updated;
+    });
+
+    // Auto switch to the new company
+    setMode('company');
+    setSelectedIndustry('custom_uploads');
+    setSelectedCompany(key);
+  }, [customCompanies]);
 
   const simulatedGraph = useMemo(() => {
     if (!graph || !macroEvent) return graph;
@@ -258,14 +322,14 @@ export default function App() {
                 value={selectedIndustry}
                 onChange={(ind) => {
                   setSelectedIndustry(ind);
-                  setSelectedCompany(INDUSTRY_COMPANY_MAP[ind].companies[0].key);
+                  setSelectedCompany(currentIndustryMap[ind].companies[0].key);
                 }}
-                industries={INDUSTRY_COMPANY_MAP}
+                industries={currentIndustryMap}
               />
               <CompanyFilter
                 value={selectedCompany}
                 onChange={setSelectedCompany}
-                companies={INDUSTRY_COMPANY_MAP[selectedIndustry].companies}
+                companies={currentIndustryMap[selectedIndustry]?.companies || []}
               />
             </>
           ) : (
@@ -300,6 +364,7 @@ export default function App() {
 
       <div className="flex-1 flex flex-row overflow-hidden">
         <div className="flex-1 min-w-0 bg-black relative">
+          <DataUploadPanel onUploadSuccess={handleCustomUpload} />
           {/* Floating Pause Button */}
           <div
             style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 20 }}

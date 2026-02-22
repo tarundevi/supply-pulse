@@ -1,0 +1,22 @@
+Here is the Apple supply chain network I want extracted:
+Company: Apple Inc.
+Locations:
+- HQ: Apple Cupertino HQ (USA) - Categories: iphones, macbooks, chips, displays, batteries
+- Supplier: Apple Foxconn Shenzhen Assembly in China - Supplies: iphones, macbooks
+- Supplier: Apple TSMC Taiwan (A-Series Chips) in Taiwan - Supplies: chips
+- Supplier: Apple Samsung Korea Displays in South Korea - Supplies: displays
+- Supplier: Apple Tata Electronics India Assembly in India - Supplies: iphones
+- Supplier: Apple LG Vietnam Battery in Vietnam - Supplies: batteries
+- Supplier: Apple Corning Japan Glass in Japan - Supplies: displays
+
+Supply Chains:
+- AAPL_FOX_SHZ supplies iphones to AAPL_HQ
+- AAPL_FOX_SHZ supplies macbooks to AAPL_HQ
+- AAPL_TSMC_TW supplies chips to AAPL_FOX_SHZ
+- AAPL_SAM_KR supplies displays to AAPL_FOX_SHZ
+- AAPL_TATA_IN supplies iphones to AAPL_HQ
+- AAPL_LG_VN supplies batteries to AAPL_FOX_SHZ
+- AAPL_JP_GLASS supplies displays to AAPL_SAM_KR
+- AAPL_TSMC_TW supplies chips to AAPL_TATA_IN
+- AAPL_LG_VN supplies batteries to AAPL_TATA_IN
+- AAPL_SAM_KR supplies displays to AAPL_TATA_IN

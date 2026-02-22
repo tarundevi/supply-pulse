@@ -1,0 +1,48 @@
+Company Name: Quantum Motors
+Ticker: QMOT
+Industry: Electric Vehicles & Autonomous Driving
+
+Headquarters:
+Quantum Motors HQ is located in Austin, Texas. This is where all the vehicle design, software engineering, and final AI safety testing occurs. We require high-performance AI chips, heavy-duty batteries, and lidar sensors shipped directly here for integration before vehicles are sent to customers.
+
+Tier 1 Suppliers (Final Assembly & Core Components):
+1. **Quantum Gigafactory Berlin** (Berlin, Germany):
+   - This massive facility handles the final assembly of our flagship European models.
+   - They need constant shipments of forged steel chassis components and electric motors.
+   - They supply fully assembled "Euro-Spec EVs" directly to our Austin HQ for final global distribution logging.
+
+2. **VoltCore Power Systems** (Seoul, South Korea):
+   - VoltCore is our primary supplier for next-generation solid-state batteries.
+   - They ship battery packs directly to Austin HQ and to the Berlin Gigafactory.
+
+3. **NeuroVision Semiconductors** (Hsinchu, Taiwan):
+   - NeuroVision manufactures our custom autonomous driving "Q-Brain" AI chips.
+   - These highly sensitive chips are shipped directly to Austin HQ.
+
+4. **LumiSense Technologies** (Kyoto, Japan):
+   - LumiSense provides advanced LiDAR and optical sensor arrays.
+   - They ship sensors to Austin HQ and also to Berlin.
+
+Tier 2 Suppliers (Raw Materials & Sub-components):
+5. **Titan Forge Industries** (Monterrey, Mexico):
+   - Titan Forge handles all the heavy metal stamping and creates the forged steel chassis.
+   - They ship these heavy chassis components directly to the Berlin Gigafactory for assembly.
+
+6. **Lithium Dynamics** (Antofagasta, Chile):
+   - Lithium Dynamics is responsible for mining and refining high-grade lithium.
+   - They ship raw lithium material across the ocean to VoltCore Power Systems in Seoul.
+
+7. **RareEarth Extraction Co.** (Baotou, China):
+   - They mine neodymium and other rare earth magnets crucial for our electric motors.
+   - These magnetic components are shipped to the Berlin Gigafactory where the motors are finalized.
+
+Supply Chain Links Summary:
+- Lithium Dynamics (Chile) -> Ships Lithium -> VoltCore Power Systems (South Korea)
+- RareEarth Extraction Co. (China) -> Ships Magnets -> Quantum Gigafactory Berlin (Germany)
+- Titan Forge Industries (Mexico) -> Ships Chassis -> Quantum Gigafactory Berlin (Germany)
+- VoltCore Power Systems (South Korea) -> Ships Batteries -> Quantum Motors HQ (USA)
+- VoltCore Power Systems (South Korea) -> Ships Batteries -> Quantum Gigafactory Berlin (Germany)
+- NeuroVision Semiconductors (Taiwan) -> Ships AI Chips -> Quantum Motors HQ (USA)
+- LumiSense Technologies (Japan) -> Ships Sensors -> Quantum Motors HQ (USA)
+- LumiSense Technologies (Japan) -> Ships Sensors -> Quantum Gigafactory Berlin (Germany)
+- Quantum Gigafactory Berlin (Germany) -> Ships Assembled EVs -> Quantum Motors HQ (USA)

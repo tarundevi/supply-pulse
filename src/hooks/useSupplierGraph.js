@@ -74,6 +74,16 @@ function toCompanyLikeFromCountry(legacyGraph) {
   };
 }
 
+// Save a custom generated graph to local storage
+export function saveCustomGraph(graph) {
+  const key = graph.metadata.company_key;
+  try {
+    localStorage.setItem(`supplyPulse_graph_${key}`, JSON.stringify(graph));
+  } catch (e) {
+    console.error('Failed to save custom graph to localStorage', e);
+  }
+}
+
 export function useSupplierGraph(selectedCompany) {
   const [baseGraphs, setBaseGraphs] = useState({ company: null, country: null });
   const [companyChain, setCompanyChain] = useState(null);
@@ -133,6 +143,19 @@ export function useSupplierGraph(selectedCompany) {
     if (chainCache.current[selectedCompany]) {
       setCompanyChain(chainCache.current[selectedCompany]);
       return;
+    }
+
+    // Check if it is a custom graph in localStorage
+    try {
+      const customGraph = localStorage.getItem(`supplyPulse_graph_${selectedCompany}`);
+      if (customGraph) {
+        const parsed = JSON.parse(customGraph);
+        chainCache.current[selectedCompany] = parsed;
+        setCompanyChain(parsed);
+        return;
+      }
+    } catch (e) {
+      console.error('Could not load from localStorage', e);
     }
 
     // Load from /data/supply_chains/{key}.json
