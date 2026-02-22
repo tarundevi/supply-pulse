@@ -19,22 +19,20 @@ The format must match the following schema:
       "lng": 0.0, // accurate longitude
       "country_iso3": "USA", // 3 letter ISO
       "country": "United States",
-      "categories": ["category1", "category2"],
+      "categories": ["category1"],
       "capacity_index": 1.0,
       "lead_time_days": 0,
       "unit_cost_index": 1.0,
-      "tariff_rate_by_category": {},
+      "tariff_rate_by_category": { "category1": 0.05 },
       "risk_score": 0.1,
       "risk_event_count": 0,
-      "concentration_share": 0,
+      "concentration_share": 0.5,
       "confidence": 0.95,
       "sources": { "source_type": "extracted" },
-      "baseline_volume_by_category": {}
-    },
-    // Add other facilities (suppliers, manufacturing plants)
-    // For non-HQ nodes, entity_type MUST be "facility"
-    // CRITICAL: parent_company_id MUST be identical to the "anchor_company" string across ALL nodes, even for 3rd party suppliers!
-    // Populate capacity_index (0.0 to 1.0), lead_time_days (integer), risk_score (0-10)
+      "baseline_volume_by_category": {
+         "category1": 100.0 // MUST populate this with the volume of goods handled by this node. VERY IMPORTANT for impact forecasting.
+      }
+    }
   ],
   "edges": [
     {
@@ -50,7 +48,6 @@ The format must match the following schema:
       "targetLng": 0.0, // must match target_id lng
       "target_market": "USA"
     }
-    // Add other edges connecting suppliers to the HQ or tier 2 to tier 1
   ],
   "metadata": {
     "mode": "company",
@@ -65,6 +62,13 @@ The format must match the following schema:
     },
     "arc_colors": {
        "category1": "rgba(77,166,255,0.7)"
+    },
+    "financials": {
+       "annualRevenue": 10000000000,
+       "totalUnitsShipped": 5000000,
+       "avgUnitPrice": 2000,
+       "markupFactor": 2.0,
+       "grossMargin": 0.3
     }
   }
 }
@@ -73,11 +77,11 @@ Guidelines:
 1. Extract ALL mentioned facilities, suppliers, and manufacturing locations.
 2. Estimate coordinates (lat/lng) for each location based on the city/country provided.
 3. Infer the categories of components/products being supplied.
-4. If specific volumes/metrics aren't explicitly stated, provide reasonable estimates. 
-   - CRITICAL: \`baseline_volume\` on edges MUST be bounded between 10.0 and 500.0. Do not use massive numbers.
-5. CRITICAL: \`parent_company_id\` on EVERY SINGLE NODE (including 3rd-party suppliers like Foxconn) MUST exactly match the string used in \`metadata.anchor_company\`. This groups them together.
-6. Create edges representing the flow of goods.
-7. The output MUST be raw JSON.
+4. CRITICAL: For EVERY NODE, you MUST provide a realistic estimate in \`baseline_volume_by_category\` for the categories it handles. The sum of these volumes dictates the Consumer Impact Forecast revenue at risk.
+5. If specific volumes/metrics aren't explicitly stated, provide reasonable estimates based on any financial or revenue data mentioned. \`baseline_volume\` on edges MUST be bounded between 10.0 and 500.0.
+6. CRITICAL: \`parent_company_id\` on EVERY SINGLE NODE (including 3rd-party suppliers like Foxconn) MUST exactly match the string used in \`metadata.anchor_company\`. This groups them together.
+7. Create edges representing the flow of goods.
+8. The output MUST be raw JSON.
 `;
 
 export default function DataUploadPanel({ onUploadSuccess }) {
@@ -103,7 +107,7 @@ export default function DataUploadPanel({ onUploadSuccess }) {
 
       const result = await model.generateContent([
         PROMPT,
-        `Document Context:\n${textContext}`
+        `Document Context: \n${textContext} `
       ]);
 
       const responseText = result.response.text();

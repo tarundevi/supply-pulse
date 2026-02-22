@@ -1,55 +1,48 @@
-# [Company Name] Supply Chain Data Template
+Company Name: [Enter Anchor Company Name]
+Ticker: [Enter Ticker/Abbreviation, e.g., AAPL]
+Industry: [Enter Industry, e.g., Consumer Electronics]
 
-**Company Name:** [Full Company Name]
-**Ticker/Abbreviation:** [e.g., AAPL, TSLA, QMOT]
-**Industry:** [e.g., Consumer Electronics, Automotive, Pharmaceuticals]
+Financial & Volume Data:
+- Annual Revenue: [e.g., $10 Billion]
+- Total Units Shipped (Annually): [e.g., 5 Million Units]
+- Average Retail Price per Unit: [e.g., $2,000]
+[Note: Providing overall financial/volume baseline here helps the system accurately forecast revenue at risk during disruptions.]
 
-## Headquarters (Anchor Node)
-*This is the central node of your supply chain.*
-- **Facility Name:** [Company Name] HQ
-- **Location:** [City, State/Country - e.g., Cupertino, California, USA]
-- **Key Functions/Categories:** [e.g., Final Assembly, Design, Software Engineering, Distribution]
-- **Description:** [Brief description of what happens here]
+Headquarters:
+[Company Name] HQ is located in [City], [Country]. 
+[State what happens at HQ, e.g., Final assembly, design, and software engineering. List the components/products shipped here from Tier 1 suppliers.]
+Estimated Volume Handled: [e.g., 100% of final assembly]
 
-## Tier 1 Suppliers (Direct Suppliers to HQ)
-*These facilities supply components directly to your Headquarters or main assembly hubs.*
+Tier 1 Suppliers (Final Assembly & Core Components):
+1. **[Facility Name / Partner Name]** ([City], [Country]):
+   - Role: [e.g., Assembles the final flagship device.]
+   - Materials Needed: [e.g., AI Chips, Batteries]
+   - Ships To: [e.g., Ships fully assembled devices to HQ.]
+   - Volume/Capacity: [What percentage of your total volume do they handle? e.g., Handles 60% of total assembly volume. Provide rough component counts if available.]
 
-**1. [Supplier Facility Name]**
-- **Company:** [Parent Company Name]
-- **Location:** [City, Country - e.g., Shenzhen, China]
-- **Categories Supplied:** [Identify what they provide - e.g., Batteries, AI Chips, Displays]
-- **Ships To:** [Where do they send these goods? e.g., Ships to HQ, Ships to Gigafactory Berlin]
-- **Details (Optional but helpful):** [Volume, lead times, or any risk factors]
+2. **[Facility Name / Partner Name]** ([City], [Country]):
+   - Role: [Description]
+   - Materials Needed: [Description]
+   - Ships To: [Where they ship to]
+   - Volume/Capacity: [Estimated volume/percentage]
 
-**2. [Supplier Facility Name]**
-- **Company:** [Parent Company Name]
-- **Location:** [City, Country]
-- **Categories Supplied:** [e.g., Sensors, Machined Parts]
-- **Ships To:** [e.g., Ships to HQ]
+[...Add as many Tier 1 suppliers as needed...]
 
-*(Add more Tier 1 suppliers as needed...)*
+Tier 2 Suppliers (Raw Materials & Sub-components):
+3. **[Facility Name / Partner Name]** ([City], [Country]):
+   - Role: [e.g., Mines and refines lithium.]
+   - Ships To: [e.g., Ships to Supplier 1.]
+   - Volume/Capacity: [e.g., Provides 80% of our global lithium supply.]
 
-## Tier 2 Suppliers (Sub-component & Raw Material Suppliers)
-*These facilities supply raw materials or sub-components to your Tier 1 suppliers, or directly to your factories.*
+4. **[Facility Name / Partner Name]** ([City], [Country]):
+   - Role: [Description]
+   - Ships To: [Where they ship to]
+   - Volume/Capacity: [Estimated volume/percentage]
 
-**3. [Supplier Facility Name]**
-- **Company:** [Parent Company Name]
-- **Location:** [City, Country - e.g., Antofagasta, Chile]
-- **Categories Supplied:** [e.g., Raw Lithium, Rare Earth Metals]
-- **Ships To:** [Which Tier 1 supplier do they ship to? e.g., Ships to Supplier 1 in Shenzhen]
-- **Details (Optional but helpful):** [Volume, lead times, or any risk factors]
+[...Add as many Tier 2/3 suppliers as needed...]
 
-**4. [Supplier Facility Name]**
-- **Company:** [Parent Company Name]
-- **Location:** [City, Country]
-- **Categories Supplied:** [e.g., Forged Steel, Raw Silicon]
-- **Ships To:** [e.g., Ships to Supplier 2]
-
-*(Add more Tier 2 suppliers and raw material sources as needed...)*
-
-## Supply Chain Flow (Optional Summary)
-*A brief summary of exactly how goods move from node to node helps the AI perfectly map the edges.*
-- [Supplier 3] ships [Material] to [Supplier 1].
-- [Supplier 4] ships [Material] to [Supplier 2].
-- [Supplier 1] ships [Component] to [HQ].
-- [Supplier 2] ships [Component] to [HQ].
+Supply Chain Links Summary:
+[List all logical shipping routes and explicitly note the estimated volume or percentage of goods on this route. This ensures accurate map edges and impact calculations.]
+- [Supplier Name] ([Source Country]) -> Ships [Material/Component] -> [Target Name] ([Target Country]) [Volume: e.g. 50k units/month]
+- [Supplier Name] ([Source Country]) -> Ships [Material/Component] -> [Target Name] ([Target Country]) [Volume: e.g. 100k units/month]
+- [Supplier Name] ([Source Country]) -> Ships [Material/Component] -> [Company Name] HQ ([Target Country]) [Volume: e.g. 100% of supply]
