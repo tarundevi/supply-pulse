@@ -1,6 +1,13 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 let genAI = null;
+const EVENT_MARKERS = [
+  /tariff/,
+  /sanction|embargo|ban|block trade/,
+  /interest rate|rate hike|rate increase|cost of capital/,
+  /currency|devaluation|appreciation|exchange rate|forex|fx/,
+  /export control|quota|restriction|export limit/,
+];
 
 function getClient() {
   if (!genAI) {
@@ -9,6 +16,23 @@ function getClient() {
     genAI = new GoogleGenerativeAI(key);
   }
   return genAI;
+}
+
+function countEventTypeMatches(text) {
+  return EVENT_MARKERS.reduce((count, pattern) => count + (pattern.test(text) ? 1 : 0), 0);
+}
+
+function hasMultiEventInput(userInput) {
+  const text = userInput.toLowerCase();
+  if (countEventTypeMatches(text) > 1) return true;
+
+  const segments = text
+    .split(/,|;|\bthen\b|\band\b/)
+    .map((segment) => segment.trim())
+    .filter(Boolean);
+
+  const segmentHits = segments.filter((segment) => countEventTypeMatches(segment) > 0).length;
+  return segmentHits > 1;
 }
 
 function regexFallback(userInput, config) {
@@ -92,27 +116,23 @@ Format: { "eventType": "tariff", "countries": ["CHN"], "categories": ["electroni
 2. sanction: Complete trade block
 Format: { "eventType": "sanction", "countries": ["RUS"], "categories": ["electronics"] }
 
-3. interest_rate: Global cost of capital change
-Format: { "eventType": "interest_rate", "rateChangePct": 0.02 }
-
-4. currency: Currency exchange rate change
+3. currency: Currency exchange rate change
 Format: { "eventType": "currency", "countries": ["CHN"], "currencyChangePct": -0.15 }
 
-5. export_control: Trade restrictions/quotas
+4. export_control: Trade restrictions/quotas
 Format: { "eventType": "export_control", "countries": ["CHN"], "categories": ["chips"], "restrictionLevel": 0.8 }
 
 Rules:
-- eventType: must be one of [tariff, sanction, interest_rate, currency, export_control]
-- countries: array of ISO3 codes from: ${(config.validCountries || []).join(', ')} (required for all except interest_rate)
-- categories: array from: ${(config.validCategories || []).join(', ')} (required for all except interest_rate)
+- eventType: must be one of [tariff, sanction, currency, export_control]
+- countries: array of ISO3 codes from: ${(config.validCountries || []).join(', ')} (required)
+- categories: array from: ${(config.validCategories || []).join(', ')} (required)
 - tariffRate: decimal percentage (25% -> 0.25)
-- rateChangePct: decimal for interest rate changes (2% -> 0.02)
 - currencyChangePct: negative for devaluation, positive for appreciation
 - restrictionLevel: 0-1 percentage (80% restriction -> 0.8)
 - isIncrement: true for phrases like "additional" or "increase by"
 - If user is vague on category, return all categories from appropriate mode
 
-Respond ONLY with valid JSON matching one of the above formats. Detect event type based on keywords like: sanction/embargo, interest rate, currency/devaluation, export control/quota.`;
+Respond ONLY with valid JSON matching one of the above formats. Detect event type based on keywords like: sanction/embargo, currency/devaluation, export control/quota.`;
 }
 
 export async function parseMacroEvent(userInput, config) {
@@ -120,6 +140,10 @@ export async function parseMacroEvent(userInput, config) {
   const validCategories = config?.validCategories || [];
 
   try {
+    if (hasMultiEventInput(userInput)) {
+      return { error: 'Please simulate one event at a time.' };
+    }
+
     let parsed;
     try {
       const client = getClient();
@@ -142,10 +166,12 @@ export async function parseMacroEvent(userInput, config) {
       return { error: 'Could not identify event type' };
     }
 
-    if (parsed.eventType !== 'interest_rate') {
-      if (countries.length === 0) return { error: 'Could not identify target country' };
-      if (categories.length === 0) return { error: 'Could not identify product category' };
+    if (parsed.eventType === 'interest_rate') {
+      return { error: 'Interest-rate simulation is currently unavailable. Use tariff, sanction, currency, or export control.' };
     }
+
+    if (countries.length === 0) return { error: 'Could not identify target country' };
+    if (categories.length === 0) return { error: 'Could not identify product category' };
 
     if (parsed.eventType === 'tariff') {
       if (typeof parsed.tariffRate !== 'number' || parsed.tariffRate <= 0 || parsed.tariffRate > 1) {
@@ -166,17 +192,6 @@ export async function parseMacroEvent(userInput, config) {
         eventType: 'sanction',
         countries,
         categories,
-      };
-    }
-
-    if (parsed.eventType === 'interest_rate') {
-      if (typeof parsed.rateChangePct !== 'number') {
-        return { error: 'Invalid interest rate change' };
-      }
-
-      return {
-        eventType: 'interest_rate',
-        rateChangePct: parsed.rateChangePct,
       };
     }
 

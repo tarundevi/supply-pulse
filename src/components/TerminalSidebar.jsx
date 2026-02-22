@@ -39,10 +39,6 @@ export default function TerminalSidebar({
         bannerText = `SANCTION: Trade blocked on ${macroEvent.categories.join(', ')} from ${macroEvent.countries.join(', ')}`;
         bannerStyle = { borderColor: COLORS.riskHigh, color: COLORS.riskHigh, background: 'rgba(239, 68, 68, 0.1)' };
         break;
-      case 'interest_rate':
-        bannerText = `INTEREST RATE: ${Math.round(macroEvent.rateChangePct * 100)}% rate change (global impact)`;
-        bannerStyle = { borderColor: COLORS.riskMedium, color: COLORS.riskMedium, background: 'rgba(245, 158, 11, 0.08)' };
-        break;
       case 'currency':
         const changeDir = macroEvent.currencyChangePct < 0 ? 'devaluation' : 'appreciation';
         bannerText = `CURRENCY: ${Math.round(Math.abs(macroEvent.currencyChangePct) * 100)}% ${changeDir} in ${macroEvent.countries.join(', ')}`;

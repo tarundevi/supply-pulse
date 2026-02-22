@@ -21,8 +21,6 @@ import {
   SCENARIO_MODES,
   MODE_CATEGORY_MAP,
   PARSER_CONFIG_BY_MODE,
-  INTEREST_RATE_COST_SENSITIVITY,
-  SANCTION_PRICE_SHOCK_FACTOR,
   EXPORT_CONTROL_COST_PREMIUM,
   CURRENCY_PASS_THROUGH_RATES,
 } from './utils/constants';
@@ -182,6 +180,12 @@ export default function App() {
 
   const [activeCategory, setActiveCategory] = useState(Object.keys(MODE_CATEGORY_MAP[DEFAULT_MODE])[0]);
 
+  const scenarioCategory = useMemo(() => {
+    if (!macroEvent || !macroEvent.categories?.length) return activeCategory;
+    if (macroEvent.categories.includes(activeCategory)) return activeCategory;
+    return macroEvent.categories[0];
+  }, [macroEvent, activeCategory]);
+
   useEffect(() => {
     setDisruptedNodeId(null);
     setMacroEvent(null);
@@ -257,10 +261,18 @@ export default function App() {
     [customCompanies, staticCompanyKeys]
   );
 
+  const handleMacroSimulate = useCallback((event) => {
+    setMacroEvent(event);
+    setSelectedRecId(null);
+    if (event?.categories?.length > 0 && !event.categories.includes(activeCategory)) {
+      setActiveCategory(event.categories[0]);
+    }
+  }, [activeCategory]);
+
   const simulatedGraph = useMemo(() => {
     if (!graph || !macroEvent) return graph;
 
-    const categoriesToAdjust = macroEvent.categories?.length ? macroEvent.categories : [activeCategory];
+    const categoriesToAdjust = macroEvent.categories?.length ? macroEvent.categories : [scenarioCategory];
 
     switch (macroEvent.eventType) {
       case 'tariff':
@@ -289,22 +301,6 @@ export default function App() {
                 (node.tariff_rate_by_category ? Object.keys(node.tariff_rate_by_category) : categoriesToAdjust)
                   .map((cat) => [cat, 9.99])
               ),
-            };
-          }),
-        };
-
-      case 'interest_rate':
-        return {
-          ...graph,
-          nodes: graph.nodes.map((node) => {
-            if (node.entity_type === 'anchor_company') return node;
-
-            const category = node.supplier_category || categoriesToAdjust[0];
-            const sensitivity = INTEREST_RATE_COST_SENSITIVITY[category] || 0.1;
-
-            return {
-              ...node,
-              unit_cost_index: (node.unit_cost_index || 1) * (1 + macroEvent.rateChangePct * sensitivity),
             };
           }),
         };
@@ -348,7 +344,7 @@ export default function App() {
       default:
         return graph;
     }
-  }, [graph, macroEvent, activeCategory]);
+  }, [graph, macroEvent, scenarioCategory]);
 
   const disruptedNode = useMemo(() => {
     if (!simulatedGraph || !disruptedNodeId) return null;
@@ -357,10 +353,6 @@ export default function App() {
 
   const affectedNodes = useMemo(() => {
     if (!simulatedGraph || !macroEvent) return [];
-
-    if (macroEvent.eventType === 'interest_rate') {
-      return simulatedGraph.nodes.filter((n) => n.entity_type !== 'anchor_company');
-    }
 
     return simulatedGraph.nodes.filter(
       (n) => n.entity_type !== 'anchor_company' && macroEvent.countries?.includes(n.country_iso3)
@@ -381,22 +373,22 @@ export default function App() {
     if (!simulatedGraph) return [];
 
     if (disruptedNodeId && macroEvent) {
-      return simulateCombinedScenario(disruptedNodeId, macroEvent, activeCategory, graph, weights);
+      return simulateCombinedScenario(disruptedNodeId, macroEvent, scenarioCategory, graph, weights);
     }
     if (disruptedNodeId) {
-      return rerouteSupplierOutage(disruptedNodeId, activeCategory, simulatedGraph, weights);
+      return rerouteSupplierOutage(disruptedNodeId, scenarioCategory, simulatedGraph, weights);
     }
     if (macroEvent) {
-      return rerouteMacroEventShock(macroEvent, activeCategory, simulatedGraph, weights);
+      return rerouteMacroEventShock(macroEvent, scenarioCategory, simulatedGraph, weights);
     }
     return [];
-  }, [simulatedGraph, graph, disruptedNodeId, macroEvent, activeCategory, weights]);
+  }, [simulatedGraph, graph, disruptedNodeId, macroEvent, scenarioCategory, weights]);
 
   const consumerImpact = useMemo(() => {
     if (!simulatedGraph) return null;
     const selectedRec = selectedRecId ? recommendations.find((r) => r.id === selectedRecId) : null;
-    return computeConsumerImpact(disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations, selectedRec);
-  }, [disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations, selectedRecId]);
+    return computeConsumerImpact(disruptedNode, scenarioCategory, simulatedGraph, graph, macroEvent, recommendations, selectedRec);
+  }, [disruptedNode, scenarioCategory, simulatedGraph, graph, macroEvent, recommendations, selectedRecId]);
 
   const handleNodeClick = useCallback((nodeId) => {
     console.log('[handleNodeClick] Called with nodeId:', nodeId);
@@ -519,11 +511,11 @@ export default function App() {
             </>
           )}
           <MacroEventSimulator
-            onSimulate={setMacroEvent}
+            onSimulate={handleMacroSimulate}
             onClear={() => setMacroEvent(null)}
             isActive={!!macroEvent}
             parserConfig={parserConfig}
-            placeholder={mode === 'company' ? 'e.g. 25% tariff on China chips, sanction Russia, 2% rate hike' : 'e.g. 25% tariff on China electronics, 15% currency devaluation'}
+            placeholder={mode === 'company' ? 'e.g. 25% tariff on China chips' : 'e.g. 25% tariff on China electronics'}
           />
         </div>
 
@@ -560,7 +552,7 @@ export default function App() {
           </div>
           <Globe
             graph={simulatedGraph}
-            activeCategory={activeCategory}
+            activeCategory={scenarioCategory}
             disruptedNodeId={disruptedNodeId}
             onNodeClick={handleNodeClick}
             recommendations={recommendations}
@@ -574,7 +566,7 @@ export default function App() {
         </div>
         <TerminalSidebar
           disruptedNode={disruptedNode}
-          activeCategory={activeCategory}
+          activeCategory={scenarioCategory}
           recommendations={recommendations}
           weights={weights}
           onWeightsChange={setWeights}

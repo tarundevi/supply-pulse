@@ -5,7 +5,6 @@ import { parseMacroEvent } from '../utils/parseMacroEvent';
 const EVENT_TYPES = [
   { type: 'tariff', example: '25% tariff on China chips', desc: 'Apply import tariffs to specific countries/categories' },
   { type: 'sanction', example: 'Sanction China', desc: 'Block trade with specific countries' },
-  { type: 'interest_rate', example: '2% interest rate hike', desc: 'Global cost of capital change' },
   { type: 'currency', example: '15% currency devaluation in China', desc: 'Exchange rate changes' },
   { type: 'export_control', example: '80% export restriction on China chips', desc: 'Trade quotas and restrictions' },
 ];
@@ -85,6 +84,9 @@ export default function MacroEventSimulator({ onSimulate, onClear, isActive, par
           Clear
         </button>
       )}
+      <span className="text-[10px] font-mono" style={{ color: COLORS.textMuted }}>
+        One event per simulation.
+      </span>
       <div className="relative">
         <button
           onClick={() => setShowHelp(!showHelp)}

@@ -362,10 +362,6 @@ export function rerouteExportControlShock(macroEvent, category, graph, weights) 
   });
 }
 
-export function rerouteInterestRateShock(macroEvent, category, graph, weights) {
-  return [];
-}
-
 export function rerouteMacroEventShock(macroEvent, category, graph, weights) {
   if (!macroEvent || !macroEvent.eventType) return [];
 
@@ -378,8 +374,6 @@ export function rerouteMacroEventShock(macroEvent, category, graph, weights) {
       return rerouteCurrencyShock(macroEvent, category, graph, weights);
     case 'export_control':
       return rerouteExportControlShock(macroEvent, category, graph, weights);
-    case 'interest_rate':
-      return rerouteInterestRateShock(macroEvent, category, graph, weights);
     default:
       return [];
   }
@@ -464,10 +458,6 @@ export function simulateCombinedScenario(disruptedNodeId, macroEvent, category, 
         }),
       };
       break;
-    }
-
-    case 'interest_rate': {
-      return [];
     }
 
     default:

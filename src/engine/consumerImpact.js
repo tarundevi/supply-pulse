@@ -4,7 +4,6 @@ import {
   RETAIL_PRICE_BASELINE,
   GROSS_MARGIN_RATES,
   SANCTION_PRICE_SHOCK_FACTOR,
-  INTEREST_RATE_COST_SENSITIVITY,
   EXPORT_CONTROL_COST_PREMIUM,
   CURRENCY_PASS_THROUGH_RATES,
   getNodeVolume,
@@ -70,18 +69,6 @@ export function computeConsumerImpact(disruptedNode, category, simulatedGraph, o
         eventEffectiveCostDelta = SANCTION_PRICE_SHOCK_FACTOR * affectedVolumeShare;
         affectedVolume = simVolume;
         eventDescription = `Supply Blocked`;
-        break;
-      }
-
-      case 'interest_rate': {
-        const sensitivity = INTEREST_RATE_COST_SENSITIVITY[categoryForConstants] || 0.1;
-        eventEffectiveCostDelta = macroEvent.rateChangePct * sensitivity;
-        
-        affectedVolume = simulatedGraph.nodes
-          .filter((n) => n.entity_type !== 'anchor_company')
-          .reduce((s, n) => s + (getNodeVolume(n, categoryForConstants)), 0);
-        
-        eventDescription = `Cost of Capital Increase`;
         break;
       }
 

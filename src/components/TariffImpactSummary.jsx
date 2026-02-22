@@ -100,45 +100,6 @@ export default function TariffImpactSummary({ affectedNodes, category, macroEven
         );
       }
 
-      case 'interest_rate': {
-        const totalAffectedVolume = affectedNodes.reduce(
-          (sum, n) => sum + (getNodeVolume(n, category)),
-          0
-        );
-
-        return (
-          <>
-            <div className="text-xs tracking-widest uppercase mt-3 mb-1" style={{ color: COLORS.textMuted }}>
-              Cost of Capital Increase ({categoryLabel})
-            </div>
-            <div className="border-t mb-2" style={{ borderColor: COLORS.separator }} />
-
-            <div className="space-y-1 text-xs">
-              <div className="flex justify-between">
-                <span style={{ color: COLORS.textMuted }}>Rate Change:</span>
-                <span className="font-bold text-amber-400">
-                  +{Math.round(macroEvent.rateChangePct * 100)}%
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span style={{ color: COLORS.textMuted }}>Scope:</span>
-                <span>GLOBAL (all suppliers)</span>
-              </div>
-              <div className="flex justify-between">
-                <span style={{ color: COLORS.textMuted }}>Total Affected Volume:</span>
-                <span className="font-bold">{formatVolume(totalAffectedVolume)} units / cycle</span>
-              </div>
-            </div>
-
-            <div className="border-t mt-2 pt-2" style={{ borderColor: COLORS.separator }} />
-
-            <div className="text-xs" style={{ color: COLORS.textMuted }}>
-              Note: Interest rate changes affect all suppliers globally. Rerouting will not reduce costs.
-            </div>
-          </>
-        );
-      }
-
       case 'currency': {
         const totalAffectedVolume = affectedNodes.reduce(
           (sum, n) => sum + (getNodeVolume(n, category)),
@@ -246,8 +207,6 @@ export default function TariffImpactSummary({ affectedNodes, category, macroEven
         return 'TARIFF IMPACT DETECTED';
       case 'sanction':
         return 'SUPPLY BLOCKED';
-      case 'interest_rate':
-        return 'COST OF CAPITAL INCREASE';
       case 'currency':
         return 'FX IMPACT';
       case 'export_control':

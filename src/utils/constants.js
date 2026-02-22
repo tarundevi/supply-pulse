@@ -28,7 +28,6 @@ export const ENTITY_TYPES = {
 export const EVENT_TYPES = {
   tariff: 'tariff',
   sanction: 'sanction',
-  interest_rate: 'interest_rate',
   currency: 'currency',
   export_control: 'export_control',
 };
@@ -37,7 +36,6 @@ export const SCENARIO_MODES = {
   outage: 'outage',
   tariff: 'tariff',
   sanction: 'sanction',
-  interest_rate: 'interest_rate',
   currency: 'currency',
   export_control: 'export_control',
   combined: 'combined',
