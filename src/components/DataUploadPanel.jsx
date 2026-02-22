@@ -14,7 +14,7 @@ The format must match the following schema:
       "id": "COMPANY_HQ", // Start with Company ticker/abbrev + _HQ
       "name": "Full Company Name HQ",
       "entity_type": "anchor_company",
-      "parent_company_id": "Company Name",
+      "parent_company_id": "Company Name", // MUST EXACTLY MATCH metadata.anchor_company string
       "lat": 0.0, // accurate latitude
       "lng": 0.0, // accurate longitude
       "country_iso3": "USA", // 3 letter ISO
@@ -33,6 +33,7 @@ The format must match the following schema:
     },
     // Add other facilities (suppliers, manufacturing plants)
     // For non-HQ nodes, entity_type MUST be "facility"
+    // CRITICAL: parent_company_id MUST be identical to the "anchor_company" string across ALL nodes, even for 3rd party suppliers!
     // Populate capacity_index (0.0 to 1.0), lead_time_days (integer), risk_score (0-10)
   ],
   "edges": [
@@ -41,7 +42,7 @@ The format must match the following schema:
       "target_id": "COMPANY_HQ",
       "category": "category1",
       "relationship_type": "supplies",
-      "baseline_volume": 100.0, // estimated volume
+      "baseline_volume": 100.0, // estimated volume (MUST BE BETWEEN 10.0 and 500.0)
       "baseline_share": 0.5, // 0.0 to 1.0
       "effective_cost_index": 1.0,
       "lead_time_days": 30,
@@ -72,9 +73,11 @@ Guidelines:
 1. Extract ALL mentioned facilities, suppliers, and manufacturing locations.
 2. Estimate coordinates (lat/lng) for each location based on the city/country provided.
 3. Infer the categories of components/products being supplied.
-4. If specific volumes/metrics aren't explicitly stated, provide reasonable estimates based on the context to ensure the graph looks populated.
-5. Create edges representing the flow of goods.
-6. The output MUST be raw JSON.
+4. If specific volumes/metrics aren't explicitly stated, provide reasonable estimates. 
+   - CRITICAL: \`baseline_volume\` on edges MUST be bounded between 10.0 and 500.0. Do not use massive numbers.
+5. CRITICAL: \`parent_company_id\` on EVERY SINGLE NODE (including 3rd-party suppliers like Foxconn) MUST exactly match the string used in \`metadata.anchor_company\`. This groups them together.
+6. Create edges representing the flow of goods.
+7. The output MUST be raw JSON.
 `;
 
 export default function DataUploadPanel({ onUploadSuccess }) {

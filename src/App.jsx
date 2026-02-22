@@ -44,8 +44,19 @@ export default function App() {
   // Load custom companies from localStorage on boot
   useEffect(() => {
     try {
-      const saved = JSON.parse(localStorage.getItem('supplyPulseCustomGraphs') || '[]');
-      setCustomCompanies(saved);
+      const savedKeys = JSON.parse(localStorage.getItem('supplyPulseCustomGraphs') || '[]');
+      const loadedGraphs = [];
+      for (const key of savedKeys) {
+        const fullGraphStr = localStorage.getItem(`supplyPulseGraph_${key}`);
+        if (fullGraphStr) {
+          try {
+            loadedGraphs.push(JSON.parse(fullGraphStr));
+          } catch (err) {
+            console.error('Failed to parse graph for key', key);
+          }
+        }
+      }
+      setCustomCompanies(loadedGraphs);
     } catch (e) {
       console.error('Failed to load custom graphs.', e);
     }
@@ -61,9 +72,9 @@ export default function App() {
         label: 'Custom Uploads',
         description: 'User-uploaded custom supply chain data.',
         companies: customCompanies.map(g => ({
-          key: g.metadata.company_key,
-          label: g.metadata.anchor_company || g.metadata.company_key
-        }))
+          key: g?.metadata?.company_key || 'unknown',
+          label: g?.metadata?.anchor_company || g?.metadata?.company_key || 'Unknown Upload'
+        })).filter((c) => c.key !== 'unknown')
       },
       ...INDUSTRY_COMPANY_MAP
     };
