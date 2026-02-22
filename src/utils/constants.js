@@ -191,6 +191,16 @@ const VOLUME_KEY_MAP = {
 };
 
 /**
+ * Get total volume for a node across ALL product keys (category-agnostic).
+ * Used for supplier outage scenarios where the entire node goes offline.
+ */
+export function getNodeTotalVolume(node) {
+  const volMap = node?.baseline_volume_by_category;
+  if (!volMap) return 0;
+  return Object.values(volMap).reduce((sum, v) => sum + v, 0);
+}
+
+/**
  * Get total volume for a node under a standard category by summing all matching product keys.
  */
 export function getNodeVolume(node, category) {
