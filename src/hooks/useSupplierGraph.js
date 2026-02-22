@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { INDUSTRY_COMPANY_MAP } from '../utils/industries';
+import { normalizeEconomicCategory } from '../utils/constants';
 
 const DISCOVERY_LIMIT_PER_CATEGORY = 20;
 const DISCOVERY_CONFIDENCE_THRESHOLD = 0.7;
@@ -173,6 +174,33 @@ function withDiscoveredNodes(graph, selectedCompany, poolEntries) {
         if (gcLower === catLower || gcLower === catLower + 's' || gcLower + 's' === catLower) {
           match = gc;
           break;
+        } else {
+          const canonicalGc = normalizeEconomicCategory(gcLower);
+          const canonicalCat = normalizeEconomicCategory(catLower);
+          if (canonicalGc && canonicalCat && canonicalGc === canonicalCat) {
+            match = gc;
+            break;
+          } else {
+            // Fallback: Check if they share a meaningful word root
+            const stem = (w) => w.replace(/ies$/, 'y').replace(/os$/, 'o').replace(/es$/, '').replace(/s$/, '');
+            const wordsA = catLower.split(/[_\s-]+/).filter(w => w.length > 2).map(stem);
+            const wordsB = gcLower.split(/[_\s-]+/).filter(w => w.length > 2).map(stem);
+
+            let hasOverlap = false;
+            for (const wa of wordsA) {
+              for (const wb of wordsB) {
+                if (wa === wb || (wa.length > 3 && wb.length > 3 && (wa.includes(wb) || wb.includes(wa)))) {
+                  hasOverlap = true;
+                  break;
+                }
+              }
+              if (hasOverlap) break;
+            }
+            if (hasOverlap) {
+              match = gc;
+              break;
+            }
+          }
         }
       }
 
