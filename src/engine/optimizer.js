@@ -1,4 +1,4 @@
-import { RISK_THRESHOLDS } from '../utils/constants';
+import { RISK_THRESHOLDS, getNodeVolume } from '../utils/constants';
 
 function norm(value, min, max) {
   if (max <= min) return 0;
@@ -17,7 +17,7 @@ function effectiveCost(node, category) {
 }
 
 function categoryVolume(node, category) {
-  return node.baseline_volume_by_category?.[category] || 0;
+  return getNodeVolume(node, category);
 }
 
 function hasCategory(node, category) {
