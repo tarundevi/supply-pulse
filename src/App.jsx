@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import Globe from './components/Globe';
 import TerminalSidebar from './components/TerminalSidebar';
 import CategoryFilter from './components/CategoryFilter';
@@ -7,7 +7,8 @@ import CompanyFilter from './components/CompanyFilter';
 import DestinationFilter from './components/DestinationFilter';
 import { INDUSTRY_COMPANY_MAP } from './utils/industries';
 import MacroEventSimulator from './components/MacroEventSimulator';
-import { useSupplierGraph } from './hooks/useSupplierGraph';
+import DataUploadPanel from './components/DataUploadPanel';
+import { useSupplierGraph, saveCustomGraph } from './hooks/useSupplierGraph';
 import {
   rerouteSupplierOutage,
   rerouteMacroEventShock,
@@ -27,6 +28,8 @@ import {
 } from './utils/constants';
 
 const DEFAULT_MODE = (import.meta.env.VITE_APP_MODE || 'company').toLowerCase() === 'country' ? 'country' : 'company';
+const CUSTOM_GRAPHS_STORAGE_KEY = 'supplyPulseCustomGraphs';
+const CUSTOM_GRAPH_STORAGE_PREFIX = 'supplyPulse_graph_';
 
 export default function App() {
   const [mode, setMode] = useState(DEFAULT_MODE);
@@ -39,8 +42,83 @@ export default function App() {
   // New for company mode
   const [selectedIndustry, setSelectedIndustry] = useState(Object.keys(INDUSTRY_COMPANY_MAP)[0]);
   const [selectedCompany, setSelectedCompany] = useState(INDUSTRY_COMPANY_MAP[Object.keys(INDUSTRY_COMPANY_MAP)[0]].companies[0].key);
+  const [customCompanies, setCustomCompanies] = useState([]);
+
+  // Load and normalize custom companies from localStorage on boot.
+  useEffect(() => {
+    try {
+      const rawSaved = JSON.parse(localStorage.getItem(CUSTOM_GRAPHS_STORAGE_KEY) || '[]');
+      const saved = Array.isArray(rawSaved) ? rawSaved : [];
+      const seenKeys = new Set();
+      const normalized = [];
+
+      for (const entry of saved) {
+        let key = null;
+        let label = null;
+
+        if (typeof entry === 'string') {
+          key = entry;
+        } else if (entry && typeof entry === 'object') {
+          if (entry.key) {
+            key = String(entry.key);
+            label = entry.label ? String(entry.label) : null;
+          } else if (entry.metadata?.company_key) {
+            key = String(entry.metadata.company_key);
+            label = entry.metadata.anchor_company ? String(entry.metadata.anchor_company) : null;
+          }
+        }
+
+        if (!key || seenKeys.has(key)) continue;
+
+        if (!label) {
+          try {
+            const graphRaw = localStorage.getItem(`${CUSTOM_GRAPH_STORAGE_PREFIX}${key}`);
+            if (graphRaw) {
+              const parsedGraph = JSON.parse(graphRaw);
+              label = parsedGraph?.metadata?.anchor_company || parsedGraph?.metadata?.company_key || null;
+            }
+          } catch (hydrateError) {
+            console.error(`Failed to hydrate custom graph label for ${key}.`, hydrateError);
+          }
+        }
+
+        normalized.push({ key, label: label || key });
+        seenKeys.add(key);
+      }
+
+      setCustomCompanies(normalized);
+      localStorage.setItem(CUSTOM_GRAPHS_STORAGE_KEY, JSON.stringify(normalized));
+    } catch (e) {
+      console.error('Failed to load custom graphs.', e);
+      setCustomCompanies([]);
+    }
+  }, []);
+
+  const staticCompanyKeys = useMemo(
+    () =>
+      new Set(
+        Object.values(INDUSTRY_COMPANY_MAP)
+          .flatMap((industry) => industry.companies || [])
+          .map((company) => company.key)
+          .filter(Boolean)
+      ),
+    []
+  );
 
   const { graphs, loading, error } = useSupplierGraph(selectedCompany);
+
+  // Dynamically build the Industry map to include Custom Uploads.
+  const currentIndustryMap = useMemo(() => {
+    if (customCompanies.length === 0) return INDUSTRY_COMPANY_MAP;
+    return {
+      custom_uploads: {
+        label: 'Custom Uploads',
+        description: 'User-uploaded custom supply chain data.',
+        companies: customCompanies.map(({ key, label }) => ({ key, label })),
+      },
+      ...INDUSTRY_COMPANY_MAP,
+    };
+  }, [customCompanies]);
 
   const graph = useMemo(() => {
     if (mode === 'company' && graphs.companyChain) return graphs.companyChain;
@@ -107,24 +185,31 @@ export default function App() {
   useEffect(() => {
     setDisruptedNodeId(null);
     setMacroEvent(null);
-    // Reset industry/company on mode switch
+    // Reset industry/company on mode switch.
     if (mode === 'company') {
-      setSelectedIndustry(Object.keys(INDUSTRY_COMPANY_MAP)[0]);
-      setSelectedCompany(INDUSTRY_COMPANY_MAP[Object.keys(INDUSTRY_COMPANY_MAP)[0]].companies[0].key);
+      const industryKeys = Object.keys(currentIndustryMap);
+      const firstIndustry = industryKeys[0];
+      if (firstIndustry) {
+        setSelectedIndustry(firstIndustry);
+        const firstCompany = currentIndustryMap[firstIndustry]?.companies?.[0]?.key;
+        if (firstCompany) {
+          setSelectedCompany(firstCompany);
+        }
+      }
     }
-  }, [mode]);
+  }, [mode, currentIndustryMap]);
 
-  // Track if we're currently processing a node click to prevent resets
+  // Track if we're currently processing a node click to prevent resets.
   const [isProcessingClick, setIsProcessingClick] = useState(false);
 
   useEffect(() => {
     console.log('[categories effect] Running, isProcessingClick:', isProcessingClick, 'activeCategory:', activeCategory);
-    // Skip if we're currently processing a node click
+    // Skip if we're currently processing a node click.
     if (isProcessingClick) {
       console.log('[categories effect] Skipping due to isProcessingClick');
       return;
     }
-    
+
     const keys = Object.keys(categories || {});
     console.log('[categories effect] keys:', keys, 'includes activeCategory:', keys.includes(activeCategory));
     if (keys.length > 0 && !keys.includes(activeCategory)) {
@@ -134,6 +219,43 @@ export default function App() {
       setMacroEvent(null);
     }
   }, [categories, activeCategory, isProcessingClick]);
+
+  const handleCustomUpload = useCallback(
+    (parsedGraph) => {
+      const existingCustomKeys = new Set(customCompanies.map((company) => company.key));
+      let key = String(parsedGraph?.metadata?.company_key || `custom_${Date.now()}`);
+      const baseKey = key;
+      let suffix = 1;
+      while (staticCompanyKeys.has(key) || existingCustomKeys.has(key)) {
+        key = `${baseKey}_${Date.now()}_${suffix}`;
+        suffix += 1;
+      }
+
+      const graphToSave = {
+        ...parsedGraph,
+        metadata: {
+          ...parsedGraph.metadata,
+          company_key: key,
+          mode: 'company',
+        },
+      };
+
+      saveCustomGraph(graphToSave);
+
+      const label = graphToSave.metadata?.anchor_company || key;
+      setCustomCompanies((prev) => {
+        const next = [{ key, label }, ...prev.filter((company) => company.key !== key)];
+        localStorage.setItem(CUSTOM_GRAPHS_STORAGE_KEY, JSON.stringify(next));
+        return next;
+      });
+
+      // Auto switch to the new company.
+      setMode('company');
+      setSelectedIndustry('custom_uploads');
+      setSelectedCompany(key);
+    },
+    [customCompanies, staticCompanyKeys]
+  );
 
   const simulatedGraph = useMemo(() => {
     if (!graph || !macroEvent) return graph;
@@ -272,7 +394,7 @@ export default function App() {
 
   const consumerImpact = useMemo(() => {
     if (!simulatedGraph) return null;
-    const selectedRec = selectedRecId ? recommendations.find(r => r.id === selectedRecId) : null;
+    const selectedRec = selectedRecId ? recommendations.find((r) => r.id === selectedRecId) : null;
     return computeConsumerImpact(disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations, selectedRec);
   }, [disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations, selectedRecId]);
 
@@ -281,14 +403,14 @@ export default function App() {
     console.log('[handleNodeClick] Current disruptedNodeId:', disruptedNodeId);
     console.log('[handleNodeClick] Current activeCategory:', activeCategory);
     console.log('[handleNodeClick] Current mode:', mode);
-    
+
     if (!nodeId) {
       console.log('[handleNodeClick] No nodeId, setting disruptedNodeId to null');
       setDisruptedNodeId(null);
       return;
     }
 
-    // Prevent the categories effect from resetting our state
+    // Prevent the categories effect from resetting our state.
     console.log('[handleNodeClick] Setting isProcessingClick to true');
     setIsProcessingClick(true);
 
@@ -303,7 +425,7 @@ export default function App() {
       return nodeId;
     });
 
-    // Auto-switch activeCategory to match clicked node's category
+    // Auto-switch activeCategory to match clicked node's category.
     if (mode === 'company' && simulatedGraph) {
       const clickedNode = simulatedGraph.nodes.find((n) => n.id === nodeId);
       console.log('[handleNodeClick] Clicked node:', clickedNode?.name, clickedNode?.categories);
@@ -314,7 +436,7 @@ export default function App() {
       }
     }
 
-    // Allow the effect to run again after state updates
+    // Allow the effect to run again after state updates.
     console.log('[handleNodeClick] Scheduling isProcessingClick reset');
     setTimeout(() => {
       console.log('[handleNodeClick] Setting isProcessingClick to false');
@@ -322,12 +444,12 @@ export default function App() {
     }, 0);
   }, [mode, simulatedGraph, disruptedNodeId, activeCategory]);
 
-  // Log disruptedNodeId changes
+  // Log disruptedNodeId changes.
   useEffect(() => {
     console.log('[disruptedNodeId effect] disruptedNodeId changed to:', disruptedNodeId);
   }, [disruptedNodeId]);
 
-  // Clear selected recommendation when disrupted node changes
+  // Clear selected recommendation when disrupted node changes.
   useEffect(() => {
     setSelectedRecId(null);
   }, [disruptedNodeId, macroEvent]);
@@ -380,14 +502,14 @@ export default function App() {
                 value={selectedIndustry}
                 onChange={(ind) => {
                   setSelectedIndustry(ind);
-                  setSelectedCompany(INDUSTRY_COMPANY_MAP[ind].companies[0].key);
+                  setSelectedCompany(currentIndustryMap[ind].companies[0].key);
                 }}
-                industries={INDUSTRY_COMPANY_MAP}
+                industries={currentIndustryMap}
               />
               <CompanyFilter
                 value={selectedCompany}
                 onChange={setSelectedCompany}
-                companies={INDUSTRY_COMPANY_MAP[selectedIndustry].companies}
+                companies={currentIndustryMap[selectedIndustry]?.companies || []}
               />
             </>
           ) : (
@@ -422,6 +544,7 @@ export default function App() {
 
       <div className="flex-1 flex flex-row overflow-hidden">
         <div className="flex-1 min-w-0 bg-black relative">
+          <DataUploadPanel onUploadSuccess={handleCustomUpload} />
           {/* Floating Pause Button */}
           <div
             style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 20 }}

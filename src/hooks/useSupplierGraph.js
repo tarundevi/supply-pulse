@@ -238,6 +238,21 @@ function withDiscoveredNodes(graph, selectedCompany, poolEntries) {
   };
 }
 
+// Save a custom generated graph to local storage.
+export function saveCustomGraph(graph) {
+  const key = graph?.metadata?.company_key;
+  if (!key) {
+    console.error('Failed to save custom graph to localStorage: missing metadata.company_key');
+    return;
+  }
+
+  try {
+    localStorage.setItem(`supplyPulse_graph_${key}`, JSON.stringify(graph));
+  } catch (e) {
+    console.error('Failed to save custom graph to localStorage', e);
+  }
+}
+
 export function useSupplierGraph(selectedCompany) {
   const [baseGraphs, setBaseGraphs] = useState({ company: null, country: null });
   const [companyChain, setCompanyChain] = useState(null);
@@ -247,7 +262,7 @@ export function useSupplierGraph(selectedCompany) {
   const rawChainCache = useRef({});
   const discoveryPoolCache = useRef(null);
 
-  // Load the base graphs once on mount
+  // Load the base graphs once on mount.
   useEffect(() => {
     async function loadBaseGraphs() {
       try {
@@ -287,7 +302,7 @@ export function useSupplierGraph(selectedCompany) {
     loadBaseGraphs();
   }, []);
 
-  // Dynamically load per-company supply chain when selectedCompany changes
+  // Dynamically load per-company supply chain when selectedCompany changes.
   useEffect(() => {
     if (!selectedCompany) {
       setCompanyChain(null);
@@ -335,7 +350,17 @@ export function useSupplierGraph(selectedCompany) {
 
     async function loadChain() {
       try {
-        const data = await fetchChain(selectedCompany);
+        let customGraph = null;
+        try {
+          const customGraphRaw = localStorage.getItem(`supplyPulse_graph_${selectedCompany}`);
+          if (customGraphRaw) {
+            customGraph = JSON.parse(customGraphRaw);
+          }
+        } catch (e) {
+          console.error('Could not load from localStorage', e);
+        }
+
+        const data = customGraph || await fetchChain(selectedCompany);
         if (!data) {
           if (isActive) setCompanyChain(null);
           return;
