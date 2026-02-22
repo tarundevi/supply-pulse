@@ -166,3 +166,54 @@ export const GROSS_MARGIN_RATES = {
   electronics: 0.38, textiles: 0.52, chemicals: 0.30, machinery: 0.28, vehicles: 0.22,
   chips: 0.55, displays: 0.35, batteries: 0.32, assembly: 0.18, sensors: 0.45,
 };
+
+/**
+ * Maps standard UI categories to product-specific volume keys found in supply chain data.
+ * A node's baseline_volume_by_category may use product-specific keys (e.g. "ai_chips")
+ * instead of standard categories (e.g. "chips"). This mapping resolves them.
+ */
+const VOLUME_KEY_MAP = {
+  // Company mode categories
+  chips: ['chips', 'ai_chips', 'semiconductors', 'tpu_chips', 'graviton_chips', 'graphics_cards'],
+  displays: ['displays', 'tvs', 'screens'],
+  batteries: ['batteries', 'ev_batteries'],
+  assembly: ['assembly', 'iphones', 'pixel_devices', 'echo_devices', 'macbooks', 'surface_devices', 'xbox', 'smart_home'],
+  sensors: ['sensors', 'cameras', 'audio', 'networking', 'robotics'],
+  // Country mode categories
+  electronics: ['electronics', 'semiconductors', 'ai_chips', 'chips', 'displays', 'tvs', 'graphics_cards',
+    'cloud_servers', 'aws_servers', 'data_storage', 'networking', 'home_appliances',
+    'washing_machines', 'refrigerators', 'air_conditioners', 'ovens', 'hvac', 'compressors'],
+  textiles: ['textiles', 'fashion', 'leather_goods', 'footwear', 'eyewear'],
+  chemicals: ['chemicals', 'petrochemicals', 'refined_products', 'refined_fuels', 'base_oils', 'lubricants',
+    'perfumes', 'wines_spirits'],
+  machinery: ['machinery', 'engines', 'ev_components', 'logistics', 'renewables'],
+  vehicles: ['vehicles', 'ev_platforms', 'trucks'],
+};
+
+/**
+ * Get total volume for a node across ALL product keys (category-agnostic).
+ * Used for supplier outage scenarios where the entire node goes offline.
+ */
+export function getNodeTotalVolume(node) {
+  const volMap = node?.baseline_volume_by_category;
+  if (!volMap) return 0;
+  return Object.values(volMap).reduce((sum, v) => sum + v, 0);
+}
+
+/**
+ * Get total volume for a node under a standard category by summing all matching product keys.
+ */
+export function getNodeVolume(node, category) {
+  const volMap = node?.baseline_volume_by_category;
+  if (!volMap) return 0;
+  // Direct match first
+  if (volMap[category] !== undefined) return volMap[category];
+  // Sum all mapped product keys
+  const keys = VOLUME_KEY_MAP[category];
+  if (!keys) return 0;
+  let total = 0;
+  for (const k of keys) {
+    if (volMap[k] !== undefined) total += volMap[k];
+  }
+  return total;
+}

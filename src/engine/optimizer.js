@@ -1,4 +1,4 @@
-import { RISK_THRESHOLDS } from '../utils/constants';
+import { RISK_THRESHOLDS, getNodeVolume, getNodeTotalVolume } from '../utils/constants';
 
 const DISCOVERY_CONFIDENCE_THRESHOLD = 0.7;
 const MAX_SCORED_CANDIDATES = 7;
@@ -21,7 +21,7 @@ function effectiveCost(node, category) {
 }
 
 function categoryVolume(node, category) {
-  return node.baseline_volume_by_category?.[category] || 0;
+  return getNodeVolume(node, category);
 }
 
 function discoveredCategoryVolume(node, category) {
@@ -188,7 +188,7 @@ export function rerouteSupplierOutage(disruptedNodeId, category, graph, weights,
   const disruptedNode = graph.nodes.find((n) => n.id === disruptedNodeId);
   if (!disruptedNode) return [];
 
-  const disruptedVolume = categoryVolume(disruptedNode, category);
+  const disruptedVolume = getNodeTotalVolume(disruptedNode);
   if (disruptedVolume <= 0) return [];
 
   return buildScenarioRecommendations({

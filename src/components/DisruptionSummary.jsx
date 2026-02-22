@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { COLORS, MODE_CATEGORY_MAP } from '../utils/constants';
+import { COLORS, MODE_CATEGORY_MAP, getNodeTotalVolume } from '../utils/constants';
 import { formatPercent, formatVolume } from '../utils/formatters';
 
 function riskBar(eventCount) {
@@ -11,9 +11,9 @@ export default function DisruptionSummary({ node, category, graph, mode = 'compa
   if (!node) return null;
 
   const categoryLabel = MODE_CATEGORY_MAP[mode]?.[category]?.label || category;
-  const disruptedVolume = node.baseline_volume_by_category?.[category] || 0;
+  const disruptedVolume = getNodeTotalVolume(node);
 
-  const allEdges = (graph?.edges || []).filter((e) => e.category === category);
+  const allEdges = graph?.edges || [];
   const totalVolume = allEdges.reduce((sum, e) => sum + (e.baseline_volume || 0), 0);
   const nodeVolume = allEdges
     .filter((e) => e.source_id === node.id)

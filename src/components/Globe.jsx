@@ -1,6 +1,6 @@
 ﻿import React, { useRef, useEffect, useMemo, useState, useCallback } from 'react';
 import GlobeGL from 'react-globe.gl';
-import { COLORS, RISK_THRESHOLDS } from '../utils/constants';
+import { COLORS, RISK_THRESHOLDS, getNodeVolume } from '../utils/constants';
 
 // Parse rgba string into components and return a darkened version for background boxes
 function darkenRgba(rgbaStr, bgAlpha = 0.85) {
@@ -172,7 +172,7 @@ export default function Globe({
       const isOutOfNetwork = node.is_discovered || node.network_status === 'out_of_network';
       const vol = isOutOfNetwork
         ? (node.max_volume_by_category?.[activeCategory] || 0)
-        : (node.baseline_volume_by_category?.[activeCategory] || 0);
+        : getNodeVolume(node, activeCategory);
       const isDisrupted = node.id === disruptedNodeId;
       const isChainFacility = hasCompanyChain && node.parent_company_id === chainParentId;
       return {

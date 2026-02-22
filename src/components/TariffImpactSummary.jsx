@@ -1,5 +1,5 @@
 import React from 'react';
-import { COLORS, MODE_CATEGORY_MAP } from '../utils/constants';
+import { COLORS, MODE_CATEGORY_MAP, getNodeVolume } from '../utils/constants';
 import { formatPercent, formatVolume } from '../utils/formatters';
 
 export default function TariffImpactSummary({ affectedNodes, category, macroEvent, mode = 'company' }) {
@@ -12,7 +12,7 @@ export default function TariffImpactSummary({ affectedNodes, category, macroEven
     switch (eventType) {
       case 'tariff': {
         const totalAffectedVolume = affectedNodes.reduce(
-          (sum, n) => sum + (n.baseline_volume_by_category?.[category] || 0),
+          (sum, n) => sum + (getNodeVolume(n, category)),
           0
         );
 
@@ -47,7 +47,7 @@ export default function TariffImpactSummary({ affectedNodes, category, macroEven
                 <div key={node.id} className="flex justify-between">
                   <span style={{ color: COLORS.textMuted }}>{node.name} ({node.country_iso3})</span>
                   <span className="text-amber-400">
-                    {formatVolume(node.baseline_volume_by_category?.[category] || 0)} @ {formatPercent(node.tariff_rate_by_category?.[category] || 0)}
+                    {formatVolume(getNodeVolume(node, category))} @ {formatPercent(node.tariff_rate_by_category?.[category] || 0)}
                   </span>
                 </div>
               ))}
@@ -58,7 +58,7 @@ export default function TariffImpactSummary({ affectedNodes, category, macroEven
 
       case 'sanction': {
         const totalBlockedVolume = affectedNodes.reduce(
-          (sum, n) => sum + (n.baseline_volume_by_category?.[category] || 0),
+          (sum, n) => sum + (getNodeVolume(n, category)),
           0
         );
 
@@ -91,7 +91,7 @@ export default function TariffImpactSummary({ affectedNodes, category, macroEven
                 <div key={node.id} className="flex justify-between">
                   <span style={{ color: COLORS.textMuted }}>{node.name} ({node.country_iso3})</span>
                   <span className="text-red-400">
-                    BLOCKED - {formatVolume(node.baseline_volume_by_category?.[category] || 0)}
+                    BLOCKED - {formatVolume(getNodeVolume(node, category))}
                   </span>
                 </div>
               ))}
@@ -102,7 +102,7 @@ export default function TariffImpactSummary({ affectedNodes, category, macroEven
 
       case 'interest_rate': {
         const totalAffectedVolume = affectedNodes.reduce(
-          (sum, n) => sum + (n.baseline_volume_by_category?.[category] || 0),
+          (sum, n) => sum + (getNodeVolume(n, category)),
           0
         );
 
@@ -141,7 +141,7 @@ export default function TariffImpactSummary({ affectedNodes, category, macroEven
 
       case 'currency': {
         const totalAffectedVolume = affectedNodes.reduce(
-          (sum, n) => sum + (n.baseline_volume_by_category?.[category] || 0),
+          (sum, n) => sum + (getNodeVolume(n, category)),
           0
         );
         const changeDir = macroEvent.currencyChangePct < 0 ? 'Devaluation' : 'Appreciation';
@@ -188,7 +188,7 @@ export default function TariffImpactSummary({ affectedNodes, category, macroEven
 
       case 'export_control': {
         const totalAffectedVolume = affectedNodes.reduce(
-          (sum, n) => sum + (n.baseline_volume_by_category?.[category] || 0),
+          (sum, n) => sum + (getNodeVolume(n, category)),
           0
         );
         const capacityReduction = Math.round(macroEvent.restrictionLevel * 100);

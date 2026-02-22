@@ -7,6 +7,8 @@ import {
   INTEREST_RATE_COST_SENSITIVITY,
   EXPORT_CONTROL_COST_PREMIUM,
   CURRENCY_PASS_THROUGH_RATES,
+  getNodeVolume,
+  getNodeTotalVolume,
 } from '../utils/constants';
 
 /**
@@ -46,7 +48,7 @@ export function computeConsumerImpact(disruptedNode, category, simulatedGraph, o
         
         affectedVolume = simulatedGraph.nodes
           .filter((n) => n.entity_type !== 'anchor_company' && macroEvent.countries.includes(n.country_iso3))
-          .reduce((s, n) => s + (n.baseline_volume_by_category?.[categoryForConstants] || 0), 0);
+          .reduce((s, n) => s + (getNodeVolume(n, categoryForConstants)), 0);
         
         eventDescription = `Tariff Impact`;
         break;
@@ -60,8 +62,8 @@ export function computeConsumerImpact(disruptedNode, category, simulatedGraph, o
           (n) => n.entity_type !== 'anchor_company' && macroEvent.countries.includes(n.country_iso3),
         );
         
-        const simVolume = simNodes.reduce((s, n) => s + (n.baseline_volume_by_category?.[categoryForConstants] || 0), 0);
-        const origVolume = origNodes.reduce((s, n) => s + (n.baseline_volume_by_category?.[categoryForConstants] || 0), 0);
+        const simVolume = simNodes.reduce((s, n) => s + (getNodeVolume(n, categoryForConstants)), 0);
+        const origVolume = origNodes.reduce((s, n) => s + (getNodeVolume(n, categoryForConstants)), 0);
         
         const affectedVolumeShare = origVolume > 0 ? (origVolume - simVolume) / origVolume : 0;
         
@@ -77,7 +79,7 @@ export function computeConsumerImpact(disruptedNode, category, simulatedGraph, o
         
         affectedVolume = simulatedGraph.nodes
           .filter((n) => n.entity_type !== 'anchor_company')
-          .reduce((s, n) => s + (n.baseline_volume_by_category?.[categoryForConstants] || 0), 0);
+          .reduce((s, n) => s + (getNodeVolume(n, categoryForConstants)), 0);
         
         eventDescription = `Cost of Capital Increase`;
         break;
@@ -105,7 +107,7 @@ export function computeConsumerImpact(disruptedNode, category, simulatedGraph, o
         
         affectedVolume = simulatedGraph.nodes
           .filter((n) => n.entity_type !== 'anchor_company' && macroEvent.countries.includes(n.country_iso3))
-          .reduce((s, n) => s + (n.baseline_volume_by_category?.[categoryForConstants] || 0), 0);
+          .reduce((s, n) => s + (getNodeVolume(n, categoryForConstants)), 0);
         
         eventDescription = `FX Impact`;
         break;
@@ -127,7 +129,7 @@ export function computeConsumerImpact(disruptedNode, category, simulatedGraph, o
         const costPremium = EXPORT_CONTROL_COST_PREMIUM[categoryForConstants] || 0.2;
         eventEffectiveCostDelta = capacityLoss * costPremium;
         
-        affectedVolume = simNodes.reduce((s, n) => s + (n.baseline_volume_by_category?.[categoryForConstants] || 0), 0);
+        affectedVolume = simNodes.reduce((s, n) => s + (getNodeVolume(n, categoryForConstants)), 0);
         eventDescription = `Export Restriction`;
         break;
       }
@@ -139,7 +141,21 @@ export function computeConsumerImpact(disruptedNode, category, simulatedGraph, o
     }
   } else if (disruptedNode) {
     eventDescription = `Supplier Disruption`;
-    affectedVolume = disruptedNode.baseline_volume_by_category?.[categoryForConstants] || 0;
+    affectedVolume = getNodeTotalVolume(disruptedNode);
+
+    // Supplier outage: cost delta = weighted-avg reroute cost across all allocated alternatives
+    if (recommendations?.length > 0) {
+      const totalAlloc = recommendations.reduce((s, r) => s + (r.allocatedVolume || 0), 0);
+      if (totalAlloc > 0) {
+        eventEffectiveCostDelta = recommendations.reduce(
+          (s, r) => s + (r.costDeltaPct ?? 0) * (r.allocatedVolume || 0), 0
+        ) / totalAlloc;
+      } else {
+        eventEffectiveCostDelta = recommendations[0].costDeltaPct ?? 0;
+      }
+      // Outage always has a cost impact — even "cheaper" reroutes carry disruption risk premium
+      eventEffectiveCostDelta = Math.max(eventEffectiveCostDelta, 0.02);
+    }
   }
 
   const bestCostDelta = recommendations?.length > 0 ? (recommendations[0].costDeltaPct ?? 0) : 0;
@@ -180,5 +196,17 @@ export function computeConsumerImpact(disruptedNode, category, simulatedGraph, o
     hasNegativeImpact,
     eventDescription,
     eventType: macroEvent?.eventType || null,
+    // Formula inputs for transparent display
+    inputs: {
+      category,
+      passThrough,
+      elasticity,
+      markupFactor: baseline.markupFactor,
+      avgUnitPrice: baseline.avgUnitPrice,
+      grossMargin,
+      effectiveCostDelta,
+      affectedVolume,
+      bestCostDelta,
+    },
   };
 }
