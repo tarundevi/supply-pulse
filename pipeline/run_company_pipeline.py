@@ -21,6 +21,7 @@ def run_step(name: str, cmd: list[str]) -> None:
 def main(args):
     python = sys.executable
     run_step("Load manual baseline", [python, "load_manual_supplier_baseline.py"])
+    run_step("Load discovered supplier catalog", [python, "load_discovered_supplier_catalog.py"])
     run_step("Pull EDGAR company", [python, "pull_edgar_company.py", "--anchor-company", args.anchor_company, "--ticker", args.ticker])
     run_step("Pull GDELT risk", [python, "pull_gdelt_company_risk.py", "--timespan", args.gdelt_timespan])
     run_step("Pull country tariffs", [python, "pull_country_tariffs.py"])

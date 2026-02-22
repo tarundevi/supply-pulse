@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import Globe from './components/Globe';
 import TerminalSidebar from './components/TerminalSidebar';
 import CategoryFilter from './components/CategoryFilter';
@@ -28,6 +28,8 @@ import {
 } from './utils/constants';
 
 const DEFAULT_MODE = (import.meta.env.VITE_APP_MODE || 'company').toLowerCase() === 'country' ? 'country' : 'company';
+const CUSTOM_GRAPHS_STORAGE_KEY = 'supplyPulseCustomGraphs';
+const CUSTOM_GRAPH_STORAGE_PREFIX = 'supplyPulse_graph_';
 
 export default function App() {
   const [mode, setMode] = useState(DEFAULT_MODE);
@@ -36,47 +38,85 @@ export default function App() {
   const [weights, setWeights] = useState(DEFAULT_WEIGHTS);
   const [macroEvent, setMacroEvent] = useState(null);
   const [autoRotate, setAutoRotate] = useState(true);
+  const [selectedRecId, setSelectedRecId] = useState(null);
   // New for company mode
   const [selectedIndustry, setSelectedIndustry] = useState(Object.keys(INDUSTRY_COMPANY_MAP)[0]);
   const [selectedCompany, setSelectedCompany] = useState(INDUSTRY_COMPANY_MAP[Object.keys(INDUSTRY_COMPANY_MAP)[0]].companies[0].key);
   const [customCompanies, setCustomCompanies] = useState([]);
 
-  // Load custom companies from localStorage on boot
+  // Load and normalize custom companies from localStorage on boot.
   useEffect(() => {
     try {
-      const savedKeys = JSON.parse(localStorage.getItem('supplyPulseCustomGraphs') || '[]');
-      const loadedGraphs = [];
-      for (const key of savedKeys) {
-        const fullGraphStr = localStorage.getItem(`supplyPulseGraph_${key}`);
-        if (fullGraphStr) {
-          try {
-            loadedGraphs.push(JSON.parse(fullGraphStr));
-          } catch (err) {
-            console.error('Failed to parse graph for key', key);
+      const rawSaved = JSON.parse(localStorage.getItem(CUSTOM_GRAPHS_STORAGE_KEY) || '[]');
+      const saved = Array.isArray(rawSaved) ? rawSaved : [];
+      const seenKeys = new Set();
+      const normalized = [];
+
+      for (const entry of saved) {
+        let key = null;
+        let label = null;
+
+        if (typeof entry === 'string') {
+          key = entry;
+        } else if (entry && typeof entry === 'object') {
+          if (entry.key) {
+            key = String(entry.key);
+            label = entry.label ? String(entry.label) : null;
+          } else if (entry.metadata?.company_key) {
+            key = String(entry.metadata.company_key);
+            label = entry.metadata.anchor_company ? String(entry.metadata.anchor_company) : null;
           }
         }
+
+        if (!key || seenKeys.has(key)) continue;
+
+        if (!label) {
+          try {
+            const graphRaw = localStorage.getItem(`${CUSTOM_GRAPH_STORAGE_PREFIX}${key}`);
+            if (graphRaw) {
+              const parsedGraph = JSON.parse(graphRaw);
+              label = parsedGraph?.metadata?.anchor_company || parsedGraph?.metadata?.company_key || null;
+            }
+          } catch (hydrateError) {
+            console.error(`Failed to hydrate custom graph label for ${key}.`, hydrateError);
+          }
+        }
+
+        normalized.push({ key, label: label || key });
+        seenKeys.add(key);
       }
-      setCustomCompanies(loadedGraphs);
+
+      setCustomCompanies(normalized);
+      localStorage.setItem(CUSTOM_GRAPHS_STORAGE_KEY, JSON.stringify(normalized));
     } catch (e) {
       console.error('Failed to load custom graphs.', e);
+      setCustomCompanies([]);
     }
   }, []);
 
+  const staticCompanyKeys = useMemo(
+    () =>
+      new Set(
+        Object.values(INDUSTRY_COMPANY_MAP)
+          .flatMap((industry) => industry.companies || [])
+          .map((company) => company.key)
+          .filter(Boolean)
+      ),
+    []
+  );
+
   const { graphs, loading, error } = useSupplierGraph(selectedCompany);
 
-  // Dynamically build the Industry map to include Custom Uploads
+  // Dynamically build the Industry map to include Custom Uploads.
   const currentIndustryMap = useMemo(() => {
     if (customCompanies.length === 0) return INDUSTRY_COMPANY_MAP;
     return {
       custom_uploads: {
         label: 'Custom Uploads',
         description: 'User-uploaded custom supply chain data.',
-        companies: customCompanies.map(g => ({
-          key: g?.metadata?.company_key || 'unknown',
-          label: g?.metadata?.anchor_company || g?.metadata?.company_key || 'Unknown Upload'
-        })).filter((c) => c.key !== 'unknown')
+        companies: customCompanies.map(({ key, label }) => ({ key, label })),
       },
-      ...INDUSTRY_COMPANY_MAP
+      ...INDUSTRY_COMPANY_MAP,
     };
   }, [customCompanies]);
 
@@ -87,60 +127,135 @@ export default function App() {
     return graphs.company || graphs.country || null;
   }, [mode, graphs]);
 
-  const categories = useMemo(() => MODE_CATEGORY_MAP[mode], [mode]);
-  const parserConfig = useMemo(() => PARSER_CONFIG_BY_MODE[mode], [mode]);
+  const categories = useMemo(() => {
+    if (mode === 'company') {
+      const labels = graph?.metadata?.category_labels || {};
+      const keys = Object.keys(labels);
+      if (keys.length > 0) {
+        return Object.fromEntries(
+          keys.map((key) => [key, { label: labels[key], code: key.toUpperCase() }])
+        );
+      }
+    }
+    return MODE_CATEGORY_MAP[mode];
+  }, [mode, graph]);
+
+  const parserConfig = useMemo(() => {
+    const base = PARSER_CONFIG_BY_MODE[mode];
+    if (mode !== 'company') return base;
+
+    const dynamicCategories = Object.keys(categories || {});
+    const nodes = graph?.nodes || [];
+    const dynamicCountries = Array.from(
+      new Set(nodes.map((node) => node.country_iso3).filter(Boolean))
+    );
+
+    const dynamicCountryAliases = {};
+    for (const node of nodes) {
+      if (!node?.country_iso3) continue;
+      if (node.country) dynamicCountryAliases[String(node.country).toLowerCase()] = node.country_iso3;
+      if (node.country_iso3) dynamicCountryAliases[String(node.country_iso3).toLowerCase()] = node.country_iso3;
+    }
+
+    const dynamicAliases = { ...(base.categoryAliases || {}) };
+    for (const category of dynamicCategories) {
+      dynamicAliases[category] = category;
+      dynamicAliases[category.replace(/_/g, ' ')] = category;
+      if (category.endsWith('s') && category.length > 1) {
+        dynamicAliases[category.slice(0, -1)] = category;
+      }
+    }
+
+    return {
+      ...base,
+      validCategories: dynamicCategories.length > 0 ? dynamicCategories : base.validCategories,
+      categoryAliases: dynamicAliases,
+      validCountries: dynamicCountries.length > 0
+        ? Array.from(new Set([...(base.validCountries || []), ...dynamicCountries]))
+        : base.validCountries,
+      countryAliases: {
+        ...(base.countryAliases || {}),
+        ...dynamicCountryAliases,
+      },
+    };
+  }, [mode, categories, graph]);
 
   const [activeCategory, setActiveCategory] = useState(Object.keys(MODE_CATEGORY_MAP[DEFAULT_MODE])[0]);
 
   useEffect(() => {
-    const keys = Object.keys(categories || {});
-    if (!keys.includes(activeCategory)) {
-      setActiveCategory(keys[0]);
-    }
     setDisruptedNodeId(null);
     setMacroEvent(null);
-    // Reset industry/company on mode switch
+    // Reset industry/company on mode switch.
     if (mode === 'company') {
-      const firstIndustry = Object.keys(currentIndustryMap)[0];
-      setSelectedIndustry(firstIndustry);
-      setSelectedCompany(currentIndustryMap[firstIndustry].companies[0].key);
-    }
-  }, [mode, categories, currentIndustryMap]);
-
-  const handleCustomUpload = useCallback((parsedGraph) => {
-    // Determine a new unique company_key
-    let key = parsedGraph.metadata?.company_key || 'custom_' + Date.now();
-
-    // Check if exists
-    if (customCompanies.find(c => c.metadata?.company_key === key) || Object.values(INDUSTRY_COMPANY_MAP).some(ind => ind.companies.some(c => c.key === key))) {
-      key = key + '_' + Date.now();
-    }
-
-    // Ensure metadata is completely setup
-    const graphToSave = {
-      ...parsedGraph,
-      metadata: {
-        ...parsedGraph.metadata,
-        company_key: key,
-        mode: 'company',
+      const industryKeys = Object.keys(currentIndustryMap);
+      const firstIndustry = industryKeys[0];
+      if (firstIndustry) {
+        setSelectedIndustry(firstIndustry);
+        const firstCompany = currentIndustryMap[firstIndustry]?.companies?.[0]?.key;
+        if (firstCompany) {
+          setSelectedCompany(firstCompany);
+        }
       }
-    };
+    }
+  }, [mode, currentIndustryMap]);
 
-    saveCustomGraph(graphToSave);
+  // Track if we're currently processing a node click to prevent resets.
+  const [isProcessingClick, setIsProcessingClick] = useState(false);
 
-    setCustomCompanies(prev => {
-      const updated = [graphToSave, ...prev];
-      localStorage.setItem('supplyPulseCustomGraphs', JSON.stringify(updated.map(g => g.metadata.company_key)));
-      // Actually we just need to save the keys to local storage in app state, but the actual graphs are saved inside hook localStorage.
-      // Wait, let's just save the minimal metadata to app state.
-      return updated;
-    });
+  useEffect(() => {
+    console.log('[categories effect] Running, isProcessingClick:', isProcessingClick, 'activeCategory:', activeCategory);
+    // Skip if we're currently processing a node click.
+    if (isProcessingClick) {
+      console.log('[categories effect] Skipping due to isProcessingClick');
+      return;
+    }
 
-    // Auto switch to the new company
-    setMode('company');
-    setSelectedIndustry('custom_uploads');
-    setSelectedCompany(key);
-  }, [customCompanies]);
+    const keys = Object.keys(categories || {});
+    console.log('[categories effect] keys:', keys, 'includes activeCategory:', keys.includes(activeCategory));
+    if (keys.length > 0 && !keys.includes(activeCategory)) {
+      console.log('[categories effect] Setting defaults - activeCategory:', keys[0]);
+      setActiveCategory(keys[0]);
+      setDisruptedNodeId(null);
+      setMacroEvent(null);
+    }
+  }, [categories, activeCategory, isProcessingClick]);
+
+  const handleCustomUpload = useCallback(
+    (parsedGraph) => {
+      const existingCustomKeys = new Set(customCompanies.map((company) => company.key));
+      let key = String(parsedGraph?.metadata?.company_key || `custom_${Date.now()}`);
+      const baseKey = key;
+      let suffix = 1;
+      while (staticCompanyKeys.has(key) || existingCustomKeys.has(key)) {
+        key = `${baseKey}_${Date.now()}_${suffix}`;
+        suffix += 1;
+      }
+
+      const graphToSave = {
+        ...parsedGraph,
+        metadata: {
+          ...parsedGraph.metadata,
+          company_key: key,
+          mode: 'company',
+        },
+      };
+
+      saveCustomGraph(graphToSave);
+
+      const label = graphToSave.metadata?.anchor_company || key;
+      setCustomCompanies((prev) => {
+        const next = [{ key, label }, ...prev.filter((company) => company.key !== key)];
+        localStorage.setItem(CUSTOM_GRAPHS_STORAGE_KEY, JSON.stringify(next));
+        return next;
+      });
+
+      // Auto switch to the new company.
+      setMode('company');
+      setSelectedIndustry('custom_uploads');
+      setSelectedCompany(key);
+    },
+    [customCompanies, staticCompanyKeys]
+  );
 
   const simulatedGraph = useMemo(() => {
     if (!graph || !macroEvent) return graph;
@@ -279,16 +394,70 @@ export default function App() {
 
   const consumerImpact = useMemo(() => {
     if (!simulatedGraph) return null;
-    return computeConsumerImpact(disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations);
-  }, [disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations]);
+    const selectedRec = selectedRecId ? recommendations.find((r) => r.id === selectedRecId) : null;
+    return computeConsumerImpact(disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations, selectedRec);
+  }, [disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations, selectedRecId]);
 
   const handleNodeClick = useCallback((nodeId) => {
-    setDisruptedNodeId((prev) => (prev === nodeId ? null : nodeId));
-  }, []);
+    console.log('[handleNodeClick] Called with nodeId:', nodeId);
+    console.log('[handleNodeClick] Current disruptedNodeId:', disruptedNodeId);
+    console.log('[handleNodeClick] Current activeCategory:', activeCategory);
+    console.log('[handleNodeClick] Current mode:', mode);
+
+    if (!nodeId) {
+      console.log('[handleNodeClick] No nodeId, setting disruptedNodeId to null');
+      setDisruptedNodeId(null);
+      return;
+    }
+
+    // Prevent the categories effect from resetting our state.
+    console.log('[handleNodeClick] Setting isProcessingClick to true');
+    setIsProcessingClick(true);
+
+    setDisruptedNodeId((prev) => {
+      console.log('[handleNodeClick] setDisruptedNodeId callback, prev:', prev);
+      if (prev === nodeId) {
+        setIsProcessingClick(false);
+        console.log('[handleNodeClick] Same node, returning null');
+        return null;
+      }
+      console.log('[handleNodeClick] Returning new nodeId:', nodeId);
+      return nodeId;
+    });
+
+    // Auto-switch activeCategory to match clicked node's category.
+    if (mode === 'company' && simulatedGraph) {
+      const clickedNode = simulatedGraph.nodes.find((n) => n.id === nodeId);
+      console.log('[handleNodeClick] Clicked node:', clickedNode?.name, clickedNode?.categories);
+      if (clickedNode && clickedNode.categories?.length > 0) {
+        const nodeCategory = clickedNode.categories[0];
+        console.log('[handleNodeClick] Setting activeCategory to:', nodeCategory);
+        setActiveCategory(nodeCategory);
+      }
+    }
+
+    // Allow the effect to run again after state updates.
+    console.log('[handleNodeClick] Scheduling isProcessingClick reset');
+    setTimeout(() => {
+      console.log('[handleNodeClick] Setting isProcessingClick to false');
+      setIsProcessingClick(false);
+    }, 0);
+  }, [mode, simulatedGraph, disruptedNodeId, activeCategory]);
+
+  // Log disruptedNodeId changes.
+  useEffect(() => {
+    console.log('[disruptedNodeId effect] disruptedNodeId changed to:', disruptedNodeId);
+  }, [disruptedNodeId]);
+
+  // Clear selected recommendation when disrupted node changes.
+  useEffect(() => {
+    setSelectedRecId(null);
+  }, [disruptedNodeId, macroEvent]);
 
   const handleReset = useCallback(() => {
     setDisruptedNodeId(null);
     setMacroEvent(null);
+    setSelectedRecId(null);
   }, []);
 
   if (loading) {
@@ -399,6 +568,8 @@ export default function App() {
             mode={mode}
             autoRotate={autoRotate}
             selectedCompany={selectedCompany}
+            selectedRecId={selectedRecId}
+            macroEvent={macroEvent}
           />
         </div>
         <TerminalSidebar
@@ -413,6 +584,8 @@ export default function App() {
           scenarioMode={scenarioMode}
           mode={mode}
           consumerImpact={consumerImpact}
+          selectedRecId={selectedRecId}
+          onSelectRec={setSelectedRecId}
         />
       </div>
     </div>

@@ -20,6 +20,8 @@ export default function TerminalSidebar({
   scenarioMode,
   mode,
   consumerImpact,
+  selectedRecId,
+  onSelectRec,
 }) {
 
   const renderEventBanner = () => {
@@ -81,6 +83,8 @@ export default function TerminalSidebar({
             category={activeCategory}
             isTariffScenario={scenarioMode !== 'outage'}
             mode={mode}
+            selectedRecId={selectedRecId}
+            onSelectRec={onSelectRec}
           />
           <RecommendedAction recommendations={recommendations} scenarioMode={scenarioMode} />
         </>
@@ -88,7 +92,7 @@ export default function TerminalSidebar({
         <>
           <TariffImpactSummary affectedNodes={affectedNodes} category={activeCategory} macroEvent={macroEvent} mode={mode} />
           <ConsumerImpact impact={consumerImpact} />
-          <AlternativeSuppliers recommendations={recommendations} category={activeCategory} isTariffScenario={true} mode={mode} />
+          <AlternativeSuppliers recommendations={recommendations} category={activeCategory} isTariffScenario={true} mode={mode} selectedRecId={selectedRecId} onSelectRec={onSelectRec} />
           <RecommendedAction recommendations={recommendations} scenarioMode={scenarioMode} />
         </>
       ) : (

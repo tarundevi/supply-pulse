@@ -84,6 +84,7 @@ function rotationSpeedFromAltitude(altitude) {
 }
 
 const DEFAULT_ACCENT = '#22c55e';
+const OUT_OF_NETWORK_COLOR = '#fb923c';
 
 export default function Globe({
   graph,
@@ -95,10 +96,13 @@ export default function Globe({
   mode = 'company',
   autoRotate = true,
   selectedCompany = null,
+  selectedRecId = null,
+  macroEvent = null,
 }) {
   const globeRef = useRef();
   const containerRef = useRef();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const pointClickHandled = useRef(false);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -145,34 +149,68 @@ export default function Globe({
 
   const points = useMemo(() => {
     if (!graph) return [];
+    const discoveredRecommendedIds = new Set(
+      (recommendations || [])
+        .filter((rec) => rec.isDiscovered)
+        .map((rec) => rec.id)
+    );
 
     const chainNodes = hasCompanyChain
-      ? graph.nodes.filter((n) => n.parent_company_id === chainParentId && n.entity_type !== 'anchor_company')
+      ? graph.nodes.filter(
+          (n) =>
+            n.entity_type !== 'anchor_company' &&
+            (n.parent_company_id === chainParentId || discoveredRecommendedIds.has(n.id))
+        )
       : [];
 
     const nodesToRender = hasCompanyChain
       ? chainNodes
-      : graph.nodes.filter((n) => n.entity_type !== 'anchor_company');
+      : graph.nodes.filter(
+          (n) =>
+            n.entity_type !== 'anchor_company' &&
+            (!n.is_discovered || discoveredRecommendedIds.has(n.id))
+        );
 
     const supplierPoints = nodesToRender.map((node) => {
-      const vol = getNodeVolume(node, activeCategory);
+      const isOutOfNetwork = node.is_discovered || node.network_status === 'out_of_network';
+      const vol = isOutOfNetwork
+        ? (mode === 'company'
+            ? Object.values(node.max_volume_by_category || {}).reduce((a, b) => a + b, 0)
+            : (node.max_volume_by_category?.[activeCategory] || 0))
+        : getNodeVolume(node, activeCategory);
       const isDisrupted = node.id === disruptedNodeId;
       const isChainFacility = hasCompanyChain && node.parent_company_id === chainParentId;
+      const isSelectedRec = node.id === selectedRecId;
+      let baseSize = mode === 'country'
+        ? Math.max(0.1, Math.log10(vol + 1) * 0.08)
+        : isChainFacility
+          ? Math.max(0.35, Math.log10(vol + 1) * 0.28)
+          : Math.max(0.28, Math.log10(vol + 1) * 0.23);
+      if (isSelectedRec) baseSize = Math.max(baseSize * 1.5, 0.45);
       return {
         ...node,
-        size: mode === 'country'
-          ? Math.max(0.1, Math.log10(vol + 1) * 0.08)
-          : isChainFacility
-            ? Math.max(0.35, Math.log10(vol + 1) * 0.28)
-            : Math.max(0.28, Math.log10(vol + 1) * 0.23),
-        color: isDisrupted
-          ? COLORS.arcDisrupted
-          : isChainFacility
-            ? accentColor
-            : riskColor(node.risk_event_count || 0),
-        ringColor: isDisrupted ? COLORS.arcDisrupted : isChainFacility ? accentColor : riskColor(node.risk_event_count || 0),
+        size: baseSize,
+        color: isSelectedRec
+          ? '#4ade80'
+          : isDisrupted
+            ? COLORS.arcDisrupted
+            : isOutOfNetwork
+              ? OUT_OF_NETWORK_COLOR
+            : isChainFacility
+              ? accentColor
+              : riskColor(node.risk_event_count || 0),
+        ringColor: isSelectedRec
+          ? '#4ade80'
+          : isDisrupted
+            ? COLORS.arcDisrupted
+            : isOutOfNetwork
+              ? OUT_OF_NETWORK_COLOR
+              : isChainFacility
+                ? accentColor
+                : riskColor(node.risk_event_count || 0),
         isDestination: false,
         isChainFacility,
+        isOutOfNetwork,
       };
     });
 
@@ -192,7 +230,34 @@ export default function Globe({
     return hasCompanyChain
       ? [...supplierPoints]
       : [...supplierPoints, destPoint];
-  }, [graph, activeCategory, disruptedNodeId, destinationMarket, hasCompanyChain, chainParentId, accentColor, mode]);
+  }, [graph, activeCategory, disruptedNodeId, destinationMarket, recommendations, hasCompanyChain, chainParentId, accentColor, mode, selectedRecId]);
+
+  const affectedEdgeTargets = useMemo(() => {
+    if (!graph) return [];
+    
+    const edges = graph.edges || [];
+    
+    if (macroEvent && macroEvent.countries?.length > 0) {
+      // Find edges from nodes in affected countries
+      const affectedEdges = edges.filter((e) => {
+        const src = graph.nodes?.find((n) => n.id === e.source_id);
+        if (!src) return false;
+        if (mode !== 'company' && e.category !== activeCategory) return false;
+        return macroEvent.countries.includes(src.country_iso3);
+      });
+      
+      const targetMap = new Map();
+      for (const e of affectedEdges) {
+        const key = `${e.targetLat},${e.targetLng}`;
+        if (!targetMap.has(key)) {
+          targetMap.set(key, { lat: e.targetLat, lng: e.targetLng, target_id: e.target_id, target_market: e.target_market });
+        }
+      }
+      return Array.from(targetMap.values());
+    }
+    
+    return [];
+  }, [graph, macroEvent, activeCategory, mode]);
 
   const arcs = useMemo(() => {
     if (!graph) return [];
@@ -209,12 +274,14 @@ export default function Globe({
     }
 
     const baseArcs = filteredEdges
-      .filter((e) => hasCompanyChain ? true : e.category === activeCategory)
+      .filter((e) => (hasCompanyChain || mode === 'company') ? true : e.category === activeCategory)
       .map((edge) => {
         const src = nodeById.get(edge.source_id);
         if (!src) return null;
         const tgt = nodeById.get(edge.target_id);
         const isDisrupted = edge.source_id === disruptedNodeId;
+        const isMacroAffected = macroEvent && macroEvent.countries?.includes(src.country_iso3);
+        const hideDisrupted = (isDisrupted || (isMacroAffected && !src.is_discovered)) && selectedRecId;
         const isChainArc = hasCompanyChain && (src.parent_company_id === chainParentId || tgt?.parent_company_id === chainParentId);
         let strokeWidth = Math.max(0.45, Math.log10((edge.baseline_volume || 0) + 1) * 0.75);
         if (mode === 'country') {
@@ -228,12 +295,16 @@ export default function Globe({
           startLng: src.lng,
           endLat: edge.targetLat,
           endLng: edge.targetLng,
-          color: isDisrupted
-            ? 'rgba(239,68,68,0.25)'
-            : isChainArc
-              ? (arcColorMap[edge.category] || 'rgba(34,197,94,0.6)')
-              : COLORS.arcDefault,
-          stroke: strokeWidth,
+          color: hideDisrupted
+            ? 'rgba(0,0,0,0)'
+            : isDisrupted
+              ? 'rgba(239,68,68,0.25)'
+              : isMacroAffected
+                ? 'rgba(239,68,68,0.25)'
+                : (isChainArc || mode === 'company')
+                  ? (arcColorMap[edge.category] || 'rgba(34,197,94,0.6)')
+                  : COLORS.arcDefault,
+          stroke: hideDisrupted ? 0 : strokeWidth,
           label: isChainArc
             ? `<b>${catLabel}</b><br/><span style="opacity:0.8">${srcName} → ${tgtName}</span>`
             : `${src.name} -> ${edge.target_market || edge.target_id}`,
@@ -243,21 +314,93 @@ export default function Globe({
       .filter(Boolean);
 
     const dest = DESTINATION_COORDS[destinationMarket] || DESTINATION_COORDS.USA;
-    const recArcs = !hasCompanyChain && (recommendations || []).map((rec) => ({
-      startLat: rec.lat,
-      startLng: rec.lng,
-      endLat: dest.lat,
-      endLng: dest.lng,
-      color: COLORS.arcRecommended,
-      stroke: 2.5,
-      label: `Recommended: ${rec.name}`,
-      isRecommended: true,
-    }));
+    const disruptedEdge = disruptedNodeId
+      ? filteredEdges.find((e) => e.source_id === disruptedNodeId)
+      : null;
+    const recArcs = !hasCompanyChain && (recommendations || []).map((rec) => {
+      const isSelected = selectedRecId === rec.id;
+      const isDimmed = selectedRecId && !isSelected;
+      
+      let targetLat, targetLng;
+      
+      if (isSelected) {
+        if (disruptedEdge) {
+          targetLat = disruptedEdge.targetLat;
+          targetLng = disruptedEdge.targetLng;
+        } else if (affectedEdgeTargets.length > 0) {
+          targetLat = affectedEdgeTargets[0].lat;
+          targetLng = affectedEdgeTargets[0].lng;
+        } else {
+          targetLat = dest.lat;
+          targetLng = dest.lng;
+        }
+      } else {
+        targetLat = dest.lat;
+        targetLng = dest.lng;
+      }
+      
+      return {
+        startLat: rec.lat,
+        startLng: rec.lng,
+        endLat: targetLat,
+        endLng: targetLng,
+        color: isDimmed ? 'rgba(34,197,94,0.15)' : isSelected ? '#4ade80' : COLORS.arcRecommended,
+        stroke: isSelected ? 4 : isDimmed ? 1.2 : 2.5,
+        label: isSelected ? `Rerouted: ${rec.name}` : `Recommended: ${rec.name}`,
+        isRecommended: true,
+        recId: rec.id,
+      };
+    });
+
+    // In company chain mode, add an arc from the selected recommendation to the disrupted node's target
+    // or to the affected edge targets when disruptedNodeId is null (e.g., macro event only)
+    let selectedRecArc = [];
+    if (selectedRecId) {
+      const selectedRec = (recommendations || []).find((r) => r.id === selectedRecId);
+      if (selectedRec) {
+        let endLat, endLng;
+        
+        if (disruptedNodeId) {
+          const disruptedEdge = filteredEdges.find((e) => e.source_id === disruptedNodeId);
+          if (disruptedEdge) {
+            endLat = disruptedEdge.targetLat;
+            endLng = disruptedEdge.targetLng;
+          }
+        }
+        
+        // Fallback: use affectedEdgeTargets (for macro events without specific node click)
+        if ((!endLat || !endLng) && affectedEdgeTargets.length > 0) {
+          endLat = affectedEdgeTargets[0].lat;
+          endLng = affectedEdgeTargets[0].lng;
+        }
+        
+        // Final fallback: use destination market
+        if (!endLat || !endLng) {
+          const dest = DESTINATION_COORDS[destinationMarket] || DESTINATION_COORDS.USA;
+          endLat = dest.lat;
+          endLng = dest.lng;
+        }
+        
+        if (endLat && endLng) {
+          selectedRecArc = [{
+            startLat: selectedRec.lat,
+            startLng: selectedRec.lng,
+            endLat,
+            endLng,
+            color: '#4ade80',
+            stroke: 4,
+            label: `Rerouted: ${selectedRec.name}`,
+            isRecommended: true,
+            recId: selectedRec.id,
+          }];
+        }
+      }
+    }
 
     return hasCompanyChain
-      ? baseArcs
+      ? [...baseArcs, ...selectedRecArc]
       : [...baseArcs, ...(recArcs || [])];
-  }, [graph, activeCategory, disruptedNodeId, recommendations, destinationMarket, hasCompanyChain, chainParentId, categoryLabels, arcColorMap, companyLabel, mode]);
+  }, [graph, activeCategory, disruptedNodeId, recommendations, destinationMarket, hasCompanyChain, chainParentId, categoryLabels, arcColorMap, companyLabel, mode, selectedRecId, macroEvent, affectedEdgeTargets]);
 
   // Always-visible HTML labels for company chain nodes and arc midpoints
   const htmlLabels = useMemo(() => {
@@ -276,6 +419,9 @@ export default function Globe({
         textColor: '#fff',
         altitude: 0.012,
         isHQ: false,
+        nodeId: p.id,
+        isDestination: p.isDestination,
+        isOutOfNetwork: p.isOutOfNetwork,
       };
     });
 
@@ -291,6 +437,7 @@ export default function Globe({
         textColor: accentColor,
         altitude: 0.015,
         isHQ: true,
+        nodeId: null,
       });
     }
 
@@ -313,6 +460,7 @@ export default function Globe({
           textColor: '#fff',
           altitude: peakAlt,
           isHQ: false,
+          nodeId: null,
         };
       });
 
@@ -321,6 +469,7 @@ export default function Globe({
 
   // Create HTML element for each label — styled colored box
   const createLabelElement = useCallback((d) => {
+    const clickable = d.nodeId != null && !d.isDestination && !d.isOutOfNetwork;
     const el = document.createElement('div');
     el.style.cssText = `
       background: ${d.bgColor};
@@ -332,7 +481,8 @@ export default function Globe({
       font-size: ${d.isHQ ? '11px' : '9px'};
       font-weight: ${d.isHQ ? '700' : '500'};
       white-space: nowrap;
-      pointer-events: none;
+      pointer-events: ${clickable ? 'auto' : 'none'};
+      cursor: ${clickable ? 'pointer' : 'default'};
       user-select: none;
       backdrop-filter: blur(4px);
       letter-spacing: 0.3px;
@@ -342,8 +492,15 @@ export default function Globe({
       transform: translate(8px, -50%);
     `;
     el.textContent = d.text;
+    if (clickable) {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        pointClickHandled.current = true;
+        onNodeClick(d.nodeId);
+      });
+    }
     return el;
-  }, []);
+  }, [onNodeClick]);
 
   if (!graph) return null;
 
@@ -362,12 +519,24 @@ export default function Globe({
         pointLabel={(d) =>
           d.isDestination
             ? `${d.name}`
+            : d.isOutOfNetwork
+              ? `<b>${d.name}</b><br/>${d.country_iso3}<br/>Candidate supplier (out of network)<br/>Confidence: ${Math.round((d.confidence || 0) * 100)}%`
             : d.isChainFacility
               ? `<b>${d.name}</b><br/>${d.country_iso3}<br/>${companyLabel} Facility`
               : `${d.name} (${d.country_iso3})<br/>${d.parent_company_id || 'Supplier'}`
         }
-        onPointClick={(point) => (point.isDestination ? null : onNodeClick(point.id))}
-        onGlobeClick={() => onNodeClick(null)}
+        onPointClick={(point) => {
+          if (point.isDestination || point.isOutOfNetwork) return;
+          pointClickHandled.current = true;
+          onNodeClick(point.id);
+        }}
+        onGlobeClick={() => {
+          if (pointClickHandled.current) {
+            pointClickHandled.current = false;
+            return;
+          }
+          onNodeClick(null);
+        }}
         arcsData={arcs}
         arcStartLat="startLat"
         arcStartLng="startLng"
@@ -385,7 +554,7 @@ export default function Globe({
         htmlAltitude="altitude"
         htmlElement={createLabelElement}
         htmlTransitionDuration={300}
-        ringsData={disruptedNodeId ? points.filter((p) => p.id === disruptedNodeId) : []}
+        ringsData={disruptedNodeId ? points.filter((p) => p.id === disruptedNodeId && !p.isOutOfNetwork) : []}
         ringLat="lat"
         ringLng="lng"
         ringColor="ringColor"

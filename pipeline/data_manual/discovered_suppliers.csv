@@ -1,0 +1,15 @@
+supplier_id,facility_name,parent_company,country_iso3,lat,lng,categories,max_volume_by_category,capacity_index,lead_time_days,unit_cost_index,confidence,source_type,notes
+DSC_VTC_BAC,Viettronics Bac Ninh,Viettronics,VNM,21.1861,106.0763,assembly|displays,"{""assembly"":120,""displays"":55}",0.76,26,0.96,0.78,manual_catalog,Independent EMS candidate in Vietnam
+DSC_CMX_GUA,Comex Guadalajara,Comex Electronics,MEX,20.6597,-103.3496,assembly|sensors,"{""assembly"":105,""sensors"":38}",0.71,23,0.99,0.74,manual_catalog,Nearshore final assembly and module integration
+DSC_JBL_PEN,Jabil Penang,Jabil,MYS,5.4164,100.3327,assembly|displays|sensors,"{""assembly"":80,""displays"":28,""sensors"":44}",0.69,24,1.01,0.73,manual_catalog,Regional contract manufacturing alternative
+DSC_FOX_VIE,Foxconn Bac Giang,Foxconn,VNM,21.2777,106.1946,assembly|chips,"{""assembly"":140,""chips"":42}",0.81,25,0.95,0.79,manual_catalog,Additional Foxconn campus not in baseline network
+DSC_ASE_KUL,ASE Kulim,ASE,MYS,5.3642,100.5618,chips|sensors,"{""chips"":68,""sensors"":22}",0.74,21,0.98,0.75,manual_catalog,OSAT and sensor packaging capacity
+DSC_UMC_TAI,UMC Tainan,UMC,TWN,23.0000,120.2000,chips,"{""chips"":92}",0.84,30,1.03,0.82,manual_catalog,Foundry diversification option
+DSC_BOE_HEF,BOE Hefei,BOE,CHN,31.8206,117.2272,displays,"{""displays"":88}",0.79,29,1.0,0.72,manual_catalog,Display module supplier outside baseline list
+DSC_INO_SUZ,Innolux Suzhou,Innolux,CHN,31.2989,120.5853,displays,"{""displays"":74}",0.72,27,0.99,0.71,manual_catalog,Alternative LCD panel line
+DSC_EVE_HUI,EVE Huizhou,EVE Energy,CHN,23.0794,114.4126,batteries,"{""batteries"":66}",0.75,22,1.02,0.73,manual_catalog,Li-ion cell supplier candidate
+DSC_BAK_CHQ,BAK Chongqing,BAK Battery,CHN,29.4316,106.9123,batteries,"{""batteries"":58}",0.68,24,1.01,0.7,manual_catalog,Battery pack line with moderate confidence
+DSC_SON_OSA,Sony Osaka Sensors,Sony,JPN,34.6937,135.5023,sensors|chips,"{""sensors"":47,""chips"":26}",0.73,19,1.06,0.77,manual_catalog,Image sensor and mixed-signal capability
+DSC_STM_CAT,STMicro Catania,STMicroelectronics,ITA,37.5079,15.0830,chips|sensors,"{""chips"":34,""sensors"":31}",0.67,28,1.08,0.72,manual_catalog,European resilience candidate
+DSC_POW_WRO,PowerCell Wroclaw,PowerCell,POL,51.1079,17.0385,batteries|sensors,"{""batteries"":36,""sensors"":18}",0.66,27,1.05,0.71,manual_catalog,Central Europe backup supplier
+DSC_FLE_JUA,Flex Juarez,Flex,MEX,31.6904,-106.4245,assembly|batteries,"{""assembly"":96,""batteries"":24}",0.7,20,1.0,0.76,manual_catalog,Nearshore assembly and battery pack integration
