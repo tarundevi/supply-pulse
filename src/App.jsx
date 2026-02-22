@@ -35,6 +35,7 @@ export default function App() {
   const [weights, setWeights] = useState(DEFAULT_WEIGHTS);
   const [macroEvent, setMacroEvent] = useState(null);
   const [autoRotate, setAutoRotate] = useState(true);
+  const [selectedRecId, setSelectedRecId] = useState(null);
   // New for company mode
   const [selectedIndustry, setSelectedIndustry] = useState(Object.keys(INDUSTRY_COMPANY_MAP)[0]);
   const [selectedCompany, setSelectedCompany] = useState(INDUSTRY_COMPANY_MAP[Object.keys(INDUSTRY_COMPANY_MAP)[0]].companies[0].key);
@@ -113,14 +114,26 @@ export default function App() {
     }
   }, [mode]);
 
+  // Track if we're currently processing a node click to prevent resets
+  const [isProcessingClick, setIsProcessingClick] = useState(false);
+
   useEffect(() => {
+    console.log('[categories effect] Running, isProcessingClick:', isProcessingClick, 'activeCategory:', activeCategory);
+    // Skip if we're currently processing a node click
+    if (isProcessingClick) {
+      console.log('[categories effect] Skipping due to isProcessingClick');
+      return;
+    }
+    
     const keys = Object.keys(categories || {});
+    console.log('[categories effect] keys:', keys, 'includes activeCategory:', keys.includes(activeCategory));
     if (keys.length > 0 && !keys.includes(activeCategory)) {
+      console.log('[categories effect] Setting defaults - activeCategory:', keys[0]);
       setActiveCategory(keys[0]);
       setDisruptedNodeId(null);
       setMacroEvent(null);
     }
-  }, [categories, activeCategory]);
+  }, [categories, activeCategory, isProcessingClick]);
 
   const simulatedGraph = useMemo(() => {
     if (!graph || !macroEvent) return graph;
@@ -259,16 +272,70 @@ export default function App() {
 
   const consumerImpact = useMemo(() => {
     if (!simulatedGraph) return null;
-    return computeConsumerImpact(disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations);
-  }, [disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations]);
+    const selectedRec = selectedRecId ? recommendations.find(r => r.id === selectedRecId) : null;
+    return computeConsumerImpact(disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations, selectedRec);
+  }, [disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations, selectedRecId]);
 
   const handleNodeClick = useCallback((nodeId) => {
-    setDisruptedNodeId((prev) => (prev === nodeId ? null : nodeId));
-  }, []);
+    console.log('[handleNodeClick] Called with nodeId:', nodeId);
+    console.log('[handleNodeClick] Current disruptedNodeId:', disruptedNodeId);
+    console.log('[handleNodeClick] Current activeCategory:', activeCategory);
+    console.log('[handleNodeClick] Current mode:', mode);
+    
+    if (!nodeId) {
+      console.log('[handleNodeClick] No nodeId, setting disruptedNodeId to null');
+      setDisruptedNodeId(null);
+      return;
+    }
+
+    // Prevent the categories effect from resetting our state
+    console.log('[handleNodeClick] Setting isProcessingClick to true');
+    setIsProcessingClick(true);
+
+    setDisruptedNodeId((prev) => {
+      console.log('[handleNodeClick] setDisruptedNodeId callback, prev:', prev);
+      if (prev === nodeId) {
+        setIsProcessingClick(false);
+        console.log('[handleNodeClick] Same node, returning null');
+        return null;
+      }
+      console.log('[handleNodeClick] Returning new nodeId:', nodeId);
+      return nodeId;
+    });
+
+    // Auto-switch activeCategory to match clicked node's category
+    if (mode === 'company' && simulatedGraph) {
+      const clickedNode = simulatedGraph.nodes.find((n) => n.id === nodeId);
+      console.log('[handleNodeClick] Clicked node:', clickedNode?.name, clickedNode?.categories);
+      if (clickedNode && clickedNode.categories?.length > 0) {
+        const nodeCategory = clickedNode.categories[0];
+        console.log('[handleNodeClick] Setting activeCategory to:', nodeCategory);
+        setActiveCategory(nodeCategory);
+      }
+    }
+
+    // Allow the effect to run again after state updates
+    console.log('[handleNodeClick] Scheduling isProcessingClick reset');
+    setTimeout(() => {
+      console.log('[handleNodeClick] Setting isProcessingClick to false');
+      setIsProcessingClick(false);
+    }, 0);
+  }, [mode, simulatedGraph, disruptedNodeId, activeCategory]);
+
+  // Log disruptedNodeId changes
+  useEffect(() => {
+    console.log('[disruptedNodeId effect] disruptedNodeId changed to:', disruptedNodeId);
+  }, [disruptedNodeId]);
+
+  // Clear selected recommendation when disrupted node changes
+  useEffect(() => {
+    setSelectedRecId(null);
+  }, [disruptedNodeId, macroEvent]);
 
   const handleReset = useCallback(() => {
     setDisruptedNodeId(null);
     setMacroEvent(null);
+    setSelectedRecId(null);
   }, []);
 
   if (loading) {
@@ -322,7 +389,6 @@ export default function App() {
                 onChange={setSelectedCompany}
                 companies={INDUSTRY_COMPANY_MAP[selectedIndustry].companies}
               />
-              <CategoryFilter value={activeCategory} onChange={setActiveCategory} categories={categories} />
             </>
           ) : (
             <>
@@ -379,6 +445,8 @@ export default function App() {
             mode={mode}
             autoRotate={autoRotate}
             selectedCompany={selectedCompany}
+            selectedRecId={selectedRecId}
+            macroEvent={macroEvent}
           />
         </div>
         <TerminalSidebar
@@ -393,6 +461,8 @@ export default function App() {
           scenarioMode={scenarioMode}
           mode={mode}
           consumerImpact={consumerImpact}
+          selectedRecId={selectedRecId}
+          onSelectRec={setSelectedRecId}
         />
       </div>
     </div>

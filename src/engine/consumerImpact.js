@@ -15,7 +15,7 @@ import {
  * Compute downstream consumer impact of supply chain disruptions.
  * Returns null when there is no meaningful cost impact.
  */
-export function computeConsumerImpact(disruptedNode, category, simulatedGraph, originalGraph, macroEvent, recommendations) {
+export function computeConsumerImpact(disruptedNode, category, simulatedGraph, originalGraph, macroEvent, recommendations, selectedRec = null) {
   if (!category || (!disruptedNode && !macroEvent)) return null;
 
   const passThrough = TARIFF_PASS_THROUGH_RATES[category] ?? 0.7;
@@ -143,23 +143,42 @@ export function computeConsumerImpact(disruptedNode, category, simulatedGraph, o
     eventDescription = `Supplier Disruption`;
     affectedVolume = getNodeTotalVolume(disruptedNode);
 
-    // Supplier outage: cost delta = weighted-avg reroute cost across all allocated alternatives
+    // Supplier outage: cost delta from rerouting
     if (recommendations?.length > 0) {
-      const totalAlloc = recommendations.reduce((s, r) => s + (r.allocatedVolume || 0), 0);
-      if (totalAlloc > 0) {
-        eventEffectiveCostDelta = recommendations.reduce(
-          (s, r) => s + (r.costDeltaPct ?? 0) * (r.allocatedVolume || 0), 0
-        ) / totalAlloc;
+      if (selectedRec) {
+        // Use the specific selected recommendation's cost delta
+        eventEffectiveCostDelta = selectedRec.costDeltaPct ?? 0;
       } else {
-        eventEffectiveCostDelta = recommendations[0].costDeltaPct ?? 0;
+        // Weighted-avg reroute cost across all allocated alternatives
+        const totalAlloc = recommendations.reduce((s, r) => s + (r.allocatedVolume || 0), 0);
+        if (totalAlloc > 0) {
+          eventEffectiveCostDelta = recommendations.reduce(
+            (s, r) => s + (r.costDeltaPct ?? 0) * (r.allocatedVolume || 0), 0
+          ) / totalAlloc;
+        } else {
+          eventEffectiveCostDelta = recommendations[0].costDeltaPct ?? 0;
+        }
       }
       // Outage always has a cost impact — even "cheaper" reroutes carry disruption risk premium
       eventEffectiveCostDelta = Math.max(eventEffectiveCostDelta, 0.02);
     }
   }
 
-  const bestCostDelta = recommendations?.length > 0 ? (recommendations[0].costDeltaPct ?? 0) : 0;
-  let rerouteDelta = Math.max(0, bestCostDelta);
+  // Reset rerouteDelta to 0 when no recommendation is selected
+  let rerouteDelta = 0;
+
+  // Determine best cost delta from recommendations
+  const chosenRec = selectedRec || recommendations?.[0];
+  const bestCostDelta = chosenRec ? (chosenRec.costDeltaPct ?? 0) : 0;
+
+  // For macro events: incorporate selected recommendation's cost impact
+  if (macroEvent && selectedRec && recommendations?.length > 0) {
+    rerouteDelta = Math.max(0, selectedRec.costDeltaPct ?? 0);
+  } else if (disruptedNode && !macroEvent) {
+    // For single supplier disruption: use the selected recommendation's cost delta
+    // If no recommendation is selected, use 0
+    rerouteDelta = Math.max(0, bestCostDelta);
+  }
 
   const effectiveCostDelta = eventEffectiveCostDelta + rerouteDelta;
   const hasNegativeImpact = effectiveCostDelta > 0;

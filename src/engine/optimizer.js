@@ -164,7 +164,7 @@ function buildScenarioRecommendations({
   const remainingVolume = Math.max(requiredVolume - coveredByKnown, 0);
 
   let discoveredAllocated = [];
-  if (remainingVolume > 0 && discovered.length > 0) {
+  if (discovered.length > 0) {
     const discoveredScored = buildScoredCandidates(
       discovered,
       category,
@@ -177,7 +177,13 @@ function buildScenarioRecommendations({
       .sort((a, b) => a.score - b.score)
       .slice(0, MAX_SCORED_CANDIDATES);
 
-    discoveredAllocated = allocateCoverage(discoveredScored, remainingVolume, requiredVolume)
+    // If there's remaining volume, allocate it to discovered suppliers
+    // Otherwise, show them with proportional/indicative allocation so they appear in the UI
+    const discoveredVolume = remainingVolume > 0
+      ? remainingVolume
+      : requiredVolume;
+
+    discoveredAllocated = allocateCoverage(discoveredScored, discoveredVolume, requiredVolume)
       .filter((record) => record.allocatedVolume > 0);
   }
 
