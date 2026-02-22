@@ -6,11 +6,11 @@ import IndustryFilter from './components/IndustryFilter';
 import CompanyFilter from './components/CompanyFilter';
 import DestinationFilter from './components/DestinationFilter';
 import { INDUSTRY_COMPANY_MAP } from './utils/industries';
-import TariffSimulator from './components/TariffSimulator';
+import MacroEventSimulator from './components/MacroEventSimulator';
 import { useSupplierGraph } from './hooks/useSupplierGraph';
 import {
   rerouteSupplierOutage,
-  rerouteTariffShock,
+  rerouteMacroEventShock,
   simulateCombinedScenario,
 } from './engine/optimizer';
 import { computeConsumerImpact } from './engine/consumerImpact';
@@ -20,6 +20,10 @@ import {
   SCENARIO_MODES,
   MODE_CATEGORY_MAP,
   PARSER_CONFIG_BY_MODE,
+  INTEREST_RATE_COST_SENSITIVITY,
+  SANCTION_PRICE_SHOCK_FACTOR,
+  EXPORT_CONTROL_COST_PREMIUM,
+  CURRENCY_PASS_THROUGH_RATES,
 } from './utils/constants';
 
 const DEFAULT_MODE = (import.meta.env.VITE_APP_MODE || 'company').toLowerCase() === 'country' ? 'country' : 'company';
@@ -30,7 +34,7 @@ export default function App() {
   const [disruptedNodeId, setDisruptedNodeId] = useState(null);
   const [destinationMarket, setDestinationMarket] = useState('USA');
   const [weights, setWeights] = useState(DEFAULT_WEIGHTS);
-  const [tariffSim, setTariffSim] = useState(null);
+  const [macroEvent, setMacroEvent] = useState(null);
   const [autoRotate, setAutoRotate] = useState(true);
   // New for company mode
   const [selectedIndustry, setSelectedIndustry] = useState(Object.keys(INDUSTRY_COMPANY_MAP)[0]);
@@ -54,7 +58,7 @@ export default function App() {
       setActiveCategory(keys[0]);
     }
     setDisruptedNodeId(null);
-    setTariffSim(null);
+    setMacroEvent(null);
     // Reset industry/company on mode switch
     if (mode === 'company') {
       setSelectedIndustry(Object.keys(INDUSTRY_COMPANY_MAP)[0]);
@@ -63,60 +67,144 @@ export default function App() {
   }, [mode, categories]);
 
   const simulatedGraph = useMemo(() => {
-    if (!graph || !tariffSim) return graph;
-    const categoriesToAdjust = tariffSim.categories?.length ? tariffSim.categories : [activeCategory];
+    if (!graph || !macroEvent) return graph;
 
-    return {
-      ...graph,
-      nodes: graph.nodes.map((node) => {
-        if (!tariffSim.countries.includes(node.country_iso3)) return node;
-        const nextTariffs = { ...(node.tariff_rate_by_category || {}) };
-        categoriesToAdjust.forEach((cat) => {
-          const cur = nextTariffs[cat] || 0;
-          nextTariffs[cat] = tariffSim.isIncrement ? cur + tariffSim.tariffRate : tariffSim.tariffRate;
-        });
-        return { ...node, tariff_rate_by_category: nextTariffs };
-      }),
-    };
-  }, [graph, tariffSim, activeCategory]);
+    const categoriesToAdjust = macroEvent.categories?.length ? macroEvent.categories : [activeCategory];
+
+    switch (macroEvent.eventType) {
+      case 'tariff':
+        return {
+          ...graph,
+          nodes: graph.nodes.map((node) => {
+            if (!macroEvent.countries.includes(node.country_iso3)) return node;
+            const nextTariffs = { ...(node.tariff_rate_by_category || {}) };
+            categoriesToAdjust.forEach((cat) => {
+              const cur = nextTariffs[cat] || 0;
+              nextTariffs[cat] = macroEvent.isIncrement ? cur + macroEvent.tariffRate : macroEvent.tariffRate;
+            });
+            return { ...node, tariff_rate_by_category: nextTariffs };
+          }),
+        };
+
+      case 'sanction':
+        return {
+          ...graph,
+          nodes: graph.nodes.map((node) => {
+            if (!macroEvent.countries.includes(node.country_iso3)) return node;
+            return {
+              ...node,
+              capacity_index: 0,
+              tariff_rate_by_category: Object.fromEntries(
+                (node.tariff_rate_by_category ? Object.keys(node.tariff_rate_by_category) : categoriesToAdjust)
+                  .map((cat) => [cat, 9.99])
+              ),
+            };
+          }),
+        };
+
+      case 'interest_rate':
+        return {
+          ...graph,
+          nodes: graph.nodes.map((node) => {
+            if (node.entity_type === 'anchor_company') return node;
+
+            const category = node.supplier_category || categoriesToAdjust[0];
+            const sensitivity = INTEREST_RATE_COST_SENSITIVITY[category] || 0.1;
+
+            return {
+              ...node,
+              unit_cost_index: (node.unit_cost_index || 1) * (1 + macroEvent.rateChangePct * sensitivity),
+            };
+          }),
+        };
+
+      case 'currency':
+        return {
+          ...graph,
+          nodes: graph.nodes.map((node) => {
+            if (!macroEvent.countries.includes(node.country_iso3)) return node;
+
+            const category = node.supplier_category || categoriesToAdjust[0];
+            const passThrough = CURRENCY_PASS_THROUGH_RATES[category] || 0.6;
+
+            return {
+              ...node,
+              unit_cost_index: (node.unit_cost_index || 1) * (1 + macroEvent.currencyChangePct * passThrough),
+            };
+          }),
+        };
+
+      case 'export_control':
+        return {
+          ...graph,
+          nodes: graph.nodes.map((node) => {
+            if (!macroEvent.countries.includes(node.country_iso3)) return node;
+            if (!node.supplier_category || !categoriesToAdjust.includes(node.supplier_category)) return node;
+
+            const currentCapacity = node.capacity_index || 1;
+            const newCapacity = currentCapacity * (1 - macroEvent.restrictionLevel);
+
+            const costPremium = EXPORT_CONTROL_COST_PREMIUM[categoriesToAdjust[0]] || 0.2;
+
+            return {
+              ...node,
+              capacity_index: newCapacity,
+              unit_cost_index: (node.unit_cost_index || 1) * (1 + macroEvent.restrictionLevel * costPremium),
+            };
+          }),
+        };
+
+      default:
+        return graph;
+    }
+  }, [graph, macroEvent, activeCategory]);
 
   const disruptedNode = useMemo(() => {
     if (!simulatedGraph || !disruptedNodeId) return null;
     return simulatedGraph.nodes.find((n) => n.id === disruptedNodeId) || null;
   }, [simulatedGraph, disruptedNodeId]);
 
-  const tariffAffectedNodes = useMemo(() => {
-    if (!simulatedGraph || !tariffSim) return [];
+  const affectedNodes = useMemo(() => {
+    if (!simulatedGraph || !macroEvent) return [];
+    
+    if (macroEvent.eventType === 'interest_rate') {
+      return simulatedGraph.nodes.filter((n) => n.entity_type !== 'anchor_company');
+    }
+    
     return simulatedGraph.nodes.filter(
-      (n) => n.entity_type !== 'anchor_company' && tariffSim.countries.includes(n.country_iso3)
+      (n) => n.entity_type !== 'anchor_company' && macroEvent.countries?.includes(n.country_iso3)
     );
-  }, [simulatedGraph, tariffSim]);
+  }, [simulatedGraph, macroEvent]);
 
   const scenarioMode = useMemo(() => {
-    if (disruptedNodeId && tariffSim) return SCENARIO_MODES.combined;
-    if (tariffSim) return SCENARIO_MODES.tariff;
+    if (disruptedNodeId && macroEvent) {
+      return SCENARIO_MODES.combined;
+    }
+    if (macroEvent) {
+      return SCENARIO_MODES[macroEvent.eventType] || SCENARIO_MODES.tariff;
+    }
     return SCENARIO_MODES.outage;
-  }, [disruptedNodeId, tariffSim]);
+  }, [disruptedNodeId, macroEvent]);
 
   const recommendations = useMemo(() => {
     if (!simulatedGraph) return [];
 
-    if (disruptedNodeId && tariffSim) {
-      return simulateCombinedScenario(disruptedNodeId, tariffSim, activeCategory, graph, weights);
+    if (disruptedNodeId && macroEvent) {
+      return simulateCombinedScenario(disruptedNodeId, macroEvent, activeCategory, graph, weights);
     }
     if (disruptedNodeId) {
       return rerouteSupplierOutage(disruptedNodeId, activeCategory, simulatedGraph, weights);
     }
-    if (tariffSim) {
-      return rerouteTariffShock(tariffSim, activeCategory, simulatedGraph, weights);
+    if (macroEvent) {
+      return rerouteMacroEventShock(macroEvent, activeCategory, simulatedGraph, weights);
     }
     return [];
-  }, [simulatedGraph, graph, disruptedNodeId, tariffSim, activeCategory, weights]);
+  }, [simulatedGraph, graph, disruptedNodeId, macroEvent, activeCategory, weights]);
 
   const consumerImpact = useMemo(() => {
     if (!simulatedGraph) return null;
-    return computeConsumerImpact(disruptedNode, activeCategory, simulatedGraph, graph, tariffSim, recommendations);
-  }, [disruptedNode, activeCategory, simulatedGraph, graph, tariffSim, recommendations]);
+    return computeConsumerImpact(disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations);
+  }, [disruptedNode, activeCategory, simulatedGraph, graph, macroEvent, recommendations]);
 
   const handleNodeClick = useCallback((nodeId) => {
     setDisruptedNodeId((prev) => (prev === nodeId ? null : nodeId));
@@ -124,7 +212,7 @@ export default function App() {
 
   const handleReset = useCallback(() => {
     setDisruptedNodeId(null);
-    setTariffSim(null);
+    setMacroEvent(null);
   }, []);
 
   if (loading) {
@@ -185,12 +273,12 @@ export default function App() {
               <DestinationFilter value={destinationMarket} onChange={setDestinationMarket} />
             </>
           )}
-          <TariffSimulator
-            onSimulate={setTariffSim}
-            onClear={() => setTariffSim(null)}
-            isActive={!!tariffSim}
+          <MacroEventSimulator
+            onSimulate={setMacroEvent}
+            onClear={() => setMacroEvent(null)}
+            isActive={!!macroEvent}
             parserConfig={parserConfig}
-            placeholder={mode === 'company' ? 'e.g. 25% tariff on China chips' : 'e.g. 25% tariff on Chinese electronics'}
+            placeholder={mode === 'company' ? 'e.g. 25% tariff on China chips, sanction Russia, 2% rate hike' : 'e.g. 25% tariff on China electronics, 15% currency devaluation'}
           />
         </div>
 
@@ -243,8 +331,8 @@ export default function App() {
           weights={weights}
           onWeightsChange={setWeights}
           graph={simulatedGraph}
-          tariffSim={tariffSim}
-          tariffAffectedNodes={tariffAffectedNodes}
+          macroEvent={macroEvent}
+          affectedNodes={affectedNodes}
           scenarioMode={scenarioMode}
           mode={mode}
           consumerImpact={consumerImpact}

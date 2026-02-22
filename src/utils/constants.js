@@ -25,15 +25,46 @@ export const ENTITY_TYPES = {
   anchorCompany: 'anchor_company',
 };
 
+export const EVENT_TYPES = {
+  tariff: 'tariff',
+  sanction: 'sanction',
+  interest_rate: 'interest_rate',
+  currency: 'currency',
+  export_control: 'export_control',
+};
+
 export const SCENARIO_MODES = {
   outage: 'outage',
   tariff: 'tariff',
+  sanction: 'sanction',
+  interest_rate: 'interest_rate',
+  currency: 'currency',
+  export_control: 'export_control',
   combined: 'combined',
+};
+
+export const SANCTION_PRICE_SHOCK_FACTOR = 0.25;
+
+export const INTEREST_RATE_COST_SENSITIVITY = {
+  // Country mode
+  electronics: 0.12, textiles: 0.05, chemicals: 0.15, machinery: 0.20, vehicles: 0.18,
+  // Company mode
+  chips: 0.14, displays: 0.10, batteries: 0.16, assembly: 0.08, sensors: 0.11,
+};
+
+export const EXPORT_CONTROL_COST_PREMIUM = {
+  electronics: 0.30, textiles: 0.05, chemicals: 0.20, machinery: 0.25, vehicles: 0.15,
+  chips: 0.35, displays: 0.20, batteries: 0.25, assembly: 0.10, sensors: 0.22,
+};
+
+export const CURRENCY_PASS_THROUGH_RATES = {
+  electronics: 0.60, textiles: 0.80, chemicals: 0.50, machinery: 0.55, vehicles: 0.45,
+  chips: 0.65, displays: 0.55, batteries: 0.50, assembly: 0.70, sensors: 0.58,
 };
 
 export const PARSER_CONFIG_BY_MODE = {
   company: {
-    validCountries: ['CHN', 'TWN', 'KOR', 'JPN', 'IND', 'THA', 'MYS', 'VNM', 'USA'],
+    validCountries: ['CHN', 'TWN', 'KOR', 'JPN', 'IND', 'THA', 'MYS', 'USA'],
     countryAliases: {
       china: 'CHN',
       taiwan: 'TWN',
@@ -43,7 +74,6 @@ export const PARSER_CONFIG_BY_MODE = {
       india: 'IND',
       thailand: 'THA',
       malaysia: 'MYS',
-      vietnam: 'VNM',
       usa: 'USA',
       'united states': 'USA',
     },

@@ -80,13 +80,13 @@ export default function Globe({
     return () => ro.disconnect();
   }, []);
 
-  // Only set initial view on mount
+  // Set initial view when globe becomes available
   useEffect(() => {
-    if (!globeRef.current) return;
+    if (!globeRef.current || dimensions.width === 0) return;
     globeRef.current.controls().autoRotate = autoRotate;
     globeRef.current.controls().autoRotateSpeed = 0.35;
     globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 });
-  }, []);
+  }, [dimensions.width, dimensions.height, autoRotate]);
 
   useEffect(() => {
     if (!globeRef.current) return;
