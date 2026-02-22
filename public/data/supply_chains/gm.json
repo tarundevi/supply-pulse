@@ -1,0 +1,337 @@
+{
+    "nodes": [
+        {
+            "id": "GM_HQ",
+            "name": "General Motors Detroit HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "General Motors",
+            "lat": 42.3314,
+            "lng": -83.0458,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "vehicles",
+                "ev_platforms",
+                "engines",
+                "transmissions",
+                "batteries"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 2,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "GM_US_ARLINGTON",
+            "name": "GM Arlington Texas Assembly",
+            "entity_type": "facility",
+            "parent_company_id": "General Motors",
+            "lat": 32.7357,
+            "lng": -97.1081,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "vehicles"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 5,
+            "unit_cost_index": 1.08,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.30,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "vehicles": 170.0
+            }
+        },
+        {
+            "id": "GM_MX_RAMOS",
+            "name": "GM Ramos Arizpe Mexico",
+            "entity_type": "facility",
+            "parent_company_id": "General Motors",
+            "lat": 25.5428,
+            "lng": -100.9511,
+            "country_iso3": "MEX",
+            "country": "Mexico",
+            "categories": [
+                "vehicles",
+                "engines"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 10,
+            "unit_cost_index": 0.82,
+            "tariff_rate_by_category": {
+                "vehicles": 0.0,
+                "engines": 0.0
+            },
+            "risk_score": 2.5,
+            "risk_event_count": 15,
+            "concentration_share": 0.22,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "vehicles": 110.0,
+                "engines": 80.0
+            }
+        },
+        {
+            "id": "GM_KR_INCHEON",
+            "name": "GM Korea Incheon Assembly",
+            "entity_type": "facility",
+            "parent_company_id": "General Motors",
+            "lat": 37.4563,
+            "lng": 126.7052,
+            "country_iso3": "KOR",
+            "country": "South Korea",
+            "categories": [
+                "vehicles",
+                "ev_platforms"
+            ],
+            "capacity_index": 0.78,
+            "lead_time_days": 22,
+            "unit_cost_index": 0.92,
+            "tariff_rate_by_category": {
+                "vehicles": 0.04,
+                "ev_platforms": 0.04
+            },
+            "risk_score": 2.0,
+            "risk_event_count": 12,
+            "concentration_share": 0.15,
+            "confidence": 0.82,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "vehicles": 75.0,
+                "ev_platforms": 55.0
+            }
+        },
+        {
+            "id": "GM_ULTIUM_OH",
+            "name": "GM Ultium Cells Ohio (LG JV)",
+            "entity_type": "facility",
+            "parent_company_id": "General Motors",
+            "lat": 40.8204,
+            "lng": -81.3459,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "batteries"
+            ],
+            "capacity_index": 0.82,
+            "lead_time_days": 6,
+            "unit_cost_index": 1.05,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.6,
+            "risk_event_count": 3,
+            "concentration_share": 0.28,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "batteries": 130.0
+            }
+        },
+        {
+            "id": "GM_CN_SGMW",
+            "name": "GM SAIC-GM-Wuling China",
+            "entity_type": "facility",
+            "parent_company_id": "General Motors",
+            "lat": 24.3261,
+            "lng": 109.4022,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "vehicles",
+                "ev_platforms"
+            ],
+            "capacity_index": 0.80,
+            "lead_time_days": 24,
+            "unit_cost_index": 0.78,
+            "tariff_rate_by_category": {
+                "vehicles": 0.25,
+                "ev_platforms": 0.10
+            },
+            "risk_score": 5.5,
+            "risk_event_count": 38,
+            "concentration_share": 0.18,
+            "confidence": 0.80,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "vehicles": 90.0,
+                "ev_platforms": 65.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "GM_US_ARLINGTON",
+            "target_id": "GM_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 170.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 5,
+            "targetLat": 42.3314,
+            "targetLng": -83.0458,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "GM_MX_RAMOS",
+            "target_id": "GM_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 110.0,
+            "baseline_share": 0.32,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 10,
+            "targetLat": 42.3314,
+            "targetLng": -83.0458,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "GM_MX_RAMOS",
+            "target_id": "GM_HQ",
+            "category": "engines",
+            "relationship_type": "supplies",
+            "baseline_volume": 80.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 10,
+            "targetLat": 42.3314,
+            "targetLng": -83.0458,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "GM_KR_INCHEON",
+            "target_id": "GM_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 75.0,
+            "baseline_share": 0.22,
+            "effective_cost_index": 0.95,
+            "lead_time_days": 22,
+            "targetLat": 42.3314,
+            "targetLng": -83.0458,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "GM_KR_INCHEON",
+            "target_id": "GM_HQ",
+            "category": "ev_platforms",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.45,
+            "effective_cost_index": 0.95,
+            "lead_time_days": 22,
+            "targetLat": 42.3314,
+            "targetLng": -83.0458,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "GM_ULTIUM_OH",
+            "target_id": "GM_US_ARLINGTON",
+            "category": "batteries",
+            "relationship_type": "supplies",
+            "baseline_volume": 130.0,
+            "baseline_share": 0.70,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 6,
+            "targetLat": 32.7357,
+            "targetLng": -97.1081,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "GM_CN_SGMW",
+            "target_id": "GM_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 90.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 0.82,
+            "lead_time_days": 24,
+            "targetLat": 42.3314,
+            "targetLng": -83.0458,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "GM_CN_SGMW",
+            "target_id": "GM_HQ",
+            "category": "ev_platforms",
+            "relationship_type": "supplies",
+            "baseline_volume": 65.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 0.82,
+            "lead_time_days": 24,
+            "targetLat": 42.3314,
+            "targetLng": -83.0458,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "GM_ULTIUM_OH",
+            "target_id": "GM_HQ",
+            "category": "batteries",
+            "relationship_type": "supplies",
+            "baseline_volume": 50.0,
+            "baseline_share": 0.28,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 6,
+            "targetLat": 42.3314,
+            "targetLng": -83.0458,
+            "target_market": "USA"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "General Motors",
+        "build_version": "gm-v1",
+        "assumption_notes": "GM supply chain with US assembly, Mexico, Korea, China JVs, and Ultium battery JV",
+        "company_key": "gm",
+        "parent_company_id": "General Motors",
+        "accent_color": "#0170ce",
+        "category_labels": {
+            "vehicles": "Vehicles",
+            "ev_platforms": "EV Platforms",
+            "engines": "Engines",
+            "transmissions": "Transmissions",
+            "batteries": "Ultium Batteries"
+        },
+        "arc_colors": {
+            "vehicles": "rgba(1,112,206,0.7)",
+            "ev_platforms": "rgba(34,197,94,0.7)",
+            "engines": "rgba(251,191,36,0.7)",
+            "transmissions": "rgba(56,189,248,0.7)",
+            "batteries": "rgba(168,85,247,0.7)"
+        }
+    }
+}

@@ -1,0 +1,320 @@
+{
+    "nodes": [
+        {
+            "id": "PAN_HQ",
+            "name": "Panasonic Osaka HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Panasonic",
+            "lat": 34.6937,
+            "lng": 135.5023,
+            "country_iso3": "JPN",
+            "country": "Japan",
+            "categories": [
+                "batteries",
+                "ev_batteries",
+                "home_appliances",
+                "semiconductors",
+                "displays"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 2,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "PAN_TESLA_NV",
+            "name": "Panasonic Gigafactory Nevada (EV Batteries)",
+            "entity_type": "facility",
+            "parent_company_id": "Panasonic",
+            "lat": 39.5383,
+            "lng": -119.4442,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "ev_batteries"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 8,
+            "unit_cost_index": 1.08,
+            "tariff_rate_by_category": {},
+            "risk_score": 1.0,
+            "risk_event_count": 5,
+            "concentration_share": 0.35,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "ev_batteries": 180.0
+            }
+        },
+        {
+            "id": "PAN_CN_DALIAN",
+            "name": "Panasonic Dalian Battery Plant",
+            "entity_type": "facility",
+            "parent_company_id": "Panasonic",
+            "lat": 38.9140,
+            "lng": 121.6147,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "batteries",
+                "ev_batteries"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 20,
+            "unit_cost_index": 0.82,
+            "tariff_rate_by_category": {
+                "batteries": 0.10,
+                "ev_batteries": 0.10
+            },
+            "risk_score": 5.5,
+            "risk_event_count": 40,
+            "concentration_share": 0.25,
+            "confidence": 0.82,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "batteries": 120.0,
+                "ev_batteries": 85.0
+            }
+        },
+        {
+            "id": "PAN_MY_SHAH",
+            "name": "Panasonic Shah Alam Malaysia (Appliances)",
+            "entity_type": "facility",
+            "parent_company_id": "Panasonic",
+            "lat": 3.0738,
+            "lng": 101.5183,
+            "country_iso3": "MYS",
+            "country": "Malaysia",
+            "categories": [
+                "home_appliances"
+            ],
+            "capacity_index": 0.78,
+            "lead_time_days": 18,
+            "unit_cost_index": 0.88,
+            "tariff_rate_by_category": {
+                "home_appliances": 0.03
+            },
+            "risk_score": 1.5,
+            "risk_event_count": 8,
+            "concentration_share": 0.15,
+            "confidence": 0.80,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "home_appliances": 75.0
+            }
+        },
+        {
+            "id": "PAN_TW_SEMI",
+            "name": "Panasonic Taiwan Semiconductor Fab",
+            "entity_type": "facility",
+            "parent_company_id": "Panasonic",
+            "lat": 25.0330,
+            "lng": 121.5654,
+            "country_iso3": "TWN",
+            "country": "Taiwan",
+            "categories": [
+                "semiconductors"
+            ],
+            "capacity_index": 0.80,
+            "lead_time_days": 25,
+            "unit_cost_index": 0.95,
+            "tariff_rate_by_category": {
+                "semiconductors": 0.05
+            },
+            "risk_score": 5.0,
+            "risk_event_count": 30,
+            "concentration_share": 0.20,
+            "confidence": 0.82,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "semiconductors": 95.0
+            }
+        },
+        {
+            "id": "PAN_CZ_PILSEN",
+            "name": "Panasonic Pilsen Czech Republic (Displays)",
+            "entity_type": "facility",
+            "parent_company_id": "Panasonic",
+            "lat": 49.7384,
+            "lng": 13.3736,
+            "country_iso3": "CZE",
+            "country": "Czech Republic",
+            "categories": [
+                "displays"
+            ],
+            "capacity_index": 0.72,
+            "lead_time_days": 14,
+            "unit_cost_index": 0.92,
+            "tariff_rate_by_category": {
+                "displays": 0.02
+            },
+            "risk_score": 0.8,
+            "risk_event_count": 4,
+            "concentration_share": 0.12,
+            "confidence": 0.82,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "displays": 65.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "PAN_TESLA_NV",
+            "target_id": "PAN_HQ",
+            "category": "ev_batteries",
+            "relationship_type": "supplies",
+            "baseline_volume": 180.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 8,
+            "targetLat": 34.6937,
+            "targetLng": 135.5023,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "PAN_CN_DALIAN",
+            "target_id": "PAN_HQ",
+            "category": "batteries",
+            "relationship_type": "supplies",
+            "baseline_volume": 120.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 20,
+            "targetLat": 34.6937,
+            "targetLng": 135.5023,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "PAN_CN_DALIAN",
+            "target_id": "PAN_TESLA_NV",
+            "category": "ev_batteries",
+            "relationship_type": "supplies",
+            "baseline_volume": 85.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 0.88,
+            "lead_time_days": 22,
+            "targetLat": 39.5383,
+            "targetLng": -119.4442,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "PAN_MY_SHAH",
+            "target_id": "PAN_HQ",
+            "category": "home_appliances",
+            "relationship_type": "supplies",
+            "baseline_volume": 75.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.90,
+            "lead_time_days": 18,
+            "targetLat": 34.6937,
+            "targetLng": 135.5023,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "PAN_TW_SEMI",
+            "target_id": "PAN_HQ",
+            "category": "semiconductors",
+            "relationship_type": "supplies",
+            "baseline_volume": 95.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 0.98,
+            "lead_time_days": 25,
+            "targetLat": 34.6937,
+            "targetLng": 135.5023,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "PAN_TW_SEMI",
+            "target_id": "PAN_CN_DALIAN",
+            "category": "semiconductors",
+            "relationship_type": "supplies",
+            "baseline_volume": 40.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 0.96,
+            "lead_time_days": 12,
+            "targetLat": 38.914,
+            "targetLng": 121.6147,
+            "target_market": "China"
+        },
+        {
+            "source_id": "PAN_CZ_PILSEN",
+            "target_id": "PAN_HQ",
+            "category": "displays",
+            "relationship_type": "supplies",
+            "baseline_volume": 65.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.95,
+            "lead_time_days": 14,
+            "targetLat": 34.6937,
+            "targetLng": 135.5023,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "PAN_TW_SEMI",
+            "target_id": "PAN_MY_SHAH",
+            "category": "semiconductors",
+            "relationship_type": "supplies",
+            "baseline_volume": 30.0,
+            "baseline_share": 0.20,
+            "effective_cost_index": 0.97,
+            "lead_time_days": 10,
+            "targetLat": 3.0738,
+            "targetLng": 101.5183,
+            "target_market": "Malaysia"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Panasonic",
+        "build_version": "panasonic-v1",
+        "assumption_notes": "Panasonic supply chain focused on batteries, EV batteries, and appliances",
+        "company_key": "panasonic",
+        "parent_company_id": "Panasonic",
+        "accent_color": "#0068b7",
+        "category_labels": {
+            "batteries": "Consumer Batteries",
+            "ev_batteries": "EV Batteries",
+            "home_appliances": "Home Appliances",
+            "semiconductors": "Semiconductors",
+            "displays": "Displays"
+        },
+        "arc_colors": {
+            "batteries": "rgba(0,104,183,0.7)",
+            "ev_batteries": "rgba(34,197,94,0.7)",
+            "home_appliances": "rgba(251,191,36,0.7)",
+            "semiconductors": "rgba(168,85,247,0.7)",
+            "displays": "rgba(244,114,182,0.7)"
+        }
+    }
+}

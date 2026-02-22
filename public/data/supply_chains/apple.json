@@ -1,0 +1,379 @@
+{
+    "nodes": [
+        {
+            "id": "AAPL_HQ",
+            "name": "Apple Cupertino HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Apple",
+            "lat": 37.3349,
+            "lng": -122.009,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "iphones",
+                "macbooks",
+                "chips",
+                "displays",
+                "batteries"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.1,
+            "risk_event_count": 0,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "AAPL_FOX_SHZ",
+            "name": "Apple Foxconn Shenzhen Assembly",
+            "entity_type": "facility",
+            "parent_company_id": "Apple",
+            "lat": 22.5431,
+            "lng": 114.0579,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "iphones",
+                "macbooks"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 25,
+            "unit_cost_index": 0.88,
+            "tariff_rate_by_category": {
+                "iphones": 0.10,
+                "macbooks": 0.10
+            },
+            "risk_score": 7.5,
+            "risk_event_count": 95,
+            "concentration_share": 0.35,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "iphones": 200.0,
+                "macbooks": 120.0
+            }
+        },
+        {
+            "id": "AAPL_TSMC_TW",
+            "name": "Apple TSMC Taiwan (A-Series Chips)",
+            "entity_type": "facility",
+            "parent_company_id": "Apple",
+            "lat": 24.8138,
+            "lng": 120.9675,
+            "country_iso3": "TWN",
+            "country": "Taiwan",
+            "categories": [
+                "chips"
+            ],
+            "capacity_index": 0.96,
+            "lead_time_days": 30,
+            "unit_cost_index": 1.05,
+            "tariff_rate_by_category": {
+                "chips": 0.05
+            },
+            "risk_score": 6.0,
+            "risk_event_count": 42,
+            "concentration_share": 0.60,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "chips": 180.0
+            }
+        },
+        {
+            "id": "AAPL_SAM_KR",
+            "name": "Apple Samsung Korea Displays",
+            "entity_type": "facility",
+            "parent_company_id": "Apple",
+            "lat": 36.8,
+            "lng": 127.0,
+            "country_iso3": "KOR",
+            "country": "South Korea",
+            "categories": [
+                "displays"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 20,
+            "unit_cost_index": 1.02,
+            "tariff_rate_by_category": {
+                "displays": 0.04
+            },
+            "risk_score": 2.0,
+            "risk_event_count": 15,
+            "concentration_share": 0.45,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "displays": 140.0
+            }
+        },
+        {
+            "id": "AAPL_TATA_IN",
+            "name": "Apple Tata Electronics India Assembly",
+            "entity_type": "facility",
+            "parent_company_id": "Apple",
+            "lat": 12.7409,
+            "lng": 77.8253,
+            "country_iso3": "IND",
+            "country": "India",
+            "categories": [
+                "iphones"
+            ],
+            "capacity_index": 0.55,
+            "lead_time_days": 28,
+            "unit_cost_index": 0.82,
+            "tariff_rate_by_category": {
+                "iphones": 0.05
+            },
+            "risk_score": 3.5,
+            "risk_event_count": 22,
+            "concentration_share": 0.10,
+            "confidence": 0.75,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "iphones": 55.0
+            }
+        },
+        {
+            "id": "AAPL_LG_VN",
+            "name": "Apple LG Vietnam Battery",
+            "entity_type": "facility",
+            "parent_company_id": "Apple",
+            "lat": 21.0285,
+            "lng": 105.8542,
+            "country_iso3": "VNM",
+            "country": "Vietnam",
+            "categories": [
+                "batteries"
+            ],
+            "capacity_index": 0.70,
+            "lead_time_days": 18,
+            "unit_cost_index": 0.80,
+            "tariff_rate_by_category": {
+                "batteries": 0.03
+            },
+            "risk_score": 2.8,
+            "risk_event_count": 14,
+            "concentration_share": 0.20,
+            "confidence": 0.78,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "batteries": 85.0
+            }
+        },
+        {
+            "id": "AAPL_JP_GLASS",
+            "name": "Apple Corning Japan Glass",
+            "entity_type": "facility",
+            "parent_company_id": "Apple",
+            "lat": 35.6762,
+            "lng": 139.6503,
+            "country_iso3": "JPN",
+            "country": "Japan",
+            "categories": [
+                "displays"
+            ],
+            "capacity_index": 0.78,
+            "lead_time_days": 14,
+            "unit_cost_index": 1.08,
+            "tariff_rate_by_category": {
+                "displays": 0.02
+            },
+            "risk_score": 1.5,
+            "risk_event_count": 8,
+            "concentration_share": 0.15,
+            "confidence": 0.82,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "displays": 60.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "AAPL_FOX_SHZ",
+            "target_id": "AAPL_HQ",
+            "category": "iphones",
+            "relationship_type": "supplies",
+            "baseline_volume": 200.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 0.92,
+            "lead_time_days": 25,
+            "targetLat": 37.3349,
+            "targetLng": -122.009,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "AAPL_FOX_SHZ",
+            "target_id": "AAPL_HQ",
+            "category": "macbooks",
+            "relationship_type": "supplies",
+            "baseline_volume": 120.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.90,
+            "lead_time_days": 25,
+            "targetLat": 37.3349,
+            "targetLng": -122.009,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "AAPL_TSMC_TW",
+            "target_id": "AAPL_FOX_SHZ",
+            "category": "chips",
+            "relationship_type": "supplies",
+            "baseline_volume": 180.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 1.06,
+            "lead_time_days": 30,
+            "targetLat": 22.5431,
+            "targetLng": 114.0579,
+            "target_market": "China"
+        },
+        {
+            "source_id": "AAPL_SAM_KR",
+            "target_id": "AAPL_FOX_SHZ",
+            "category": "displays",
+            "relationship_type": "supplies",
+            "baseline_volume": 140.0,
+            "baseline_share": 0.45,
+            "effective_cost_index": 1.04,
+            "lead_time_days": 20,
+            "targetLat": 22.5431,
+            "targetLng": 114.0579,
+            "target_market": "China"
+        },
+        {
+            "source_id": "AAPL_TATA_IN",
+            "target_id": "AAPL_HQ",
+            "category": "iphones",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.15,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 28,
+            "targetLat": 37.3349,
+            "targetLng": -122.009,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "AAPL_LG_VN",
+            "target_id": "AAPL_FOX_SHZ",
+            "category": "batteries",
+            "relationship_type": "supplies",
+            "baseline_volume": 85.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 0.82,
+            "lead_time_days": 18,
+            "targetLat": 22.5431,
+            "targetLng": 114.0579,
+            "target_market": "China"
+        },
+        {
+            "source_id": "AAPL_JP_GLASS",
+            "target_id": "AAPL_SAM_KR",
+            "category": "displays",
+            "relationship_type": "supplies",
+            "baseline_volume": 60.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 1.10,
+            "lead_time_days": 14,
+            "targetLat": 36.8,
+            "targetLng": 127.0,
+            "target_market": "South Korea"
+        },
+        {
+            "source_id": "AAPL_TSMC_TW",
+            "target_id": "AAPL_TATA_IN",
+            "category": "chips",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 22,
+            "targetLat": 12.7409,
+            "targetLng": 77.8253,
+            "target_market": "India"
+        },
+        {
+            "source_id": "AAPL_LG_VN",
+            "target_id": "AAPL_TATA_IN",
+            "category": "batteries",
+            "relationship_type": "supplies",
+            "baseline_volume": 30.0,
+            "baseline_share": 0.20,
+            "effective_cost_index": 0.84,
+            "lead_time_days": 15,
+            "targetLat": 12.7409,
+            "targetLng": 77.8253,
+            "target_market": "India"
+        },
+        {
+            "source_id": "AAPL_SAM_KR",
+            "target_id": "AAPL_TATA_IN",
+            "category": "displays",
+            "relationship_type": "supplies",
+            "baseline_volume": 35.0,
+            "baseline_share": 0.18,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 16,
+            "targetLat": 12.7409,
+            "targetLng": 77.8253,
+            "target_market": "India"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Apple",
+        "build_version": "apple-v1",
+        "assumption_notes": "Apple supply chain with key manufacturing/supplier facilities",
+        "company_key": "apple",
+        "parent_company_id": "Apple",
+        "accent_color": "#a3a3a3",
+        "category_labels": {
+            "iphones": "iPhones",
+            "macbooks": "MacBooks",
+            "chips": "A-Series Chips",
+            "displays": "OLED Displays",
+            "batteries": "Lithium Batteries"
+        },
+        "arc_colors": {
+            "iphones": "rgba(163,163,163,0.7)",
+            "macbooks": "rgba(56,189,248,0.7)",
+            "chips": "rgba(168,85,247,0.7)",
+            "displays": "rgba(251,191,36,0.7)",
+            "batteries": "rgba(34,197,94,0.7)"
+        }
+    }
+}

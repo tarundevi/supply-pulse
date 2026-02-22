@@ -1,0 +1,344 @@
+{
+    "nodes": [
+        {
+            "id": "WHR_HQ",
+            "name": "Whirlpool Benton Harbor HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Whirlpool",
+            "lat": 42.1167,
+            "lng": -86.4542,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "washing_machines",
+                "dryers",
+                "refrigerators",
+                "dishwashers",
+                "ovens"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 2,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "WHR_OH_CLYDE",
+            "name": "Whirlpool Clyde Ohio (Washers)",
+            "entity_type": "facility",
+            "parent_company_id": "Whirlpool",
+            "lat": 41.3045,
+            "lng": -82.9752,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "washing_machines",
+                "dryers"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 5,
+            "unit_cost_index": 1.05,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.35,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "washing_machines": 140.0,
+                "dryers": 110.0
+            }
+        },
+        {
+            "id": "WHR_MX_RAMOS",
+            "name": "Whirlpool Ramos Arizpe Mexico",
+            "entity_type": "facility",
+            "parent_company_id": "Whirlpool",
+            "lat": 25.5428,
+            "lng": -100.9511,
+            "country_iso3": "MEX",
+            "country": "Mexico",
+            "categories": [
+                "refrigerators",
+                "ovens"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 10,
+            "unit_cost_index": 0.82,
+            "tariff_rate_by_category": {
+                "refrigerators": 0.0,
+                "ovens": 0.0
+            },
+            "risk_score": 2.5,
+            "risk_event_count": 15,
+            "concentration_share": 0.25,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refrigerators": 120.0,
+                "ovens": 80.0
+            }
+        },
+        {
+            "id": "WHR_IT_NAPLES",
+            "name": "Whirlpool Naples Italy (Dishwashers)",
+            "entity_type": "facility",
+            "parent_company_id": "Whirlpool",
+            "lat": 40.8518,
+            "lng": 14.2681,
+            "country_iso3": "ITA",
+            "country": "Italy",
+            "categories": [
+                "dishwashers",
+                "ovens"
+            ],
+            "capacity_index": 0.75,
+            "lead_time_days": 16,
+            "unit_cost_index": 1.02,
+            "tariff_rate_by_category": {
+                "dishwashers": 0.02,
+                "ovens": 0.02
+            },
+            "risk_score": 0.8,
+            "risk_event_count": 4,
+            "concentration_share": 0.15,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "dishwashers": 65.0,
+                "ovens": 45.0
+            }
+        },
+        {
+            "id": "WHR_CN_HEFEI",
+            "name": "Whirlpool Hefei China Factory",
+            "entity_type": "facility",
+            "parent_company_id": "Whirlpool",
+            "lat": 31.8206,
+            "lng": 117.2272,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "washing_machines",
+                "refrigerators"
+            ],
+            "capacity_index": 0.80,
+            "lead_time_days": 22,
+            "unit_cost_index": 0.78,
+            "tariff_rate_by_category": {
+                "washing_machines": 0.10,
+                "refrigerators": 0.10
+            },
+            "risk_score": 5.5,
+            "risk_event_count": 40,
+            "concentration_share": 0.18,
+            "confidence": 0.80,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "washing_machines": 70.0,
+                "refrigerators": 60.0
+            }
+        },
+        {
+            "id": "WHR_BR_SAO",
+            "name": "Whirlpool Sao Paulo Brazil",
+            "entity_type": "facility",
+            "parent_company_id": "Whirlpool",
+            "lat": -23.5505,
+            "lng": -46.6333,
+            "country_iso3": "BRA",
+            "country": "Brazil",
+            "categories": [
+                "refrigerators",
+                "washing_machines"
+            ],
+            "capacity_index": 0.72,
+            "lead_time_days": 18,
+            "unit_cost_index": 0.85,
+            "tariff_rate_by_category": {
+                "refrigerators": 0.04,
+                "washing_machines": 0.04
+            },
+            "risk_score": 3.0,
+            "risk_event_count": 18,
+            "concentration_share": 0.10,
+            "confidence": 0.78,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refrigerators": 55.0,
+                "washing_machines": 45.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "WHR_OH_CLYDE",
+            "target_id": "WHR_HQ",
+            "category": "washing_machines",
+            "relationship_type": "supplies",
+            "baseline_volume": 140.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 5,
+            "targetLat": 42.1167,
+            "targetLng": -86.4542,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "WHR_OH_CLYDE",
+            "target_id": "WHR_HQ",
+            "category": "dryers",
+            "relationship_type": "supplies",
+            "baseline_volume": 110.0,
+            "baseline_share": 0.70,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 5,
+            "targetLat": 42.1167,
+            "targetLng": -86.4542,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "WHR_MX_RAMOS",
+            "target_id": "WHR_HQ",
+            "category": "refrigerators",
+            "relationship_type": "supplies",
+            "baseline_volume": 120.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 10,
+            "targetLat": 42.1167,
+            "targetLng": -86.4542,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "WHR_MX_RAMOS",
+            "target_id": "WHR_HQ",
+            "category": "ovens",
+            "relationship_type": "supplies",
+            "baseline_volume": 80.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 10,
+            "targetLat": 42.1167,
+            "targetLng": -86.4542,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "WHR_IT_NAPLES",
+            "target_id": "WHR_HQ",
+            "category": "dishwashers",
+            "relationship_type": "supplies",
+            "baseline_volume": 65.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 16,
+            "targetLat": 42.1167,
+            "targetLng": -86.4542,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "WHR_CN_HEFEI",
+            "target_id": "WHR_HQ",
+            "category": "washing_machines",
+            "relationship_type": "supplies",
+            "baseline_volume": 70.0,
+            "baseline_share": 0.28,
+            "effective_cost_index": 0.82,
+            "lead_time_days": 22,
+            "targetLat": 42.1167,
+            "targetLng": -86.4542,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "WHR_CN_HEFEI",
+            "target_id": "WHR_HQ",
+            "category": "refrigerators",
+            "relationship_type": "supplies",
+            "baseline_volume": 60.0,
+            "baseline_share": 0.22,
+            "effective_cost_index": 0.82,
+            "lead_time_days": 22,
+            "targetLat": 42.1167,
+            "targetLng": -86.4542,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "WHR_BR_SAO",
+            "target_id": "WHR_HQ",
+            "category": "refrigerators",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.20,
+            "effective_cost_index": 0.88,
+            "lead_time_days": 18,
+            "targetLat": 42.1167,
+            "targetLng": -86.4542,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "WHR_IT_NAPLES",
+            "target_id": "WHR_CN_HEFEI",
+            "category": "ovens",
+            "relationship_type": "supplies",
+            "baseline_volume": 25.0,
+            "baseline_share": 0.15,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 20,
+            "targetLat": 31.8206,
+            "targetLng": 117.2272,
+            "target_market": "China"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Whirlpool",
+        "build_version": "whirlpool-v1",
+        "assumption_notes": "Whirlpool supply chain with US manufacturing, Mexico, Italy, China, and Brazil plants",
+        "company_key": "whirlpool",
+        "parent_company_id": "Whirlpool",
+        "accent_color": "#1a56db",
+        "category_labels": {
+            "washing_machines": "Washing Machines",
+            "dryers": "Dryers",
+            "refrigerators": "Refrigerators",
+            "dishwashers": "Dishwashers",
+            "ovens": "Ovens"
+        },
+        "arc_colors": {
+            "washing_machines": "rgba(26,86,219,0.7)",
+            "dryers": "rgba(56,189,248,0.7)",
+            "refrigerators": "rgba(34,197,94,0.7)",
+            "dishwashers": "rgba(251,191,36,0.7)",
+            "ovens": "rgba(244,114,182,0.7)"
+        }
+    }
+}

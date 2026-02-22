@@ -1,0 +1,391 @@
+{
+    "nodes": [
+        {
+            "id": "ARAMCO_HQ",
+            "name": "Saudi Aramco Dhahran HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Saudi Aramco",
+            "lat": 26.2885,
+            "lng": 50.1113,
+            "country_iso3": "SAU",
+            "country": "Saudi Arabia",
+            "categories": [
+                "crude_oil",
+                "natural_gas",
+                "refined_products",
+                "petrochemicals",
+                "lng"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 5,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "ARAMCO_GHAWAR",
+            "name": "Saudi Aramco Ghawar Oil Field",
+            "entity_type": "facility",
+            "parent_company_id": "Saudi Aramco",
+            "lat": 24.0000,
+            "lng": 49.0000,
+            "country_iso3": "SAU",
+            "country": "Saudi Arabia",
+            "categories": [
+                "crude_oil"
+            ],
+            "capacity_index": 0.98,
+            "lead_time_days": 5,
+            "unit_cost_index": 0.65,
+            "tariff_rate_by_category": {
+                "crude_oil": 0.0
+            },
+            "risk_score": 3.5,
+            "risk_event_count": 18,
+            "concentration_share": 0.45,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "crude_oil": 250.0
+            }
+        },
+        {
+            "id": "ARAMCO_RAS_TAN",
+            "name": "Saudi Aramco Ras Tanura Refinery",
+            "entity_type": "facility",
+            "parent_company_id": "Saudi Aramco",
+            "lat": 26.6406,
+            "lng": 50.1532,
+            "country_iso3": "SAU",
+            "country": "Saudi Arabia",
+            "categories": [
+                "refined_products",
+                "petrochemicals"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 8,
+            "unit_cost_index": 0.72,
+            "tariff_rate_by_category": {
+                "refined_products": 0.0,
+                "petrochemicals": 0.0
+            },
+            "risk_score": 2.8,
+            "risk_event_count": 12,
+            "concentration_share": 0.30,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refined_products": 180.0,
+                "petrochemicals": 95.0
+            }
+        },
+        {
+            "id": "ARAMCO_MOTIVA_US",
+            "name": "Saudi Aramco Motiva Port Arthur (USA)",
+            "entity_type": "facility",
+            "parent_company_id": "Saudi Aramco",
+            "lat": 29.8572,
+            "lng": -93.9271,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "refined_products",
+                "crude_oil"
+            ],
+            "capacity_index": 0.88,
+            "lead_time_days": 22,
+            "unit_cost_index": 1.05,
+            "tariff_rate_by_category": {
+                "refined_products": 0.0,
+                "crude_oil": 0.0
+            },
+            "risk_score": 1.2,
+            "risk_event_count": 6,
+            "concentration_share": 0.18,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refined_products": 120.0,
+                "crude_oil": 80.0
+            }
+        },
+        {
+            "id": "ARAMCO_JGSFS_CN",
+            "name": "Saudi Aramco SASREF Jizan (LNG Export)",
+            "entity_type": "facility",
+            "parent_company_id": "Saudi Aramco",
+            "lat": 16.8892,
+            "lng": 42.5511,
+            "country_iso3": "SAU",
+            "country": "Saudi Arabia",
+            "categories": [
+                "lng",
+                "natural_gas"
+            ],
+            "capacity_index": 0.80,
+            "lead_time_days": 12,
+            "unit_cost_index": 0.78,
+            "tariff_rate_by_category": {
+                "lng": 0.0,
+                "natural_gas": 0.0
+            },
+            "risk_score": 2.0,
+            "risk_event_count": 8,
+            "concentration_share": 0.15,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "lng": 90.0,
+                "natural_gas": 110.0
+            }
+        },
+        {
+            "id": "ARAMCO_SK_KR",
+            "name": "Saudi Aramco S-Oil Korea Refinery",
+            "entity_type": "facility",
+            "parent_company_id": "Saudi Aramco",
+            "lat": 35.1028,
+            "lng": 129.0403,
+            "country_iso3": "KOR",
+            "country": "South Korea",
+            "categories": [
+                "refined_products",
+                "petrochemicals"
+            ],
+            "capacity_index": 0.82,
+            "lead_time_days": 30,
+            "unit_cost_index": 0.95,
+            "tariff_rate_by_category": {
+                "refined_products": 0.03,
+                "petrochemicals": 0.04
+            },
+            "risk_score": 1.5,
+            "risk_event_count": 7,
+            "concentration_share": 0.12,
+            "confidence": 0.82,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refined_products": 85.0,
+                "petrochemicals": 65.0
+            }
+        },
+        {
+            "id": "ARAMCO_JP_TERM",
+            "name": "Saudi Aramco Japan LNG Terminal",
+            "entity_type": "facility",
+            "parent_company_id": "Saudi Aramco",
+            "lat": 34.6937,
+            "lng": 135.5023,
+            "country_iso3": "JPN",
+            "country": "Japan",
+            "categories": [
+                "lng",
+                "crude_oil"
+            ],
+            "capacity_index": 0.75,
+            "lead_time_days": 28,
+            "unit_cost_index": 1.02,
+            "tariff_rate_by_category": {
+                "lng": 0.02,
+                "crude_oil": 0.0
+            },
+            "risk_score": 1.0,
+            "risk_event_count": 5,
+            "concentration_share": 0.10,
+            "confidence": 0.80,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "lng": 70.0,
+                "crude_oil": 55.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "ARAMCO_GHAWAR",
+            "target_id": "ARAMCO_RAS_TAN",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 250.0,
+            "baseline_share": 0.70,
+            "effective_cost_index": 0.65,
+            "lead_time_days": 5,
+            "targetLat": 26.6406,
+            "targetLng": 50.1532,
+            "target_market": "Saudi Arabia"
+        },
+        {
+            "source_id": "ARAMCO_RAS_TAN",
+            "target_id": "ARAMCO_HQ",
+            "category": "refined_products",
+            "relationship_type": "supplies",
+            "baseline_volume": 180.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.72,
+            "lead_time_days": 8,
+            "targetLat": 26.2885,
+            "targetLng": 50.1113,
+            "target_market": "Saudi Arabia"
+        },
+        {
+            "source_id": "ARAMCO_GHAWAR",
+            "target_id": "ARAMCO_MOTIVA_US",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 80.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 0.70,
+            "lead_time_days": 35,
+            "targetLat": 29.8572,
+            "targetLng": -93.9271,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "ARAMCO_MOTIVA_US",
+            "target_id": "ARAMCO_HQ",
+            "category": "refined_products",
+            "relationship_type": "supplies",
+            "baseline_volume": 120.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 22,
+            "targetLat": 26.2885,
+            "targetLng": 50.1113,
+            "target_market": "Saudi Arabia"
+        },
+        {
+            "source_id": "ARAMCO_JGSFS_CN",
+            "target_id": "ARAMCO_JP_TERM",
+            "category": "lng",
+            "relationship_type": "supplies",
+            "baseline_volume": 70.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.82,
+            "lead_time_days": 18,
+            "targetLat": 34.6937,
+            "targetLng": 135.5023,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "ARAMCO_JGSFS_CN",
+            "target_id": "ARAMCO_HQ",
+            "category": "natural_gas",
+            "relationship_type": "supplies",
+            "baseline_volume": 110.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 0.78,
+            "lead_time_days": 12,
+            "targetLat": 26.2885,
+            "targetLng": 50.1113,
+            "target_market": "Saudi Arabia"
+        },
+        {
+            "source_id": "ARAMCO_RAS_TAN",
+            "target_id": "ARAMCO_SK_KR",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 85.0,
+            "baseline_share": 0.40,
+            "effective_cost_index": 0.75,
+            "lead_time_days": 25,
+            "targetLat": 35.1028,
+            "targetLng": 129.0403,
+            "target_market": "South Korea"
+        },
+        {
+            "source_id": "ARAMCO_SK_KR",
+            "target_id": "ARAMCO_HQ",
+            "category": "petrochemicals",
+            "relationship_type": "supplies",
+            "baseline_volume": 65.0,
+            "baseline_share": 0.28,
+            "effective_cost_index": 0.98,
+            "lead_time_days": 30,
+            "targetLat": 26.2885,
+            "targetLng": 50.1113,
+            "target_market": "Saudi Arabia"
+        },
+        {
+            "source_id": "ARAMCO_RAS_TAN",
+            "target_id": "ARAMCO_MOTIVA_US",
+            "category": "petrochemicals",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 0.80,
+            "lead_time_days": 30,
+            "targetLat": 29.8572,
+            "targetLng": -93.9271,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "ARAMCO_JP_TERM",
+            "target_id": "ARAMCO_HQ",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.20,
+            "effective_cost_index": 1.02,
+            "lead_time_days": 28,
+            "targetLat": 26.2885,
+            "targetLng": 50.1113,
+            "target_market": "Saudi Arabia"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Saudi Aramco",
+        "build_version": "saudi_aramco-v1",
+        "assumption_notes": "Saudi Aramco supply chain with oil fields, refineries, and global distribution",
+        "company_key": "saudi_aramco",
+        "parent_company_id": "Saudi Aramco",
+        "accent_color": "#00a651",
+        "category_labels": {
+            "crude_oil": "Crude Oil",
+            "natural_gas": "Natural Gas",
+            "refined_products": "Refined Products",
+            "petrochemicals": "Petrochemicals",
+            "lng": "LNG"
+        },
+        "arc_colors": {
+            "crude_oil": "rgba(0,166,81,0.7)",
+            "natural_gas": "rgba(56,189,248,0.7)",
+            "refined_products": "rgba(251,191,36,0.7)",
+            "petrochemicals": "rgba(168,85,247,0.7)",
+            "lng": "rgba(244,114,182,0.7)"
+        }
+    }
+}

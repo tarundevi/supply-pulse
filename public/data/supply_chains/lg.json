@@ -1,0 +1,342 @@
+{
+    "nodes": [
+        {
+            "id": "LG_HQ",
+            "name": "LG Electronics Seoul HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "LG Electronics",
+            "lat": 37.5085,
+            "lng": 126.8914,
+            "country_iso3": "KOR",
+            "country": "South Korea",
+            "categories": [
+                "tvs",
+                "home_appliances",
+                "ev_components",
+                "displays",
+                "hvac"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 2,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "LG_PAJU",
+            "name": "LG Display Paju (OLED Panels)",
+            "entity_type": "facility",
+            "parent_company_id": "LG Electronics",
+            "lat": 37.815,
+            "lng": 126.775,
+            "country_iso3": "KOR",
+            "country": "South Korea",
+            "categories": [
+                "displays",
+                "tvs"
+            ],
+            "capacity_index": 0.90,
+            "lead_time_days": 10,
+            "unit_cost_index": 1.05,
+            "tariff_rate_by_category": {
+                "displays": 0.0,
+                "tvs": 0.0
+            },
+            "risk_score": 1.5,
+            "risk_event_count": 8,
+            "concentration_share": 0.40,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "displays": 150.0,
+                "tvs": 100.0
+            }
+        },
+        {
+            "id": "LG_CN_NANJING",
+            "name": "LG Nanjing China Factory",
+            "entity_type": "facility",
+            "parent_company_id": "LG Electronics",
+            "lat": 32.0603,
+            "lng": 118.7969,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "home_appliances",
+                "tvs"
+            ],
+            "capacity_index": 0.82,
+            "lead_time_days": 18,
+            "unit_cost_index": 0.82,
+            "tariff_rate_by_category": {
+                "home_appliances": 0.10,
+                "tvs": 0.10
+            },
+            "risk_score": 6.0,
+            "risk_event_count": 50,
+            "concentration_share": 0.25,
+            "confidence": 0.80,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "home_appliances": 110.0,
+                "tvs": 80.0
+            }
+        },
+        {
+            "id": "LG_PL_WROCLAW",
+            "name": "LG Wroclaw Poland (Appliances)",
+            "entity_type": "facility",
+            "parent_company_id": "LG Electronics",
+            "lat": 51.1079,
+            "lng": 17.0385,
+            "country_iso3": "POL",
+            "country": "Poland",
+            "categories": [
+                "home_appliances",
+                "hvac"
+            ],
+            "capacity_index": 0.78,
+            "lead_time_days": 14,
+            "unit_cost_index": 0.88,
+            "tariff_rate_by_category": {
+                "home_appliances": 0.02,
+                "hvac": 0.02
+            },
+            "risk_score": 0.8,
+            "risk_event_count": 4,
+            "concentration_share": 0.15,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "home_appliances": 70.0,
+                "hvac": 55.0
+            }
+        },
+        {
+            "id": "LG_US_TN",
+            "name": "LG Clarksville Tennessee (Appliances)",
+            "entity_type": "facility",
+            "parent_company_id": "LG Electronics",
+            "lat": 36.5298,
+            "lng": -87.3595,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "home_appliances"
+            ],
+            "capacity_index": 0.75,
+            "lead_time_days": 6,
+            "unit_cost_index": 1.10,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.12,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "home_appliances": 85.0
+            }
+        },
+        {
+            "id": "LG_IN_PUNE",
+            "name": "LG Pune India (Electronics)",
+            "entity_type": "facility",
+            "parent_company_id": "LG Electronics",
+            "lat": 18.5204,
+            "lng": 73.8567,
+            "country_iso3": "IND",
+            "country": "India",
+            "categories": [
+                "tvs",
+                "ev_components"
+            ],
+            "capacity_index": 0.68,
+            "lead_time_days": 22,
+            "unit_cost_index": 0.78,
+            "tariff_rate_by_category": {
+                "tvs": 0.08,
+                "ev_components": 0.06
+            },
+            "risk_score": 3.0,
+            "risk_event_count": 18,
+            "concentration_share": 0.10,
+            "confidence": 0.75,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "tvs": 50.0,
+                "ev_components": 40.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "LG_PAJU",
+            "target_id": "LG_HQ",
+            "category": "displays",
+            "relationship_type": "supplies",
+            "baseline_volume": 150.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 10,
+            "targetLat": 37.5085,
+            "targetLng": 126.8914,
+            "target_market": "South Korea"
+        },
+        {
+            "source_id": "LG_PAJU",
+            "target_id": "LG_CN_NANJING",
+            "category": "tvs",
+            "relationship_type": "supplies",
+            "baseline_volume": 100.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 12,
+            "targetLat": 32.0603,
+            "targetLng": 118.7969,
+            "target_market": "China"
+        },
+        {
+            "source_id": "LG_CN_NANJING",
+            "target_id": "LG_HQ",
+            "category": "home_appliances",
+            "relationship_type": "supplies",
+            "baseline_volume": 110.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 18,
+            "targetLat": 37.5085,
+            "targetLng": 126.8914,
+            "target_market": "South Korea"
+        },
+        {
+            "source_id": "LG_PL_WROCLAW",
+            "target_id": "LG_HQ",
+            "category": "home_appliances",
+            "relationship_type": "supplies",
+            "baseline_volume": 70.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 0.90,
+            "lead_time_days": 14,
+            "targetLat": 37.5085,
+            "targetLng": 126.8914,
+            "target_market": "South Korea"
+        },
+        {
+            "source_id": "LG_PL_WROCLAW",
+            "target_id": "LG_HQ",
+            "category": "hvac",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 0.90,
+            "lead_time_days": 14,
+            "targetLat": 37.5085,
+            "targetLng": 126.8914,
+            "target_market": "South Korea"
+        },
+        {
+            "source_id": "LG_US_TN",
+            "target_id": "LG_HQ",
+            "category": "home_appliances",
+            "relationship_type": "supplies",
+            "baseline_volume": 85.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 1.12,
+            "lead_time_days": 6,
+            "targetLat": 37.5085,
+            "targetLng": 126.8914,
+            "target_market": "South Korea"
+        },
+        {
+            "source_id": "LG_IN_PUNE",
+            "target_id": "LG_HQ",
+            "category": "tvs",
+            "relationship_type": "supplies",
+            "baseline_volume": 50.0,
+            "baseline_share": 0.22,
+            "effective_cost_index": 0.82,
+            "lead_time_days": 22,
+            "targetLat": 37.5085,
+            "targetLng": 126.8914,
+            "target_market": "South Korea"
+        },
+        {
+            "source_id": "LG_IN_PUNE",
+            "target_id": "LG_HQ",
+            "category": "ev_components",
+            "relationship_type": "supplies",
+            "baseline_volume": 40.0,
+            "baseline_share": 0.40,
+            "effective_cost_index": 0.80,
+            "lead_time_days": 22,
+            "targetLat": 37.5085,
+            "targetLng": 126.8914,
+            "target_market": "South Korea"
+        },
+        {
+            "source_id": "LG_PAJU",
+            "target_id": "LG_IN_PUNE",
+            "category": "displays",
+            "relationship_type": "supplies",
+            "baseline_volume": 30.0,
+            "baseline_share": 0.18,
+            "effective_cost_index": 1.06,
+            "lead_time_days": 16,
+            "targetLat": 18.5204,
+            "targetLng": 73.8567,
+            "target_market": "India"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "LG Electronics",
+        "build_version": "lg-v1",
+        "assumption_notes": "LG Electronics supply chain with OLED displays, appliances, and EV components",
+        "company_key": "lg",
+        "parent_company_id": "LG Electronics",
+        "accent_color": "#a50034",
+        "category_labels": {
+            "tvs": "TVs & Displays",
+            "home_appliances": "Home Appliances",
+            "ev_components": "EV Components",
+            "displays": "OLED Panels",
+            "hvac": "HVAC Systems"
+        },
+        "arc_colors": {
+            "tvs": "rgba(165,0,52,0.7)",
+            "home_appliances": "rgba(56,189,248,0.7)",
+            "ev_components": "rgba(34,197,94,0.7)",
+            "displays": "rgba(251,191,36,0.7)",
+            "hvac": "rgba(168,85,247,0.7)"
+        }
+    }
+}

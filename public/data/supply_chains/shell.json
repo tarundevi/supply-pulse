@@ -1,0 +1,330 @@
+{
+    "nodes": [
+        {
+            "id": "SHELL_HQ",
+            "name": "Shell London HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Shell",
+            "lat": 51.5074,
+            "lng": -0.1278,
+            "country_iso3": "GBR",
+            "country": "United Kingdom",
+            "categories": [
+                "crude_oil",
+                "natural_gas",
+                "lng",
+                "refined_fuels",
+                "renewables"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 2,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "SHELL_NORTH_SEA",
+            "name": "Shell North Sea Platforms",
+            "entity_type": "facility",
+            "parent_company_id": "Shell",
+            "lat": 57.5,
+            "lng": 1.5,
+            "country_iso3": "GBR",
+            "country": "United Kingdom",
+            "categories": [
+                "crude_oil",
+                "natural_gas"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 8,
+            "unit_cost_index": 0.92,
+            "tariff_rate_by_category": {},
+            "risk_score": 2.5,
+            "risk_event_count": 12,
+            "concentration_share": 0.25,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "crude_oil": 130.0,
+                "natural_gas": 95.0
+            }
+        },
+        {
+            "id": "SHELL_PERNIS",
+            "name": "Shell Pernis Refinery (Netherlands)",
+            "entity_type": "facility",
+            "parent_company_id": "Shell",
+            "lat": 51.8854,
+            "lng": 4.3829,
+            "country_iso3": "NLD",
+            "country": "Netherlands",
+            "categories": [
+                "refined_fuels"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 6,
+            "unit_cost_index": 0.98,
+            "tariff_rate_by_category": {},
+            "risk_score": 1.0,
+            "risk_event_count": 5,
+            "concentration_share": 0.30,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refined_fuels": 160.0
+            }
+        },
+        {
+            "id": "SHELL_QAT_LNG",
+            "name": "Shell Qatar LNG (Qatargas)",
+            "entity_type": "facility",
+            "parent_company_id": "Shell",
+            "lat": 25.9069,
+            "lng": 51.531,
+            "country_iso3": "QAT",
+            "country": "Qatar",
+            "categories": [
+                "lng",
+                "natural_gas"
+            ],
+            "capacity_index": 0.95,
+            "lead_time_days": 20,
+            "unit_cost_index": 0.70,
+            "tariff_rate_by_category": {},
+            "risk_score": 3.0,
+            "risk_event_count": 15,
+            "concentration_share": 0.35,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "lng": 180.0,
+                "natural_gas": 120.0
+            }
+        },
+        {
+            "id": "SHELL_NG_BONNY",
+            "name": "Shell Nigeria Bonny Terminal",
+            "entity_type": "facility",
+            "parent_company_id": "Shell",
+            "lat": 4.44,
+            "lng": 7.15,
+            "country_iso3": "NGA",
+            "country": "Nigeria",
+            "categories": [
+                "crude_oil"
+            ],
+            "capacity_index": 0.68,
+            "lead_time_days": 25,
+            "unit_cost_index": 0.80,
+            "tariff_rate_by_category": {
+                "crude_oil": 0.03
+            },
+            "risk_score": 7.5,
+            "risk_event_count": 65,
+            "concentration_share": 0.15,
+            "confidence": 0.70,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "crude_oil": 80.0
+            }
+        },
+        {
+            "id": "SHELL_US_DEER",
+            "name": "Shell Deer Park Refinery (Texas)",
+            "entity_type": "facility",
+            "parent_company_id": "Shell",
+            "lat": 29.6983,
+            "lng": -95.1197,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "refined_fuels",
+                "renewables"
+            ],
+            "capacity_index": 0.88,
+            "lead_time_days": 12,
+            "unit_cost_index": 1.02,
+            "tariff_rate_by_category": {},
+            "risk_score": 1.2,
+            "risk_event_count": 6,
+            "concentration_share": 0.18,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refined_fuels": 120.0,
+                "renewables": 45.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "SHELL_NORTH_SEA",
+            "target_id": "SHELL_PERNIS",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 130.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 0.92,
+            "lead_time_days": 8,
+            "targetLat": 51.8854,
+            "targetLng": 4.3829,
+            "target_market": "Netherlands"
+        },
+        {
+            "source_id": "SHELL_PERNIS",
+            "target_id": "SHELL_HQ",
+            "category": "refined_fuels",
+            "relationship_type": "supplies",
+            "baseline_volume": 160.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.98,
+            "lead_time_days": 6,
+            "targetLat": 51.5074,
+            "targetLng": -0.1278,
+            "target_market": "United Kingdom"
+        },
+        {
+            "source_id": "SHELL_QAT_LNG",
+            "target_id": "SHELL_HQ",
+            "category": "lng",
+            "relationship_type": "supplies",
+            "baseline_volume": 180.0,
+            "baseline_share": 0.70,
+            "effective_cost_index": 0.72,
+            "lead_time_days": 20,
+            "targetLat": 51.5074,
+            "targetLng": -0.1278,
+            "target_market": "United Kingdom"
+        },
+        {
+            "source_id": "SHELL_QAT_LNG",
+            "target_id": "SHELL_PERNIS",
+            "category": "natural_gas",
+            "relationship_type": "supplies",
+            "baseline_volume": 120.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 0.74,
+            "lead_time_days": 18,
+            "targetLat": 51.8854,
+            "targetLng": 4.3829,
+            "target_market": "Netherlands"
+        },
+        {
+            "source_id": "SHELL_NG_BONNY",
+            "target_id": "SHELL_PERNIS",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 80.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 0.84,
+            "lead_time_days": 25,
+            "targetLat": 51.8854,
+            "targetLng": 4.3829,
+            "target_market": "Netherlands"
+        },
+        {
+            "source_id": "SHELL_NORTH_SEA",
+            "target_id": "SHELL_HQ",
+            "category": "natural_gas",
+            "relationship_type": "supplies",
+            "baseline_volume": 95.0,
+            "baseline_share": 0.45,
+            "effective_cost_index": 0.92,
+            "lead_time_days": 8,
+            "targetLat": 51.5074,
+            "targetLng": -0.1278,
+            "target_market": "United Kingdom"
+        },
+        {
+            "source_id": "SHELL_NG_BONNY",
+            "target_id": "SHELL_US_DEER",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.22,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 22,
+            "targetLat": 29.6983,
+            "targetLng": -95.1197,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "SHELL_US_DEER",
+            "target_id": "SHELL_HQ",
+            "category": "refined_fuels",
+            "relationship_type": "supplies",
+            "baseline_volume": 120.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 12,
+            "targetLat": 51.5074,
+            "targetLng": -0.1278,
+            "target_market": "United Kingdom"
+        },
+        {
+            "source_id": "SHELL_QAT_LNG",
+            "target_id": "SHELL_US_DEER",
+            "category": "lng",
+            "relationship_type": "supplies",
+            "baseline_volume": 65.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 0.75,
+            "lead_time_days": 28,
+            "targetLat": 29.6983,
+            "targetLng": -95.1197,
+            "target_market": "USA"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Shell",
+        "build_version": "shell-v1",
+        "assumption_notes": "Shell supply chain with North Sea, Qatar LNG, and global refining",
+        "company_key": "shell",
+        "parent_company_id": "Shell",
+        "accent_color": "#fbcb09",
+        "category_labels": {
+            "crude_oil": "Crude Oil",
+            "natural_gas": "Natural Gas",
+            "lng": "LNG",
+            "refined_fuels": "Refined Fuels",
+            "renewables": "Renewables"
+        },
+        "arc_colors": {
+            "crude_oil": "rgba(251,203,9,0.7)",
+            "natural_gas": "rgba(56,189,248,0.7)",
+            "lng": "rgba(244,114,182,0.7)",
+            "refined_fuels": "rgba(34,197,94,0.7)",
+            "renewables": "rgba(168,85,247,0.7)"
+        }
+    }
+}

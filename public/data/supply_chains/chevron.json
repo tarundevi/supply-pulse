@@ -1,0 +1,338 @@
+{
+    "nodes": [
+        {
+            "id": "CVX_HQ",
+            "name": "Chevron San Ramon HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Chevron",
+            "lat": 37.7799,
+            "lng": -122.0322,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "crude_oil",
+                "natural_gas",
+                "refined_fuels",
+                "lng",
+                "base_oils"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 2,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "CVX_PERMIAN",
+            "name": "Chevron Permian Basin (Texas)",
+            "entity_type": "facility",
+            "parent_company_id": "Chevron",
+            "lat": 31.7619,
+            "lng": -102.4521,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "crude_oil",
+                "natural_gas"
+            ],
+            "capacity_index": 0.94,
+            "lead_time_days": 4,
+            "unit_cost_index": 0.78,
+            "tariff_rate_by_category": {},
+            "risk_score": 1.0,
+            "risk_event_count": 6,
+            "concentration_share": 0.38,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "crude_oil": 190.0,
+                "natural_gas": 120.0
+            }
+        },
+        {
+            "id": "CVX_RICHMOND",
+            "name": "Chevron Richmond Refinery (California)",
+            "entity_type": "facility",
+            "parent_company_id": "Chevron",
+            "lat": 37.9358,
+            "lng": -122.3644,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "refined_fuels",
+                "base_oils"
+            ],
+            "capacity_index": 0.88,
+            "lead_time_days": 5,
+            "unit_cost_index": 0.95,
+            "tariff_rate_by_category": {},
+            "risk_score": 1.2,
+            "risk_event_count": 7,
+            "concentration_share": 0.25,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refined_fuels": 150.0,
+                "base_oils": 60.0
+            }
+        },
+        {
+            "id": "CVX_AU_GORGON",
+            "name": "Chevron Gorgon LNG (Australia)",
+            "entity_type": "facility",
+            "parent_company_id": "Chevron",
+            "lat": -20.7833,
+            "lng": 115.1333,
+            "country_iso3": "AUS",
+            "country": "Australia",
+            "categories": [
+                "lng",
+                "natural_gas"
+            ],
+            "capacity_index": 0.90,
+            "lead_time_days": 22,
+            "unit_cost_index": 0.88,
+            "tariff_rate_by_category": {
+                "lng": 0.0,
+                "natural_gas": 0.0
+            },
+            "risk_score": 1.5,
+            "risk_event_count": 6,
+            "concentration_share": 0.22,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "lng": 130.0,
+                "natural_gas": 85.0
+            }
+        },
+        {
+            "id": "CVX_KZ_TENGIZ",
+            "name": "Chevron Tengiz Field (Kazakhstan)",
+            "entity_type": "facility",
+            "parent_company_id": "Chevron",
+            "lat": 46.2500,
+            "lng": 53.3333,
+            "country_iso3": "KAZ",
+            "country": "Kazakhstan",
+            "categories": [
+                "crude_oil"
+            ],
+            "capacity_index": 0.82,
+            "lead_time_days": 30,
+            "unit_cost_index": 0.72,
+            "tariff_rate_by_category": {
+                "crude_oil": 0.04
+            },
+            "risk_score": 5.0,
+            "risk_event_count": 30,
+            "concentration_share": 0.18,
+            "confidence": 0.78,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "crude_oil": 110.0
+            }
+        },
+        {
+            "id": "CVX_NG_DEEPWATER",
+            "name": "Chevron Nigeria Deepwater",
+            "entity_type": "facility",
+            "parent_company_id": "Chevron",
+            "lat": 6.4550,
+            "lng": 3.3941,
+            "country_iso3": "NGA",
+            "country": "Nigeria",
+            "categories": [
+                "crude_oil",
+                "natural_gas"
+            ],
+            "capacity_index": 0.70,
+            "lead_time_days": 28,
+            "unit_cost_index": 0.82,
+            "tariff_rate_by_category": {
+                "crude_oil": 0.03,
+                "natural_gas": 0.03
+            },
+            "risk_score": 6.5,
+            "risk_event_count": 50,
+            "concentration_share": 0.12,
+            "confidence": 0.72,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "crude_oil": 75.0,
+                "natural_gas": 50.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "CVX_PERMIAN",
+            "target_id": "CVX_RICHMOND",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 190.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 0.80,
+            "lead_time_days": 4,
+            "targetLat": 37.9358,
+            "targetLng": -122.3644,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "CVX_PERMIAN",
+            "target_id": "CVX_HQ",
+            "category": "natural_gas",
+            "relationship_type": "supplies",
+            "baseline_volume": 120.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.78,
+            "lead_time_days": 4,
+            "targetLat": 37.7799,
+            "targetLng": -122.0322,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "CVX_RICHMOND",
+            "target_id": "CVX_HQ",
+            "category": "refined_fuels",
+            "relationship_type": "supplies",
+            "baseline_volume": 150.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 0.95,
+            "lead_time_days": 5,
+            "targetLat": 37.7799,
+            "targetLng": -122.0322,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "CVX_AU_GORGON",
+            "target_id": "CVX_HQ",
+            "category": "lng",
+            "relationship_type": "supplies",
+            "baseline_volume": 130.0,
+            "baseline_share": 0.70,
+            "effective_cost_index": 0.90,
+            "lead_time_days": 22,
+            "targetLat": 37.7799,
+            "targetLng": -122.0322,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "CVX_KZ_TENGIZ",
+            "target_id": "CVX_HQ",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 110.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 0.76,
+            "lead_time_days": 30,
+            "targetLat": 37.7799,
+            "targetLng": -122.0322,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "CVX_NG_DEEPWATER",
+            "target_id": "CVX_RICHMOND",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 75.0,
+            "baseline_share": 0.28,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 28,
+            "targetLat": 37.9358,
+            "targetLng": -122.3644,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "CVX_AU_GORGON",
+            "target_id": "CVX_KZ_TENGIZ",
+            "category": "natural_gas",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.22,
+            "effective_cost_index": 0.90,
+            "lead_time_days": 20,
+            "targetLat": 46.2500,
+            "targetLng": 53.3333,
+            "target_market": "Kazakhstan"
+        },
+        {
+            "source_id": "CVX_NG_DEEPWATER",
+            "target_id": "CVX_HQ",
+            "category": "natural_gas",
+            "relationship_type": "supplies",
+            "baseline_volume": 50.0,
+            "baseline_share": 0.20,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 28,
+            "targetLat": 37.7799,
+            "targetLng": -122.0322,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "CVX_RICHMOND",
+            "target_id": "CVX_AU_GORGON",
+            "category": "base_oils",
+            "relationship_type": "supplies",
+            "baseline_volume": 35.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 1.00,
+            "lead_time_days": 18,
+            "targetLat": -20.7833,
+            "targetLng": 115.1333,
+            "target_market": "Australia"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Chevron",
+        "build_version": "chevron-v1",
+        "assumption_notes": "Chevron supply chain spanning upstream production to refining and LNG export",
+        "company_key": "chevron",
+        "parent_company_id": "Chevron",
+        "accent_color": "#0066cc",
+        "category_labels": {
+            "crude_oil": "Crude Oil",
+            "natural_gas": "Natural Gas",
+            "refined_fuels": "Refined Fuels",
+            "lng": "LNG",
+            "base_oils": "Base Oils"
+        },
+        "arc_colors": {
+            "crude_oil": "rgba(0,102,204,0.7)",
+            "natural_gas": "rgba(56,189,248,0.7)",
+            "refined_fuels": "rgba(251,191,36,0.7)",
+            "lng": "rgba(244,114,182,0.7)",
+            "base_oils": "rgba(34,197,94,0.7)"
+        }
+    }
+}

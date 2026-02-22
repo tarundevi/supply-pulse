@@ -83,33 +83,7 @@ function rotationSpeedFromAltitude(altitude) {
   return 0.008 + t * 0.045;
 }
 
-const NVIDIA_GREEN = '#22c55e';
-
-// Human-readable descriptions for each transported material in the Nvidia supply chain
-const NVIDIA_CATEGORY_LABELS = {
-  semiconductors: 'Semiconductors',
-  ai_chips: 'AI Chips',
-  hbm: 'High-Bandwidth Memory',
-  graphics_cards: 'Graphics Cards',
-  automotive: 'Automotive AI Modules',
-  substrate: 'IC Substrates',
-  materials: 'Raw Materials',
-  memory: 'Memory Modules',
-  packaging: 'Chip Packaging',
-};
-
-// Distinct arc colors per category for visual differentiation
-const NVIDIA_ARC_COLORS = {
-  semiconductors: 'rgba(34,197,94,0.7)',
-  ai_chips: 'rgba(56,189,248,0.7)',
-  hbm: 'rgba(168,85,247,0.7)',
-  graphics_cards: 'rgba(251,191,36,0.7)',
-  automotive: 'rgba(244,114,182,0.7)',
-  substrate: 'rgba(45,212,191,0.7)',
-  materials: 'rgba(251,146,60,0.7)',
-  memory: 'rgba(129,140,248,0.7)',
-  packaging: 'rgba(163,230,53,0.7)',
-};
+const DEFAULT_ACCENT = '#22c55e';
 
 export default function Globe({
   graph,
@@ -160,37 +134,45 @@ export default function Globe({
     }
   }, [disruptedNodeId, graph, autoRotate]);
 
+  // Extract metadata from graph for data-driven rendering
+  const meta = graph?.metadata || {};
+  const hasCompanyChain = !!meta.company_key;
+  const chainParentId = meta.parent_company_id || '';
+  const accentColor = meta.accent_color || DEFAULT_ACCENT;
+  const categoryLabels = meta.category_labels || {};
+  const arcColorMap = meta.arc_colors || {};
+  const companyLabel = meta.anchor_company || '';
+
   const points = useMemo(() => {
     if (!graph) return [];
 
-    const isNvidia = selectedCompany === 'nvidia';
-    const nvidiaNodes = isNvidia
-      ? graph.nodes.filter((n) => n.parent_company_id === 'NVIDIA' && n.entity_type !== 'anchor_company')
+    const chainNodes = hasCompanyChain
+      ? graph.nodes.filter((n) => n.parent_company_id === chainParentId && n.entity_type !== 'anchor_company')
       : [];
 
-    const nodesToRender = isNvidia
-      ? nvidiaNodes
+    const nodesToRender = hasCompanyChain
+      ? chainNodes
       : graph.nodes.filter((n) => n.entity_type !== 'anchor_company');
 
     const supplierPoints = nodesToRender.map((node) => {
       const vol = node.baseline_volume_by_category?.[activeCategory] || 0;
       const isDisrupted = node.id === disruptedNodeId;
-      const isNvidiaFacility = isNvidia && node.parent_company_id === 'NVIDIA';
+      const isChainFacility = hasCompanyChain && node.parent_company_id === chainParentId;
       return {
         ...node,
         size: mode === 'country'
           ? Math.max(0.1, Math.log10(vol + 1) * 0.08)
-          : isNvidiaFacility
+          : isChainFacility
             ? Math.max(0.35, Math.log10(vol + 1) * 0.28)
             : Math.max(0.28, Math.log10(vol + 1) * 0.23),
         color: isDisrupted
           ? COLORS.arcDisrupted
-          : isNvidiaFacility
-            ? NVIDIA_GREEN
+          : isChainFacility
+            ? accentColor
             : riskColor(node.risk_event_count || 0),
-        ringColor: isDisrupted ? COLORS.arcDisrupted : isNvidiaFacility ? NVIDIA_GREEN : riskColor(node.risk_event_count || 0),
+        ringColor: isDisrupted ? COLORS.arcDisrupted : isChainFacility ? accentColor : riskColor(node.risk_event_count || 0),
         isDestination: false,
-        isNvidiaFacility: isNvidiaFacility,
+        isChainFacility,
       };
     });
 
@@ -207,42 +189,40 @@ export default function Globe({
       isDestination: true,
     };
 
-    return isNvidia
+    return hasCompanyChain
       ? [...supplierPoints]
       : [...supplierPoints, destPoint];
-  }, [graph, activeCategory, disruptedNodeId, destinationMarket, selectedCompany, mode]);
+  }, [graph, activeCategory, disruptedNodeId, destinationMarket, hasCompanyChain, chainParentId, accentColor, mode]);
 
   const arcs = useMemo(() => {
     if (!graph) return [];
 
-    const isNvidia = selectedCompany === 'nvidia';
     const nodeById = new Map((graph.nodes || []).map((n) => [n.id, n]));
 
     let filteredEdges = graph.edges || [];
-    if (isNvidia) {
+    if (hasCompanyChain) {
       filteredEdges = filteredEdges.filter((e) => {
         const src = nodeById.get(e.source_id);
         const target = nodeById.get(e.target_id);
-        return src?.parent_company_id === 'NVIDIA' || target?.parent_company_id === 'NVIDIA';
+        return src?.parent_company_id === chainParentId || target?.parent_company_id === chainParentId;
       });
     }
 
     const baseArcs = filteredEdges
-      .filter((e) => isNvidia ? true : e.category === activeCategory)
+      .filter((e) => hasCompanyChain ? true : e.category === activeCategory)
       .map((edge) => {
         const src = nodeById.get(edge.source_id);
         if (!src) return null;
         const tgt = nodeById.get(edge.target_id);
         const isDisrupted = edge.source_id === disruptedNodeId;
-        const isNvidiaArc = isNvidia && (src.parent_company_id === 'NVIDIA' || tgt?.parent_company_id === 'NVIDIA');
-        // Make country mode arcs thinner, matching company mode style
+        const isChainArc = hasCompanyChain && (src.parent_company_id === chainParentId || tgt?.parent_company_id === chainParentId);
         let strokeWidth = Math.max(0.45, Math.log10((edge.baseline_volume || 0) + 1) * 0.75);
         if (mode === 'country') {
           strokeWidth = Math.max(0.12, Math.log10((edge.baseline_volume || 0) + 1) * 0.18);
         }
-        const categoryLabel = NVIDIA_CATEGORY_LABELS[edge.category] || edge.category;
-        const srcName = src.name?.replace('NVIDIA ', '') || edge.source_id;
-        const tgtName = tgt?.name?.replace('NVIDIA ', '') || edge.target_market || edge.target_id;
+        const catLabel = categoryLabels[edge.category] || edge.category;
+        const srcName = src.name?.replace(`${companyLabel} `, '') || edge.source_id;
+        const tgtName = tgt?.name?.replace(`${companyLabel} `, '') || edge.target_market || edge.target_id;
         return {
           startLat: src.lat,
           startLng: src.lng,
@@ -250,20 +230,20 @@ export default function Globe({
           endLng: edge.targetLng,
           color: isDisrupted
             ? 'rgba(239,68,68,0.25)'
-            : isNvidiaArc
-              ? (NVIDIA_ARC_COLORS[edge.category] || 'rgba(34,197,94,0.6)')
+            : isChainArc
+              ? (arcColorMap[edge.category] || 'rgba(34,197,94,0.6)')
               : COLORS.arcDefault,
           stroke: strokeWidth,
-          label: isNvidiaArc
-            ? `<b>${categoryLabel}</b><br/><span style="opacity:0.8">${srcName} → ${tgtName}</span>`
+          label: isChainArc
+            ? `<b>${catLabel}</b><br/><span style="opacity:0.8">${srcName} → ${tgtName}</span>`
             : `${src.name} -> ${edge.target_market || edge.target_id}`,
-          isNvidiaArc: isNvidiaArc,
+          isChainArc,
         };
       })
       .filter(Boolean);
 
     const dest = DESTINATION_COORDS[destinationMarket] || DESTINATION_COORDS.USA;
-    const recArcs = !isNvidia && (recommendations || []).map((rec) => ({
+    const recArcs = !hasCompanyChain && (recommendations || []).map((rec) => ({
       startLat: rec.lat,
       startLng: rec.lng,
       endLat: dest.lat,
@@ -274,42 +254,41 @@ export default function Globe({
       isRecommended: true,
     }));
 
-    return isNvidia
+    return hasCompanyChain
       ? baseArcs
       : [...baseArcs, ...(recArcs || [])];
-  }, [graph, activeCategory, disruptedNodeId, recommendations, destinationMarket, selectedCompany, mode]);
+  }, [graph, activeCategory, disruptedNodeId, recommendations, destinationMarket, hasCompanyChain, chainParentId, categoryLabels, arcColorMap, companyLabel, mode]);
 
-  // Always-visible HTML labels for Nvidia nodes and arc midpoints
+  // Always-visible HTML labels for company chain nodes and arc midpoints
   const htmlLabels = useMemo(() => {
-    const isNvidia = selectedCompany === 'nvidia';
-    if (!isNvidia) return [];
+    if (!hasCompanyChain) return [];
 
-    // Node labels — offset slightly in latitude so they sit beside the node
+    // Node labels — offset slightly so they sit beside the node
     const nodeLabels = points.map((p) => {
-      const shortName = p.name?.replace('NVIDIA ', '') || p.id;
-      const accentColor = p.color || NVIDIA_GREEN;
+      const shortName = p.name?.replace(`${companyLabel} `, '') || p.id;
+      const nodeColor = p.color || accentColor;
       return {
         lat: p.lat + 1.8,
         lng: p.lng + 2.5,
         text: shortName,
-        bgColor: darkenRgba(accentColor),
-        borderColor: borderFromRgba(accentColor),
+        bgColor: darkenRgba(nodeColor),
+        borderColor: borderFromRgba(nodeColor),
         textColor: '#fff',
         altitude: 0.012,
         isHQ: false,
       };
     });
 
-    // NVIDIA HQ anchor label
-    const hqNode = (graph?.nodes || []).find(n => n.id === 'NVDA_SC');
+    // Company HQ anchor label
+    const hqNode = (graph?.nodes || []).find(n => n.entity_type === 'anchor_company');
     if (hqNode) {
       nodeLabels.push({
         lat: hqNode.lat + 2.5,
         lng: hqNode.lng + 3,
-        text: '\u2b22 NVIDIA HQ',
-        bgColor: darkenRgba(NVIDIA_GREEN),
-        borderColor: borderFromRgba(NVIDIA_GREEN),
-        textColor: NVIDIA_GREEN,
+        text: `\u2b22 ${companyLabel} HQ`,
+        bgColor: darkenRgba(accentColor),
+        borderColor: borderFromRgba(accentColor),
+        textColor: accentColor,
         altitude: 0.015,
         isHQ: true,
       });
@@ -317,30 +296,28 @@ export default function Globe({
 
     // Arc labels placed at the peak (apex) of the parabolic arc
     const arcLabels = arcs
-      .filter((a) => a.isNvidiaArc)
+      .filter((a) => a.isChainArc)
       .map((arc, i) => {
-        // Place label at the arc apex (t=0.5) with slight stagger
         const t = 0.48 + (i % 3) * 0.02;
         const pos = interpolateGreatCircle(arc.startLat, arc.startLng, arc.endLat, arc.endLng, t);
         const categoryMatch = arc.label?.match(/<b>([^<]+)<\/b>/);
         const categoryText = categoryMatch ? categoryMatch[1] : '';
-        const accentColor = arc.color || 'rgba(255,255,255,0.8)';
-        // Compute the peak altitude so the label floats at the top of the arc
+        const arcColor = arc.color || 'rgba(255,255,255,0.8)';
         const peakAlt = estimateArcPeakAlt(arc.startLat, arc.startLng, arc.endLat, arc.endLng);
         return {
           lat: pos.lat,
           lng: pos.lng,
           text: categoryText,
-          bgColor: darkenRgba(accentColor),
-          borderColor: borderFromRgba(accentColor),
+          bgColor: darkenRgba(arcColor),
+          borderColor: borderFromRgba(arcColor),
           textColor: '#fff',
-          altitude: peakAlt, // sit exactly on the arc peak
+          altitude: peakAlt,
           isHQ: false,
         };
       });
 
     return [...nodeLabels, ...arcLabels];
-  }, [points, arcs, selectedCompany, graph]);
+  }, [points, arcs, hasCompanyChain, graph, companyLabel, accentColor]);
 
   // Create HTML element for each label — styled colored box
   const createLabelElement = useCallback((d) => {
@@ -385,8 +362,8 @@ export default function Globe({
         pointLabel={(d) =>
           d.isDestination
             ? `${d.name}`
-            : d.isNvidiaFacility
-              ? `<b>${d.name}</b><br/>${d.country_iso3}<br/>NVIDIA Manufacturing Facility`
+            : d.isChainFacility
+              ? `<b>${d.name}</b><br/>${d.country_iso3}<br/>${companyLabel} Facility`
               : `${d.name} (${d.country_iso3})<br/>${d.parent_company_id || 'Supplier'}`
         }
         onPointClick={(point) => (point.isDestination ? null : onNodeClick(point.id))}

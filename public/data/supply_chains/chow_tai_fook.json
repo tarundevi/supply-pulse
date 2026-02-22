@@ -1,0 +1,328 @@
+{
+    "nodes": [
+        {
+            "id": "CTF_HQ",
+            "name": "Chow Tai Fook Hong Kong HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Chow Tai Fook",
+            "lat": 22.2783,
+            "lng": 114.1747,
+            "country_iso3": "HKG",
+            "country": "Hong Kong",
+            "categories": [
+                "gold_jewelry",
+                "diamonds",
+                "jade",
+                "watches",
+                "gemstones"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 3,
+            "concentration_share": 0,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "CTF_CN_SHUNDE",
+            "name": "Chow Tai Fook Shunde Factory",
+            "entity_type": "facility",
+            "parent_company_id": "Chow Tai Fook",
+            "lat": 22.7651,
+            "lng": 113.2426,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "gold_jewelry",
+                "jade"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 6,
+            "unit_cost_index": 0.82,
+            "tariff_rate_by_category": {
+                "gold_jewelry": 0.05,
+                "jade": 0.05
+            },
+            "risk_score": 4.5,
+            "risk_event_count": 30,
+            "concentration_share": 0.45,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "gold_jewelry": 160.0,
+                "jade": 55.0
+            }
+        },
+        {
+            "id": "CTF_CN_WUHAN",
+            "name": "Chow Tai Fook Wuhan Factory",
+            "entity_type": "facility",
+            "parent_company_id": "Chow Tai Fook",
+            "lat": 30.5928,
+            "lng": 114.3055,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "gold_jewelry",
+                "gemstones"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 8,
+            "unit_cost_index": 0.78,
+            "tariff_rate_by_category": {
+                "gold_jewelry": 0.05,
+                "gemstones": 0.05
+            },
+            "risk_score": 5.0,
+            "risk_event_count": 35,
+            "concentration_share": 0.25,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "gold_jewelry": 100.0,
+                "gemstones": 45.0
+            }
+        },
+        {
+            "id": "CTF_IN_SURAT",
+            "name": "Chow Tai Fook Surat India (Diamond Cutting)",
+            "entity_type": "facility",
+            "parent_company_id": "Chow Tai Fook",
+            "lat": 21.1702,
+            "lng": 72.8311,
+            "country_iso3": "IND",
+            "country": "India",
+            "categories": [
+                "diamonds"
+            ],
+            "capacity_index": 0.82,
+            "lead_time_days": 18,
+            "unit_cost_index": 0.72,
+            "tariff_rate_by_category": {
+                "diamonds": 0.06
+            },
+            "risk_score": 3.5,
+            "risk_event_count": 20,
+            "concentration_share": 0.30,
+            "confidence": 0.80,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "diamonds": 90.0
+            }
+        },
+        {
+            "id": "CTF_CH_WATCH",
+            "name": "Chow Tai Fook Swiss Heartland Watch",
+            "entity_type": "facility",
+            "parent_company_id": "Chow Tai Fook",
+            "lat": 47.0502,
+            "lng": 8.3093,
+            "country_iso3": "CHE",
+            "country": "Switzerland",
+            "categories": [
+                "watches"
+            ],
+            "capacity_index": 0.72,
+            "lead_time_days": 15,
+            "unit_cost_index": 1.25,
+            "tariff_rate_by_category": {
+                "watches": 0.02
+            },
+            "risk_score": 0.3,
+            "risk_event_count": 2,
+            "concentration_share": 0.12,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "watches": 50.0
+            }
+        },
+        {
+            "id": "CTF_ZA_MINING",
+            "name": "Chow Tai Fook South Africa Gold/Diamond",
+            "entity_type": "facility",
+            "parent_company_id": "Chow Tai Fook",
+            "lat": -26.2041,
+            "lng": 28.0473,
+            "country_iso3": "ZAF",
+            "country": "South Africa",
+            "categories": [
+                "diamonds",
+                "gold_jewelry"
+            ],
+            "capacity_index": 0.75,
+            "lead_time_days": 22,
+            "unit_cost_index": 0.70,
+            "tariff_rate_by_category": {
+                "diamonds": 0.02,
+                "gold_jewelry": 0.03
+            },
+            "risk_score": 4.5,
+            "risk_event_count": 28,
+            "concentration_share": 0.15,
+            "confidence": 0.75,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "diamonds": 65.0,
+                "gold_jewelry": 40.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "CTF_CN_SHUNDE",
+            "target_id": "CTF_HQ",
+            "category": "gold_jewelry",
+            "relationship_type": "supplies",
+            "baseline_volume": 160.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.82,
+            "lead_time_days": 6,
+            "targetLat": 22.2783,
+            "targetLng": 114.1747,
+            "target_market": "Hong Kong"
+        },
+        {
+            "source_id": "CTF_CN_SHUNDE",
+            "target_id": "CTF_HQ",
+            "category": "jade",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 6,
+            "targetLat": 22.2783,
+            "targetLng": 114.1747,
+            "target_market": "Hong Kong"
+        },
+        {
+            "source_id": "CTF_CN_WUHAN",
+            "target_id": "CTF_HQ",
+            "category": "gold_jewelry",
+            "relationship_type": "supplies",
+            "baseline_volume": 100.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 0.80,
+            "lead_time_days": 8,
+            "targetLat": 22.2783,
+            "targetLng": 114.1747,
+            "target_market": "Hong Kong"
+        },
+        {
+            "source_id": "CTF_IN_SURAT",
+            "target_id": "CTF_CN_SHUNDE",
+            "category": "diamonds",
+            "relationship_type": "supplies",
+            "baseline_volume": 90.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 0.75,
+            "lead_time_days": 14,
+            "targetLat": 22.7651,
+            "targetLng": 113.2426,
+            "target_market": "China"
+        },
+        {
+            "source_id": "CTF_ZA_MINING",
+            "target_id": "CTF_IN_SURAT",
+            "category": "diamonds",
+            "relationship_type": "supplies",
+            "baseline_volume": 65.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 0.72,
+            "lead_time_days": 18,
+            "targetLat": 21.1702,
+            "targetLng": 72.8311,
+            "target_market": "India"
+        },
+        {
+            "source_id": "CTF_ZA_MINING",
+            "target_id": "CTF_CN_SHUNDE",
+            "category": "gold_jewelry",
+            "relationship_type": "supplies",
+            "baseline_volume": 40.0,
+            "baseline_share": 0.20,
+            "effective_cost_index": 0.75,
+            "lead_time_days": 22,
+            "targetLat": 22.7651,
+            "targetLng": 113.2426,
+            "target_market": "China"
+        },
+        {
+            "source_id": "CTF_CH_WATCH",
+            "target_id": "CTF_HQ",
+            "category": "watches",
+            "relationship_type": "supplies",
+            "baseline_volume": 50.0,
+            "baseline_share": 0.70,
+            "effective_cost_index": 1.25,
+            "lead_time_days": 15,
+            "targetLat": 22.2783,
+            "targetLng": 114.1747,
+            "target_market": "Hong Kong"
+        },
+        {
+            "source_id": "CTF_CN_WUHAN",
+            "target_id": "CTF_HQ",
+            "category": "gemstones",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.80,
+            "lead_time_days": 8,
+            "targetLat": 22.2783,
+            "targetLng": 114.1747,
+            "target_market": "Hong Kong"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Chow Tai Fook",
+        "build_version": "chow_tai_fook-v1",
+        "assumption_notes": "Chow Tai Fook with China manufacturing, Indian diamond cutting, South African mining, and Swiss watches",
+        "company_key": "chow_tai_fook",
+        "parent_company_id": "Chow Tai Fook",
+        "accent_color": "#c41e3a",
+        "category_labels": {
+            "gold_jewelry": "Gold Jewelry",
+            "diamonds": "Diamonds",
+            "jade": "Jade",
+            "watches": "Watches",
+            "gemstones": "Gemstones"
+        },
+        "arc_colors": {
+            "gold_jewelry": "rgba(196,30,58,0.7)",
+            "diamonds": "rgba(56,189,248,0.7)",
+            "jade": "rgba(34,197,94,0.7)",
+            "watches": "rgba(168,85,247,0.7)",
+            "gemstones": "rgba(251,191,36,0.7)"
+        }
+    }
+}

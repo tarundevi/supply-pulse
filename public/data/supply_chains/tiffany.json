@@ -1,0 +1,322 @@
+{
+    "nodes": [
+        {
+            "id": "TIF_HQ",
+            "name": "Tiffany & Co. New York HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Tiffany & Co.",
+            "lat": 40.7635,
+            "lng": -73.9738,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "diamonds",
+                "jewelry",
+                "silver",
+                "watches",
+                "fragrances"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.1,
+            "risk_event_count": 1,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "TIF_BW_GABORONE",
+            "name": "Tiffany Botswana Diamond Sourcing",
+            "entity_type": "facility",
+            "parent_company_id": "Tiffany & Co.",
+            "lat": -24.6282,
+            "lng": 25.9231,
+            "country_iso3": "BWA",
+            "country": "Botswana",
+            "categories": [
+                "diamonds"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 25,
+            "unit_cost_index": 0.75,
+            "tariff_rate_by_category": {
+                "diamonds": 0.0
+            },
+            "risk_score": 3.5,
+            "risk_event_count": 18,
+            "concentration_share": 0.40,
+            "confidence": 0.80,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "diamonds": 120.0
+            }
+        },
+        {
+            "id": "TIF_BE_ANTWERP",
+            "name": "Tiffany Antwerp Diamond Cutting",
+            "entity_type": "facility",
+            "parent_company_id": "Tiffany & Co.",
+            "lat": 51.2194,
+            "lng": 4.4025,
+            "country_iso3": "BEL",
+            "country": "Belgium",
+            "categories": [
+                "diamonds"
+            ],
+            "capacity_index": 0.88,
+            "lead_time_days": 14,
+            "unit_cost_index": 1.15,
+            "tariff_rate_by_category": {
+                "diamonds": 0.0
+            },
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.25,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "diamonds": 95.0
+            }
+        },
+        {
+            "id": "TIF_US_CUMBERLAND",
+            "name": "Tiffany Cumberland RI (Manufacturing)",
+            "entity_type": "facility",
+            "parent_company_id": "Tiffany & Co.",
+            "lat": 41.9715,
+            "lng": -71.4326,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "jewelry",
+                "silver"
+            ],
+            "capacity_index": 0.80,
+            "lead_time_days": 6,
+            "unit_cost_index": 1.10,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.3,
+            "risk_event_count": 2,
+            "concentration_share": 0.30,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "jewelry": 85.0,
+                "silver": 60.0
+            }
+        },
+        {
+            "id": "TIF_JP_RETAIL",
+            "name": "Tiffany Japan Retail Hub",
+            "entity_type": "facility",
+            "parent_company_id": "Tiffany & Co.",
+            "lat": 35.6762,
+            "lng": 139.6503,
+            "country_iso3": "JPN",
+            "country": "Japan",
+            "categories": [
+                "jewelry",
+                "watches"
+            ],
+            "capacity_index": 0.70,
+            "lead_time_days": 18,
+            "unit_cost_index": 1.05,
+            "tariff_rate_by_category": {
+                "jewelry": 0.02,
+                "watches": 0.02
+            },
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.12,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "jewelry": 45.0,
+                "watches": 30.0
+            }
+        },
+        {
+            "id": "TIF_CH_WATCH",
+            "name": "Tiffany Swiss Watch Atelier",
+            "entity_type": "facility",
+            "parent_company_id": "Tiffany & Co.",
+            "lat": 47.3769,
+            "lng": 8.5417,
+            "country_iso3": "CHE",
+            "country": "Switzerland",
+            "categories": [
+                "watches"
+            ],
+            "capacity_index": 0.75,
+            "lead_time_days": 12,
+            "unit_cost_index": 1.28,
+            "tariff_rate_by_category": {
+                "watches": 0.02
+            },
+            "risk_score": 0.3,
+            "risk_event_count": 2,
+            "concentration_share": 0.15,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "watches": 55.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "TIF_BW_GABORONE",
+            "target_id": "TIF_BE_ANTWERP",
+            "category": "diamonds",
+            "relationship_type": "supplies",
+            "baseline_volume": 120.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 0.78,
+            "lead_time_days": 14,
+            "targetLat": 51.2194,
+            "targetLng": 4.4025,
+            "target_market": "Belgium"
+        },
+        {
+            "source_id": "TIF_BE_ANTWERP",
+            "target_id": "TIF_US_CUMBERLAND",
+            "category": "diamonds",
+            "relationship_type": "supplies",
+            "baseline_volume": 95.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 1.15,
+            "lead_time_days": 10,
+            "targetLat": 41.9715,
+            "targetLng": -71.4326,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "TIF_US_CUMBERLAND",
+            "target_id": "TIF_HQ",
+            "category": "jewelry",
+            "relationship_type": "supplies",
+            "baseline_volume": 85.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 1.10,
+            "lead_time_days": 6,
+            "targetLat": 40.7635,
+            "targetLng": -73.9738,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "TIF_US_CUMBERLAND",
+            "target_id": "TIF_HQ",
+            "category": "silver",
+            "relationship_type": "supplies",
+            "baseline_volume": 60.0,
+            "baseline_share": 0.70,
+            "effective_cost_index": 1.10,
+            "lead_time_days": 6,
+            "targetLat": 40.7635,
+            "targetLng": -73.9738,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "TIF_US_CUMBERLAND",
+            "target_id": "TIF_JP_RETAIL",
+            "category": "jewelry",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 1.12,
+            "lead_time_days": 18,
+            "targetLat": 35.6762,
+            "targetLng": 139.6503,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "TIF_CH_WATCH",
+            "target_id": "TIF_HQ",
+            "category": "watches",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 1.28,
+            "lead_time_days": 12,
+            "targetLat": 40.7635,
+            "targetLng": -73.9738,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "TIF_CH_WATCH",
+            "target_id": "TIF_JP_RETAIL",
+            "category": "watches",
+            "relationship_type": "supplies",
+            "baseline_volume": 30.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 1.30,
+            "lead_time_days": 18,
+            "targetLat": 35.6762,
+            "targetLng": 139.6503,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "TIF_BE_ANTWERP",
+            "target_id": "TIF_HQ",
+            "category": "diamonds",
+            "relationship_type": "supplies",
+            "baseline_volume": 40.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 1.18,
+            "lead_time_days": 14,
+            "targetLat": 40.7635,
+            "targetLng": -73.9738,
+            "target_market": "USA"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Tiffany & Co.",
+        "build_version": "tiffany-v1",
+        "assumption_notes": "Tiffany supply chain from Botswana diamonds to Antwerp cutting to US manufacturing",
+        "company_key": "tiffany",
+        "parent_company_id": "Tiffany & Co.",
+        "accent_color": "#0abab5",
+        "category_labels": {
+            "diamonds": "Diamonds",
+            "jewelry": "Fine Jewelry",
+            "silver": "Silver",
+            "watches": "Watches",
+            "fragrances": "Fragrances"
+        },
+        "arc_colors": {
+            "diamonds": "rgba(10,186,181,0.7)",
+            "jewelry": "rgba(244,114,182,0.7)",
+            "silver": "rgba(192,192,192,0.7)",
+            "watches": "rgba(56,189,248,0.7)",
+            "fragrances": "rgba(168,85,247,0.7)"
+        }
+    }
+}

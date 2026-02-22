@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 
 function toCompanyLikeFromCountry(legacyGraph) {
   if (!legacyGraph?.nodes) return null;
@@ -75,22 +75,23 @@ function toCompanyLikeFromCountry(legacyGraph) {
 }
 
 export function useSupplierGraph(selectedCompany) {
-  const [graphs, setGraphs] = useState({ company: null, country: null, nvidia: null });
+  const [baseGraphs, setBaseGraphs] = useState({ company: null, country: null });
+  const [companyChain, setCompanyChain] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const chainCache = useRef({});
 
+  // Load the base graphs once on mount
   useEffect(() => {
-    async function loadGraphs() {
+    async function loadBaseGraphs() {
       try {
-        const [companyRes, countryRes, nvidiaRes] = await Promise.all([
+        const [companyRes, countryRes] = await Promise.all([
           fetch('/data/company_graph.json').catch(() => null),
           fetch('/data/supplier_graph.json').catch(() => null),
-          fetch('/data/nvidia_supply_chain.json').catch(() => null),
         ]);
 
         let companyGraph = null;
         let countryGraph = null;
-        let nvidiaGraph = null;
         let warning = null;
 
         if (companyRes && companyRes.ok) {
@@ -104,16 +105,13 @@ export function useSupplierGraph(selectedCompany) {
           countryGraph = toCompanyLikeFromCountry(rawCountry);
         }
 
-        if (nvidiaRes && nvidiaRes.ok) {
-          nvidiaGraph = await nvidiaRes.json();
+        if (!companyGraph && !countryGraph) {
+          // Don't error — we might still have per-company supply chains
+          if (warning) setError(warning);
         }
 
-        if (!companyGraph && !countryGraph && !nvidiaGraph) {
-          throw new Error('No graph data found. Expected /data/company_graph.json or /data/supplier_graph.json');
-        }
-
-        setGraphs({ company: companyGraph, country: countryGraph, nvidia: nvidiaGraph });
-        if (warning) setError(warning);
+        setBaseGraphs({ company: companyGraph, country: countryGraph });
+        if (warning && companyGraph) setError(warning);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -121,8 +119,47 @@ export function useSupplierGraph(selectedCompany) {
       }
     }
 
-    loadGraphs();
+    loadBaseGraphs();
   }, []);
+
+  // Dynamically load per-company supply chain when selectedCompany changes
+  useEffect(() => {
+    if (!selectedCompany) {
+      setCompanyChain(null);
+      return;
+    }
+
+    // Check cache first
+    if (chainCache.current[selectedCompany]) {
+      setCompanyChain(chainCache.current[selectedCompany]);
+      return;
+    }
+
+    // Load from /data/supply_chains/{key}.json
+    async function loadChain() {
+      try {
+        const res = await fetch(`/data/supply_chains/${selectedCompany}.json`);
+        if (res.ok) {
+          const data = await res.json();
+          chainCache.current[selectedCompany] = data;
+          setCompanyChain(data);
+        } else {
+          setCompanyChain(null);
+        }
+      } catch {
+        setCompanyChain(null);
+      }
+    }
+
+    loadChain();
+  }, [selectedCompany]);
+
+  // Combine into the old-style `graphs` shape for backward compatibility
+  const graphs = {
+    company: baseGraphs.company,
+    country: baseGraphs.country,
+    companyChain,
+  };
 
   return { graphs, loading, error };
 }

@@ -1,0 +1,321 @@
+{
+    "nodes": [
+        {
+            "id": "LVMH_HQ",
+            "name": "LVMH Paris HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "LVMH",
+            "lat": 48.8708,
+            "lng": 2.3074,
+            "country_iso3": "FRA",
+            "country": "France",
+            "categories": [
+                "fashion",
+                "leather_goods",
+                "watches",
+                "wines_spirits",
+                "perfumes"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.1,
+            "risk_event_count": 1,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "LVMH_IT_FIESSO",
+            "name": "LVMH Louis Vuitton Fiesso Italy (Leather)",
+            "entity_type": "facility",
+            "parent_company_id": "LVMH",
+            "lat": 45.4242,
+            "lng": 12.0308,
+            "country_iso3": "ITA",
+            "country": "Italy",
+            "categories": [
+                "leather_goods",
+                "fashion"
+            ],
+            "capacity_index": 0.90,
+            "lead_time_days": 10,
+            "unit_cost_index": 1.15,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.35,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "leather_goods": 150.0,
+                "fashion": 80.0
+            }
+        },
+        {
+            "id": "LVMH_FR_COGNAC",
+            "name": "LVMH Hennessy Cognac (Spirits)",
+            "entity_type": "facility",
+            "parent_company_id": "LVMH",
+            "lat": 45.6950,
+            "lng": -0.3300,
+            "country_iso3": "FRA",
+            "country": "France",
+            "categories": [
+                "wines_spirits"
+            ],
+            "capacity_index": 0.88,
+            "lead_time_days": 8,
+            "unit_cost_index": 1.10,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.3,
+            "risk_event_count": 2,
+            "concentration_share": 0.30,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "wines_spirits": 130.0
+            }
+        },
+        {
+            "id": "LVMH_CH_ZENITH",
+            "name": "LVMH Zenith Switzerland (Watches)",
+            "entity_type": "facility",
+            "parent_company_id": "LVMH",
+            "lat": 47.2088,
+            "lng": 6.8005,
+            "country_iso3": "CHE",
+            "country": "Switzerland",
+            "categories": [
+                "watches"
+            ],
+            "capacity_index": 0.82,
+            "lead_time_days": 14,
+            "unit_cost_index": 1.25,
+            "tariff_rate_by_category": {
+                "watches": 0.02
+            },
+            "risk_score": 0.3,
+            "risk_event_count": 2,
+            "concentration_share": 0.25,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "watches": 90.0
+            }
+        },
+        {
+            "id": "LVMH_FR_GRASSE",
+            "name": "LVMH Dior Parfums Grasse",
+            "entity_type": "facility",
+            "parent_company_id": "LVMH",
+            "lat": 43.6588,
+            "lng": 6.9222,
+            "country_iso3": "FRA",
+            "country": "France",
+            "categories": [
+                "perfumes"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 6,
+            "unit_cost_index": 1.12,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 1,
+            "concentration_share": 0.20,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "perfumes": 75.0
+            }
+        },
+        {
+            "id": "LVMH_CN_RETAIL",
+            "name": "LVMH China Distribution Hub",
+            "entity_type": "facility",
+            "parent_company_id": "LVMH",
+            "lat": 31.2304,
+            "lng": 121.4737,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "fashion",
+                "leather_goods",
+                "watches"
+            ],
+            "capacity_index": 0.78,
+            "lead_time_days": 22,
+            "unit_cost_index": 0.90,
+            "tariff_rate_by_category": {
+                "fashion": 0.08,
+                "leather_goods": 0.08,
+                "watches": 0.10
+            },
+            "risk_score": 4.0,
+            "risk_event_count": 25,
+            "concentration_share": 0.15,
+            "confidence": 0.80,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "fashion": 60.0,
+                "leather_goods": 50.0,
+                "watches": 35.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "LVMH_IT_FIESSO",
+            "target_id": "LVMH_HQ",
+            "category": "leather_goods",
+            "relationship_type": "supplies",
+            "baseline_volume": 150.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 1.15,
+            "lead_time_days": 10,
+            "targetLat": 48.8708,
+            "targetLng": 2.3074,
+            "target_market": "France"
+        },
+        {
+            "source_id": "LVMH_IT_FIESSO",
+            "target_id": "LVMH_CN_RETAIL",
+            "category": "fashion",
+            "relationship_type": "supplies",
+            "baseline_volume": 60.0,
+            "baseline_share": 0.40,
+            "effective_cost_index": 1.18,
+            "lead_time_days": 22,
+            "targetLat": 31.2304,
+            "targetLng": 121.4737,
+            "target_market": "China"
+        },
+        {
+            "source_id": "LVMH_FR_COGNAC",
+            "target_id": "LVMH_HQ",
+            "category": "wines_spirits",
+            "relationship_type": "supplies",
+            "baseline_volume": 130.0,
+            "baseline_share": 0.70,
+            "effective_cost_index": 1.10,
+            "lead_time_days": 8,
+            "targetLat": 48.8708,
+            "targetLng": 2.3074,
+            "target_market": "France"
+        },
+        {
+            "source_id": "LVMH_CH_ZENITH",
+            "target_id": "LVMH_HQ",
+            "category": "watches",
+            "relationship_type": "supplies",
+            "baseline_volume": 90.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 1.25,
+            "lead_time_days": 14,
+            "targetLat": 48.8708,
+            "targetLng": 2.3074,
+            "target_market": "France"
+        },
+        {
+            "source_id": "LVMH_CH_ZENITH",
+            "target_id": "LVMH_CN_RETAIL",
+            "category": "watches",
+            "relationship_type": "supplies",
+            "baseline_volume": 35.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 1.28,
+            "lead_time_days": 28,
+            "targetLat": 31.2304,
+            "targetLng": 121.4737,
+            "target_market": "China"
+        },
+        {
+            "source_id": "LVMH_FR_GRASSE",
+            "target_id": "LVMH_HQ",
+            "category": "perfumes",
+            "relationship_type": "supplies",
+            "baseline_volume": 75.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 1.12,
+            "lead_time_days": 6,
+            "targetLat": 48.8708,
+            "targetLng": 2.3074,
+            "target_market": "France"
+        },
+        {
+            "source_id": "LVMH_IT_FIESSO",
+            "target_id": "LVMH_HQ",
+            "category": "fashion",
+            "relationship_type": "supplies",
+            "baseline_volume": 80.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 1.15,
+            "lead_time_days": 10,
+            "targetLat": 48.8708,
+            "targetLng": 2.3074,
+            "target_market": "France"
+        },
+        {
+            "source_id": "LVMH_CN_RETAIL",
+            "target_id": "LVMH_HQ",
+            "category": "leather_goods",
+            "relationship_type": "supplies",
+            "baseline_volume": 50.0,
+            "baseline_share": 0.22,
+            "effective_cost_index": 0.95,
+            "lead_time_days": 22,
+            "targetLat": 48.8708,
+            "targetLng": 2.3074,
+            "target_market": "France"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "LVMH",
+        "build_version": "lvmh-v1",
+        "assumption_notes": "LVMH supply chain with Italian leather, French spirits/perfumes, Swiss watches, and China distribution",
+        "company_key": "lvmh",
+        "parent_company_id": "LVMH",
+        "accent_color": "#b8860b",
+        "category_labels": {
+            "fashion": "Fashion",
+            "leather_goods": "Leather Goods",
+            "watches": "Watches & Jewelry",
+            "wines_spirits": "Wines & Spirits",
+            "perfumes": "Perfumes & Cosmetics"
+        },
+        "arc_colors": {
+            "fashion": "rgba(184,134,11,0.7)",
+            "leather_goods": "rgba(168,85,247,0.7)",
+            "watches": "rgba(56,189,248,0.7)",
+            "wines_spirits": "rgba(220,38,38,0.7)",
+            "perfumes": "rgba(244,114,182,0.7)"
+        }
+    }
+}

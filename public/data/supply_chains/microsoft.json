@@ -1,0 +1,388 @@
+{
+    "nodes": [
+        {
+            "id": "MSFT_HQ",
+            "name": "Microsoft Redmond HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Microsoft",
+            "lat": 47.6402,
+            "lng": -122.1297,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "cloud_servers",
+                "surface_devices",
+                "xbox",
+                "software",
+                "ai_chips"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.1,
+            "risk_event_count": 0,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "MSFT_FOX_CN",
+            "name": "Microsoft Foxconn China (Surface/Xbox)",
+            "entity_type": "facility",
+            "parent_company_id": "Microsoft",
+            "lat": 31.2304,
+            "lng": 121.4737,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "surface_devices",
+                "xbox"
+            ],
+            "capacity_index": 0.88,
+            "lead_time_days": 26,
+            "unit_cost_index": 0.85,
+            "tariff_rate_by_category": {
+                "surface_devices": 0.10,
+                "xbox": 0.10
+            },
+            "risk_score": 7.0,
+            "risk_event_count": 88,
+            "concentration_share": 0.40,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "surface_devices": 90.0,
+                "xbox": 110.0
+            }
+        },
+        {
+            "id": "MSFT_AZURE_IE",
+            "name": "Microsoft Azure Ireland Data Center",
+            "entity_type": "facility",
+            "parent_company_id": "Microsoft",
+            "lat": 53.3498,
+            "lng": -6.2603,
+            "country_iso3": "IRL",
+            "country": "Ireland",
+            "categories": [
+                "cloud_servers"
+            ],
+            "capacity_index": 0.90,
+            "lead_time_days": 10,
+            "unit_cost_index": 1.12,
+            "tariff_rate_by_category": {
+                "cloud_servers": 0.0
+            },
+            "risk_score": 0.8,
+            "risk_event_count": 4,
+            "concentration_share": 0.20,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "cloud_servers": 150.0
+            }
+        },
+        {
+            "id": "MSFT_TSMC_TW",
+            "name": "Microsoft TSMC Taiwan (AI Chips)",
+            "entity_type": "facility",
+            "parent_company_id": "Microsoft",
+            "lat": 24.8138,
+            "lng": 120.9675,
+            "country_iso3": "TWN",
+            "country": "Taiwan",
+            "categories": [
+                "ai_chips"
+            ],
+            "capacity_index": 0.94,
+            "lead_time_days": 32,
+            "unit_cost_index": 1.08,
+            "tariff_rate_by_category": {
+                "ai_chips": 0.05
+            },
+            "risk_score": 6.0,
+            "risk_event_count": 40,
+            "concentration_share": 0.55,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "ai_chips": 130.0
+            }
+        },
+        {
+            "id": "MSFT_FLX_MY",
+            "name": "Microsoft Flex Malaysia Assembly",
+            "entity_type": "facility",
+            "parent_company_id": "Microsoft",
+            "lat": 5.4164,
+            "lng": 100.3327,
+            "country_iso3": "MYS",
+            "country": "Malaysia",
+            "categories": [
+                "surface_devices",
+                "cloud_servers"
+            ],
+            "capacity_index": 0.65,
+            "lead_time_days": 22,
+            "unit_cost_index": 0.88,
+            "tariff_rate_by_category": {
+                "surface_devices": 0.03,
+                "cloud_servers": 0.03
+            },
+            "risk_score": 1.8,
+            "risk_event_count": 12,
+            "concentration_share": 0.12,
+            "confidence": 0.78,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "surface_devices": 40.0,
+                "cloud_servers": 55.0
+            }
+        },
+        {
+            "id": "MSFT_SK_KR",
+            "name": "Microsoft SK Hynix Korea Memory",
+            "entity_type": "facility",
+            "parent_company_id": "Microsoft",
+            "lat": 37.3895,
+            "lng": 127.1000,
+            "country_iso3": "KOR",
+            "country": "South Korea",
+            "categories": [
+                "cloud_servers",
+                "ai_chips"
+            ],
+            "capacity_index": 0.86,
+            "lead_time_days": 16,
+            "unit_cost_index": 0.95,
+            "tariff_rate_by_category": {
+                "cloud_servers": 0.03,
+                "ai_chips": 0.04
+            },
+            "risk_score": 2.2,
+            "risk_event_count": 14,
+            "concentration_share": 0.22,
+            "confidence": 0.84,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "cloud_servers": 70.0,
+                "ai_chips": 58.0
+            }
+        },
+        {
+            "id": "MSFT_AZURE_NL",
+            "name": "Microsoft Azure Netherlands Data Center",
+            "entity_type": "facility",
+            "parent_company_id": "Microsoft",
+            "lat": 52.3676,
+            "lng": 4.9041,
+            "country_iso3": "NLD",
+            "country": "Netherlands",
+            "categories": [
+                "cloud_servers",
+                "software"
+            ],
+            "capacity_index": 0.82,
+            "lead_time_days": 8,
+            "unit_cost_index": 1.10,
+            "tariff_rate_by_category": {
+                "cloud_servers": 0.0,
+                "software": 0.0
+            },
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.15,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "cloud_servers": 120.0,
+                "software": 80.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "MSFT_FOX_CN",
+            "target_id": "MSFT_HQ",
+            "category": "surface_devices",
+            "relationship_type": "supplies",
+            "baseline_volume": 90.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.90,
+            "lead_time_days": 26,
+            "targetLat": 47.6402,
+            "targetLng": -122.1297,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "MSFT_FOX_CN",
+            "target_id": "MSFT_HQ",
+            "category": "xbox",
+            "relationship_type": "supplies",
+            "baseline_volume": 110.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 0.88,
+            "lead_time_days": 26,
+            "targetLat": 47.6402,
+            "targetLng": -122.1297,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "MSFT_AZURE_IE",
+            "target_id": "MSFT_HQ",
+            "category": "cloud_servers",
+            "relationship_type": "supplies",
+            "baseline_volume": 150.0,
+            "baseline_share": 0.40,
+            "effective_cost_index": 1.12,
+            "lead_time_days": 10,
+            "targetLat": 47.6402,
+            "targetLng": -122.1297,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "MSFT_TSMC_TW",
+            "target_id": "MSFT_HQ",
+            "category": "ai_chips",
+            "relationship_type": "supplies",
+            "baseline_volume": 130.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 1.10,
+            "lead_time_days": 32,
+            "targetLat": 47.6402,
+            "targetLng": -122.1297,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "MSFT_SK_KR",
+            "target_id": "MSFT_TSMC_TW",
+            "category": "ai_chips",
+            "relationship_type": "supplies",
+            "baseline_volume": 58.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 0.97,
+            "lead_time_days": 16,
+            "targetLat": 24.8138,
+            "targetLng": 120.9675,
+            "target_market": "Taiwan"
+        },
+        {
+            "source_id": "MSFT_SK_KR",
+            "target_id": "MSFT_AZURE_IE",
+            "category": "cloud_servers",
+            "relationship_type": "supplies",
+            "baseline_volume": 70.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 0.98,
+            "lead_time_days": 16,
+            "targetLat": 53.3498,
+            "targetLng": -6.2603,
+            "target_market": "Ireland"
+        },
+        {
+            "source_id": "MSFT_FLX_MY",
+            "target_id": "MSFT_HQ",
+            "category": "surface_devices",
+            "relationship_type": "supplies",
+            "baseline_volume": 40.0,
+            "baseline_share": 0.20,
+            "effective_cost_index": 0.90,
+            "lead_time_days": 22,
+            "targetLat": 47.6402,
+            "targetLng": -122.1297,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "MSFT_FLX_MY",
+            "target_id": "MSFT_AZURE_NL",
+            "category": "cloud_servers",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 0.92,
+            "lead_time_days": 22,
+            "targetLat": 52.3676,
+            "targetLng": 4.9041,
+            "target_market": "Netherlands"
+        },
+        {
+            "source_id": "MSFT_AZURE_NL",
+            "target_id": "MSFT_HQ",
+            "category": "cloud_servers",
+            "relationship_type": "supplies",
+            "baseline_volume": 120.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 1.10,
+            "lead_time_days": 8,
+            "targetLat": 47.6402,
+            "targetLng": -122.1297,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "MSFT_TSMC_TW",
+            "target_id": "MSFT_FOX_CN",
+            "category": "ai_chips",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.28,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 14,
+            "targetLat": 31.2304,
+            "targetLng": 121.4737,
+            "target_market": "China"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Microsoft",
+        "build_version": "microsoft-v1",
+        "assumption_notes": "Microsoft supply chain covering Azure cloud, Surface, Xbox, and AI chip manufacturing",
+        "company_key": "microsoft",
+        "parent_company_id": "Microsoft",
+        "accent_color": "#00a4ef",
+        "category_labels": {
+            "cloud_servers": "Cloud Servers",
+            "surface_devices": "Surface Devices",
+            "xbox": "Xbox Consoles",
+            "software": "Software Services",
+            "ai_chips": "AI Accelerators"
+        },
+        "arc_colors": {
+            "cloud_servers": "rgba(0,164,239,0.7)",
+            "surface_devices": "rgba(168,85,247,0.7)",
+            "xbox": "rgba(34,197,94,0.7)",
+            "software": "rgba(251,191,36,0.7)",
+            "ai_chips": "rgba(244,114,182,0.7)"
+        }
+    }
+}

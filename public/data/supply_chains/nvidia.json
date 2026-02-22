@@ -9,7 +9,11 @@
       "lng": -121.9738,
       "country_iso3": "USA",
       "country": "USA",
-      "categories": ["semiconductors", "ai_chips", "graphics_cards"],
+      "categories": [
+        "semiconductors",
+        "ai_chips",
+        "graphics_cards"
+      ],
       "capacity_index": 1.0,
       "lead_time_days": 0,
       "unit_cost_index": 1.0,
@@ -34,7 +38,11 @@
       "lng": 120.6674,
       "country_iso3": "TWN",
       "country": "Taiwan",
-      "categories": ["semiconductors", "ai_chips", "graphics_cards"],
+      "categories": [
+        "semiconductors",
+        "ai_chips",
+        "graphics_cards"
+      ],
       "capacity_index": 0.95,
       "lead_time_days": 18,
       "unit_cost_index": 0.92,
@@ -67,7 +75,11 @@
       "lng": 127.4063,
       "country_iso3": "KOR",
       "country": "South Korea",
-      "categories": ["memory", "hbm", "ai_chips"],
+      "categories": [
+        "memory",
+        "hbm",
+        "ai_chips"
+      ],
       "capacity_index": 0.88,
       "lead_time_days": 15,
       "unit_cost_index": 0.95,
@@ -100,7 +112,11 @@
       "lng": 106.6297,
       "country_iso3": "VNM",
       "country": "Vietnam",
-      "categories": ["graphics_cards", "ai_chips", "packaging"],
+      "categories": [
+        "graphics_cards",
+        "ai_chips",
+        "packaging"
+      ],
       "capacity_index": 0.72,
       "lead_time_days": 22,
       "unit_cost_index": 0.78,
@@ -133,7 +149,10 @@
       "lng": 11.5756,
       "country_iso3": "DEU",
       "country": "Germany",
-      "categories": ["ai_chips", "automotive"],
+      "categories": [
+        "ai_chips",
+        "automotive"
+      ],
       "capacity_index": 0.68,
       "lead_time_days": 20,
       "unit_cost_index": 1.08,
@@ -164,7 +183,10 @@
       "lng": 135.5023,
       "country_iso3": "JPN",
       "country": "Japan",
-      "categories": ["substrate", "materials"],
+      "categories": [
+        "substrate",
+        "materials"
+      ],
       "capacity_index": 0.82,
       "lead_time_days": 12,
       "unit_cost_index": 1.05,
@@ -195,7 +217,11 @@
       "lng": -122.0090,
       "country_iso3": "USA",
       "country": "USA",
-      "categories": ["semiconductors", "ai_chips", "graphics_cards"],
+      "categories": [
+        "semiconductors",
+        "ai_chips",
+        "graphics_cards"
+      ],
       "capacity_index": 1.0,
       "lead_time_days": 5,
       "unit_cost_index": 1.15,
@@ -379,6 +405,30 @@
     "anchor_company": "NVIDIA",
     "build_version": "nvidia-v1",
     "assumption_notes": "NVIDIA-specific supply chain with manufacturing facilities as green nodes",
-    "company_key": "nvidia"
+    "company_key": "nvidia",
+    "parent_company_id": "NVIDIA",
+    "accent_color": "#22c55e",
+    "category_labels": {
+      "semiconductors": "Semiconductors",
+      "ai_chips": "AI Chips",
+      "hbm": "High-Bandwidth Memory",
+      "graphics_cards": "Graphics Cards",
+      "automotive": "Automotive AI Modules",
+      "substrate": "IC Substrates",
+      "materials": "Raw Materials",
+      "memory": "Memory Modules",
+      "packaging": "Chip Packaging"
+    },
+    "arc_colors": {
+      "semiconductors": "rgba(34,197,94,0.7)",
+      "ai_chips": "rgba(56,189,248,0.7)",
+      "hbm": "rgba(168,85,247,0.7)",
+      "graphics_cards": "rgba(251,191,36,0.7)",
+      "automotive": "rgba(244,114,182,0.7)",
+      "substrate": "rgba(45,212,191,0.7)",
+      "materials": "rgba(251,146,60,0.7)",
+      "memory": "rgba(129,140,248,0.7)",
+      "packaging": "rgba(163,230,53,0.7)"
+    }
   }
 }

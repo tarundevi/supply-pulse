@@ -1,0 +1,322 @@
+{
+    "nodes": [
+        {
+            "id": "SONY_HQ",
+            "name": "Sony Tokyo HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Sony",
+            "lat": 35.6585,
+            "lng": 139.7454,
+            "country_iso3": "JPN",
+            "country": "Japan",
+            "categories": [
+                "image_sensors",
+                "playstation",
+                "cameras",
+                "audio",
+                "semiconductors"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 2,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "SONY_KUM_SEMI",
+            "name": "Sony Kumamoto Semiconductor Fab",
+            "entity_type": "facility",
+            "parent_company_id": "Sony",
+            "lat": 32.8031,
+            "lng": 130.7079,
+            "country_iso3": "JPN",
+            "country": "Japan",
+            "categories": [
+                "image_sensors",
+                "semiconductors"
+            ],
+            "capacity_index": 0.95,
+            "lead_time_days": 10,
+            "unit_cost_index": 1.05,
+            "tariff_rate_by_category": {},
+            "risk_score": 1.2,
+            "risk_event_count": 6,
+            "concentration_share": 0.50,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "image_sensors": 170.0,
+                "semiconductors": 90.0
+            }
+        },
+        {
+            "id": "SONY_CN_FOX",
+            "name": "Sony Foxconn China (PlayStation)",
+            "entity_type": "facility",
+            "parent_company_id": "Sony",
+            "lat": 22.5431,
+            "lng": 114.0579,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "playstation"
+            ],
+            "capacity_index": 0.88,
+            "lead_time_days": 22,
+            "unit_cost_index": 0.82,
+            "tariff_rate_by_category": {
+                "playstation": 0.10
+            },
+            "risk_score": 7.0,
+            "risk_event_count": 80,
+            "concentration_share": 0.40,
+            "confidence": 0.82,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "playstation": 130.0
+            }
+        },
+        {
+            "id": "SONY_TH_AUDIO",
+            "name": "Sony Thailand Audio Factory",
+            "entity_type": "facility",
+            "parent_company_id": "Sony",
+            "lat": 13.7563,
+            "lng": 100.5018,
+            "country_iso3": "THA",
+            "country": "Thailand",
+            "categories": [
+                "audio"
+            ],
+            "capacity_index": 0.75,
+            "lead_time_days": 16,
+            "unit_cost_index": 0.85,
+            "tariff_rate_by_category": {
+                "audio": 0.03
+            },
+            "risk_score": 1.5,
+            "risk_event_count": 10,
+            "concentration_share": 0.18,
+            "confidence": 0.80,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "audio": 70.0
+            }
+        },
+        {
+            "id": "SONY_MY_PENANG",
+            "name": "Sony Penang Malaysia (Cameras)",
+            "entity_type": "facility",
+            "parent_company_id": "Sony",
+            "lat": 5.4164,
+            "lng": 100.3327,
+            "country_iso3": "MYS",
+            "country": "Malaysia",
+            "categories": [
+                "cameras"
+            ],
+            "capacity_index": 0.72,
+            "lead_time_days": 18,
+            "unit_cost_index": 0.88,
+            "tariff_rate_by_category": {
+                "cameras": 0.03
+            },
+            "risk_score": 1.2,
+            "risk_event_count": 7,
+            "concentration_share": 0.14,
+            "confidence": 0.80,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "cameras": 55.0
+            }
+        },
+        {
+            "id": "SONY_UK_WALES",
+            "name": "Sony UK Technology Centre (Wales)",
+            "entity_type": "facility",
+            "parent_company_id": "Sony",
+            "lat": 51.5879,
+            "lng": -3.2189,
+            "country_iso3": "GBR",
+            "country": "United Kingdom",
+            "categories": [
+                "cameras",
+                "audio"
+            ],
+            "capacity_index": 0.68,
+            "lead_time_days": 12,
+            "unit_cost_index": 1.08,
+            "tariff_rate_by_category": {
+                "cameras": 0.02,
+                "audio": 0.02
+            },
+            "risk_score": 0.6,
+            "risk_event_count": 3,
+            "concentration_share": 0.10,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "cameras": 40.0,
+                "audio": 35.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "SONY_KUM_SEMI",
+            "target_id": "SONY_HQ",
+            "category": "image_sensors",
+            "relationship_type": "supplies",
+            "baseline_volume": 170.0,
+            "baseline_share": 0.70,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 10,
+            "targetLat": 35.6585,
+            "targetLng": 139.7454,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "SONY_CN_FOX",
+            "target_id": "SONY_HQ",
+            "category": "playstation",
+            "relationship_type": "supplies",
+            "baseline_volume": 130.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 0.88,
+            "lead_time_days": 22,
+            "targetLat": 35.6585,
+            "targetLng": 139.7454,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "SONY_KUM_SEMI",
+            "target_id": "SONY_CN_FOX",
+            "category": "semiconductors",
+            "relationship_type": "supplies",
+            "baseline_volume": 90.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 1.06,
+            "lead_time_days": 14,
+            "targetLat": 22.5431,
+            "targetLng": 114.0579,
+            "target_market": "China"
+        },
+        {
+            "source_id": "SONY_TH_AUDIO",
+            "target_id": "SONY_HQ",
+            "category": "audio",
+            "relationship_type": "supplies",
+            "baseline_volume": 70.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 0.88,
+            "lead_time_days": 16,
+            "targetLat": 35.6585,
+            "targetLng": 139.7454,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "SONY_MY_PENANG",
+            "target_id": "SONY_HQ",
+            "category": "cameras",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 0.90,
+            "lead_time_days": 18,
+            "targetLat": 35.6585,
+            "targetLng": 139.7454,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "SONY_UK_WALES",
+            "target_id": "SONY_HQ",
+            "category": "cameras",
+            "relationship_type": "supplies",
+            "baseline_volume": 40.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 1.10,
+            "lead_time_days": 12,
+            "targetLat": 35.6585,
+            "targetLng": 139.7454,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "SONY_UK_WALES",
+            "target_id": "SONY_HQ",
+            "category": "audio",
+            "relationship_type": "supplies",
+            "baseline_volume": 35.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 1.10,
+            "lead_time_days": 12,
+            "targetLat": 35.6585,
+            "targetLng": 139.7454,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "SONY_KUM_SEMI",
+            "target_id": "SONY_MY_PENANG",
+            "category": "image_sensors",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 1.06,
+            "lead_time_days": 14,
+            "targetLat": 5.4164,
+            "targetLng": 100.3327,
+            "target_market": "Malaysia"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Sony",
+        "build_version": "sony-v1",
+        "assumption_notes": "Sony supply chain with image sensors, PlayStation, cameras, and audio",
+        "company_key": "sony",
+        "parent_company_id": "Sony",
+        "accent_color": "#000000",
+        "category_labels": {
+            "image_sensors": "Image Sensors",
+            "playstation": "PlayStation",
+            "cameras": "Cameras",
+            "audio": "Audio Equipment",
+            "semiconductors": "Semiconductors"
+        },
+        "arc_colors": {
+            "image_sensors": "rgba(100,100,100,0.7)",
+            "playstation": "rgba(0,112,221,0.7)",
+            "cameras": "rgba(251,191,36,0.7)",
+            "audio": "rgba(34,197,94,0.7)",
+            "semiconductors": "rgba(168,85,247,0.7)"
+        }
+    }
+}

@@ -29,7 +29,6 @@ import {
 const DEFAULT_MODE = (import.meta.env.VITE_APP_MODE || 'company').toLowerCase() === 'country' ? 'country' : 'company';
 
 export default function App() {
-  const { graphs, loading, error } = useSupplierGraph();
   const [mode, setMode] = useState(DEFAULT_MODE);
   const [disruptedNodeId, setDisruptedNodeId] = useState(null);
   const [destinationMarket, setDestinationMarket] = useState('USA');
@@ -40,12 +39,14 @@ export default function App() {
   const [selectedIndustry, setSelectedIndustry] = useState(Object.keys(INDUSTRY_COMPANY_MAP)[0]);
   const [selectedCompany, setSelectedCompany] = useState(INDUSTRY_COMPANY_MAP[Object.keys(INDUSTRY_COMPANY_MAP)[0]].companies[0].key);
 
+  const { graphs, loading, error } = useSupplierGraph(selectedCompany);
+
   const graph = useMemo(() => {
-    if (mode === 'company' && selectedCompany === 'nvidia' && graphs.nvidia) return graphs.nvidia;
+    if (mode === 'company' && graphs.companyChain) return graphs.companyChain;
     if (mode === 'company' && graphs.company) return graphs.company;
     if (mode === 'country' && graphs.country) return graphs.country;
-    return graphs.company || graphs.country || graphs.nvidia || null;
-  }, [mode, selectedCompany, graphs]);
+    return graphs.company || graphs.country || null;
+  }, [mode, graphs]);
 
   const categories = useMemo(() => MODE_CATEGORY_MAP[mode], [mode]);
   const parserConfig = useMemo(() => PARSER_CONFIG_BY_MODE[mode], [mode]);
@@ -166,11 +167,11 @@ export default function App() {
 
   const affectedNodes = useMemo(() => {
     if (!simulatedGraph || !macroEvent) return [];
-    
+
     if (macroEvent.eventType === 'interest_rate') {
       return simulatedGraph.nodes.filter((n) => n.entity_type !== 'anchor_company');
     }
-    
+
     return simulatedGraph.nodes.filter(
       (n) => n.entity_type !== 'anchor_company' && macroEvent.countries?.includes(n.country_iso3)
     );

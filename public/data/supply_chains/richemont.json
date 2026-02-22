@@ -1,0 +1,325 @@
+{
+    "nodes": [
+        {
+            "id": "RICH_HQ",
+            "name": "Richemont Geneva HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Richemont",
+            "lat": 46.2044,
+            "lng": 6.1432,
+            "country_iso3": "CHE",
+            "country": "Switzerland",
+            "categories": [
+                "watches",
+                "jewelry",
+                "leather_goods",
+                "writing_instruments",
+                "fashion"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.1,
+            "risk_event_count": 1,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "RICH_CH_JLC",
+            "name": "Richemont Jaeger-LeCoultre Le Sentier",
+            "entity_type": "facility",
+            "parent_company_id": "Richemont",
+            "lat": 46.6022,
+            "lng": 6.2350,
+            "country_iso3": "CHE",
+            "country": "Switzerland",
+            "categories": [
+                "watches"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 10,
+            "unit_cost_index": 1.30,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.3,
+            "risk_event_count": 2,
+            "concentration_share": 0.40,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "watches": 120.0
+            }
+        },
+        {
+            "id": "RICH_IT_CARTIER",
+            "name": "Richemont Cartier Milan (Jewelry)",
+            "entity_type": "facility",
+            "parent_company_id": "Richemont",
+            "lat": 45.4642,
+            "lng": 9.1900,
+            "country_iso3": "ITA",
+            "country": "Italy",
+            "categories": [
+                "jewelry",
+                "leather_goods"
+            ],
+            "capacity_index": 0.88,
+            "lead_time_days": 8,
+            "unit_cost_index": 1.18,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.30,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "jewelry": 100.0,
+                "leather_goods": 55.0
+            }
+        },
+        {
+            "id": "RICH_DE_MONTB",
+            "name": "Richemont Montblanc Hamburg",
+            "entity_type": "facility",
+            "parent_company_id": "Richemont",
+            "lat": 53.5511,
+            "lng": 9.9937,
+            "country_iso3": "DEU",
+            "country": "Germany",
+            "categories": [
+                "writing_instruments",
+                "leather_goods"
+            ],
+            "capacity_index": 0.80,
+            "lead_time_days": 10,
+            "unit_cost_index": 1.12,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.4,
+            "risk_event_count": 2,
+            "concentration_share": 0.15,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "writing_instruments": 60.0,
+                "leather_goods": 35.0
+            }
+        },
+        {
+            "id": "RICH_AE_DIST",
+            "name": "Richemont Dubai Distribution Hub",
+            "entity_type": "facility",
+            "parent_company_id": "Richemont",
+            "lat": 25.2048,
+            "lng": 55.2708,
+            "country_iso3": "ARE",
+            "country": "UAE",
+            "categories": [
+                "watches",
+                "jewelry"
+            ],
+            "capacity_index": 0.75,
+            "lead_time_days": 16,
+            "unit_cost_index": 0.95,
+            "tariff_rate_by_category": {
+                "watches": 0.0,
+                "jewelry": 0.0
+            },
+            "risk_score": 1.0,
+            "risk_event_count": 5,
+            "concentration_share": 0.12,
+            "confidence": 0.82,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "watches": 50.0,
+                "jewelry": 40.0
+            }
+        },
+        {
+            "id": "RICH_JP_RETAIL",
+            "name": "Richemont Japan Luxury Retail",
+            "entity_type": "facility",
+            "parent_company_id": "Richemont",
+            "lat": 35.6762,
+            "lng": 139.6503,
+            "country_iso3": "JPN",
+            "country": "Japan",
+            "categories": [
+                "watches",
+                "jewelry",
+                "fashion"
+            ],
+            "capacity_index": 0.72,
+            "lead_time_days": 18,
+            "unit_cost_index": 1.02,
+            "tariff_rate_by_category": {
+                "watches": 0.02,
+                "jewelry": 0.02
+            },
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.10,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "watches": 45.0,
+                "jewelry": 30.0,
+                "fashion": 25.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "RICH_CH_JLC",
+            "target_id": "RICH_HQ",
+            "category": "watches",
+            "relationship_type": "supplies",
+            "baseline_volume": 120.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 1.30,
+            "lead_time_days": 10,
+            "targetLat": 46.2044,
+            "targetLng": 6.1432,
+            "target_market": "Switzerland"
+        },
+        {
+            "source_id": "RICH_IT_CARTIER",
+            "target_id": "RICH_HQ",
+            "category": "jewelry",
+            "relationship_type": "supplies",
+            "baseline_volume": 100.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 1.18,
+            "lead_time_days": 8,
+            "targetLat": 46.2044,
+            "targetLng": 6.1432,
+            "target_market": "Switzerland"
+        },
+        {
+            "source_id": "RICH_IT_CARTIER",
+            "target_id": "RICH_AE_DIST",
+            "category": "jewelry",
+            "relationship_type": "supplies",
+            "baseline_volume": 40.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 1.20,
+            "lead_time_days": 14,
+            "targetLat": 25.2048,
+            "targetLng": 55.2708,
+            "target_market": "UAE"
+        },
+        {
+            "source_id": "RICH_DE_MONTB",
+            "target_id": "RICH_HQ",
+            "category": "writing_instruments",
+            "relationship_type": "supplies",
+            "baseline_volume": 60.0,
+            "baseline_share": 0.70,
+            "effective_cost_index": 1.12,
+            "lead_time_days": 10,
+            "targetLat": 46.2044,
+            "targetLng": 6.1432,
+            "target_market": "Switzerland"
+        },
+        {
+            "source_id": "RICH_CH_JLC",
+            "target_id": "RICH_JP_RETAIL",
+            "category": "watches",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 1.32,
+            "lead_time_days": 18,
+            "targetLat": 35.6762,
+            "targetLng": 139.6503,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "RICH_CH_JLC",
+            "target_id": "RICH_AE_DIST",
+            "category": "watches",
+            "relationship_type": "supplies",
+            "baseline_volume": 50.0,
+            "baseline_share": 0.28,
+            "effective_cost_index": 1.30,
+            "lead_time_days": 16,
+            "targetLat": 25.2048,
+            "targetLng": 55.2708,
+            "target_market": "UAE"
+        },
+        {
+            "source_id": "RICH_IT_CARTIER",
+            "target_id": "RICH_JP_RETAIL",
+            "category": "jewelry",
+            "relationship_type": "supplies",
+            "baseline_volume": 30.0,
+            "baseline_share": 0.18,
+            "effective_cost_index": 1.20,
+            "lead_time_days": 18,
+            "targetLat": 35.6762,
+            "targetLng": 139.6503,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "RICH_DE_MONTB",
+            "target_id": "RICH_JP_RETAIL",
+            "category": "leather_goods",
+            "relationship_type": "supplies",
+            "baseline_volume": 20.0,
+            "baseline_share": 0.15,
+            "effective_cost_index": 1.15,
+            "lead_time_days": 18,
+            "targetLat": 35.6762,
+            "targetLng": 139.6503,
+            "target_market": "Japan"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Richemont",
+        "build_version": "richemont-v1",
+        "assumption_notes": "Richemont with JLC watches, Cartier jewelry, Montblanc, and luxury distribution",
+        "company_key": "richemont",
+        "parent_company_id": "Richemont",
+        "accent_color": "#8b6914",
+        "category_labels": {
+            "watches": "Haute Horlogerie",
+            "jewelry": "Jewelry",
+            "leather_goods": "Leather Goods",
+            "writing_instruments": "Writing Instruments",
+            "fashion": "Fashion"
+        },
+        "arc_colors": {
+            "watches": "rgba(139,105,20,0.7)",
+            "jewelry": "rgba(244,114,182,0.7)",
+            "leather_goods": "rgba(168,85,247,0.7)",
+            "writing_instruments": "rgba(56,189,248,0.7)",
+            "fashion": "rgba(34,197,94,0.7)"
+        }
+    }
+}

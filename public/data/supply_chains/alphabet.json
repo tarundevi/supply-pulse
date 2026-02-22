@@ -1,0 +1,383 @@
+{
+    "nodes": [
+        {
+            "id": "GOOG_HQ",
+            "name": "Alphabet Mountain View HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Alphabet",
+            "lat": 37.4220,
+            "lng": -122.0841,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "tpu_chips",
+                "cloud_servers",
+                "pixel_devices",
+                "networking",
+                "data_storage"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.1,
+            "risk_event_count": 0,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "GOOG_TSMC_TW",
+            "name": "Alphabet TSMC Taiwan (TPU Chips)",
+            "entity_type": "facility",
+            "parent_company_id": "Alphabet",
+            "lat": 24.8138,
+            "lng": 120.9675,
+            "country_iso3": "TWN",
+            "country": "Taiwan",
+            "categories": [
+                "tpu_chips"
+            ],
+            "capacity_index": 0.93,
+            "lead_time_days": 35,
+            "unit_cost_index": 1.10,
+            "tariff_rate_by_category": {
+                "tpu_chips": 0.05
+            },
+            "risk_score": 6.0,
+            "risk_event_count": 42,
+            "concentration_share": 0.70,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "tpu_chips": 160.0
+            }
+        },
+        {
+            "id": "GOOG_DC_SG",
+            "name": "Alphabet Singapore Data Center",
+            "entity_type": "facility",
+            "parent_company_id": "Alphabet",
+            "lat": 1.3521,
+            "lng": 103.8198,
+            "country_iso3": "SGP",
+            "country": "Singapore",
+            "categories": [
+                "cloud_servers",
+                "data_storage"
+            ],
+            "capacity_index": 0.88,
+            "lead_time_days": 12,
+            "unit_cost_index": 1.05,
+            "tariff_rate_by_category": {
+                "cloud_servers": 0.0,
+                "data_storage": 0.0
+            },
+            "risk_score": 0.6,
+            "risk_event_count": 3,
+            "concentration_share": 0.18,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "cloud_servers": 130.0,
+                "data_storage": 90.0
+            }
+        },
+        {
+            "id": "GOOG_FOX_CN",
+            "name": "Alphabet Foxconn China (Pixel Assembly)",
+            "entity_type": "facility",
+            "parent_company_id": "Alphabet",
+            "lat": 22.5431,
+            "lng": 114.0579,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "pixel_devices"
+            ],
+            "capacity_index": 0.80,
+            "lead_time_days": 24,
+            "unit_cost_index": 0.85,
+            "tariff_rate_by_category": {
+                "pixel_devices": 0.10
+            },
+            "risk_score": 7.0,
+            "risk_event_count": 85,
+            "concentration_share": 0.30,
+            "confidence": 0.82,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "pixel_devices": 75.0
+            }
+        },
+        {
+            "id": "GOOG_DC_FI",
+            "name": "Alphabet Finland Data Center",
+            "entity_type": "facility",
+            "parent_company_id": "Alphabet",
+            "lat": 60.4518,
+            "lng": 22.2666,
+            "country_iso3": "FIN",
+            "country": "Finland",
+            "categories": [
+                "cloud_servers",
+                "networking"
+            ],
+            "capacity_index": 0.82,
+            "lead_time_days": 10,
+            "unit_cost_index": 1.08,
+            "tariff_rate_by_category": {
+                "cloud_servers": 0.0,
+                "networking": 0.02
+            },
+            "risk_score": 0.4,
+            "risk_event_count": 2,
+            "concentration_share": 0.15,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "cloud_servers": 110.0,
+                "networking": 65.0
+            }
+        },
+        {
+            "id": "GOOG_SAM_KR",
+            "name": "Alphabet Samsung Korea (Displays/Memory)",
+            "entity_type": "facility",
+            "parent_company_id": "Alphabet",
+            "lat": 37.28,
+            "lng": 127.11,
+            "country_iso3": "KOR",
+            "country": "South Korea",
+            "categories": [
+                "pixel_devices",
+                "data_storage"
+            ],
+            "capacity_index": 0.84,
+            "lead_time_days": 18,
+            "unit_cost_index": 0.98,
+            "tariff_rate_by_category": {
+                "pixel_devices": 0.04,
+                "data_storage": 0.03
+            },
+            "risk_score": 2.0,
+            "risk_event_count": 14,
+            "concentration_share": 0.22,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "pixel_devices": 55.0,
+                "data_storage": 72.0
+            }
+        },
+        {
+            "id": "GOOG_CISCO_US",
+            "name": "Alphabet Cisco USA Networking",
+            "entity_type": "facility",
+            "parent_company_id": "Alphabet",
+            "lat": 37.3861,
+            "lng": -122.0839,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "networking"
+            ],
+            "capacity_index": 0.78,
+            "lead_time_days": 8,
+            "unit_cost_index": 1.15,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.3,
+            "risk_event_count": 2,
+            "concentration_share": 0.10,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "networking": 85.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "GOOG_TSMC_TW",
+            "target_id": "GOOG_HQ",
+            "category": "tpu_chips",
+            "relationship_type": "supplies",
+            "baseline_volume": 160.0,
+            "baseline_share": 0.70,
+            "effective_cost_index": 1.12,
+            "lead_time_days": 35,
+            "targetLat": 37.4220,
+            "targetLng": -122.0841,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "GOOG_DC_SG",
+            "target_id": "GOOG_HQ",
+            "category": "cloud_servers",
+            "relationship_type": "supplies",
+            "baseline_volume": 130.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 12,
+            "targetLat": 37.4220,
+            "targetLng": -122.0841,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "GOOG_FOX_CN",
+            "target_id": "GOOG_HQ",
+            "category": "pixel_devices",
+            "relationship_type": "supplies",
+            "baseline_volume": 75.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.90,
+            "lead_time_days": 24,
+            "targetLat": 37.4220,
+            "targetLng": -122.0841,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "GOOG_DC_FI",
+            "target_id": "GOOG_HQ",
+            "category": "cloud_servers",
+            "relationship_type": "supplies",
+            "baseline_volume": 110.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 10,
+            "targetLat": 37.4220,
+            "targetLng": -122.0841,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "GOOG_SAM_KR",
+            "target_id": "GOOG_FOX_CN",
+            "category": "pixel_devices",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.40,
+            "effective_cost_index": 1.00,
+            "lead_time_days": 18,
+            "targetLat": 22.5431,
+            "targetLng": 114.0579,
+            "target_market": "China"
+        },
+        {
+            "source_id": "GOOG_SAM_KR",
+            "target_id": "GOOG_DC_SG",
+            "category": "data_storage",
+            "relationship_type": "supplies",
+            "baseline_volume": 72.0,
+            "baseline_share": 0.45,
+            "effective_cost_index": 0.99,
+            "lead_time_days": 12,
+            "targetLat": 1.3521,
+            "targetLng": 103.8198,
+            "target_market": "Singapore"
+        },
+        {
+            "source_id": "GOOG_CISCO_US",
+            "target_id": "GOOG_DC_FI",
+            "category": "networking",
+            "relationship_type": "supplies",
+            "baseline_volume": 65.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 1.15,
+            "lead_time_days": 8,
+            "targetLat": 60.4518,
+            "targetLng": 22.2666,
+            "target_market": "Finland"
+        },
+        {
+            "source_id": "GOOG_CISCO_US",
+            "target_id": "GOOG_DC_SG",
+            "category": "networking",
+            "relationship_type": "supplies",
+            "baseline_volume": 48.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 1.15,
+            "lead_time_days": 14,
+            "targetLat": 1.3521,
+            "targetLng": 103.8198,
+            "target_market": "Singapore"
+        },
+        {
+            "source_id": "GOOG_TSMC_TW",
+            "target_id": "GOOG_DC_SG",
+            "category": "tpu_chips",
+            "relationship_type": "supplies",
+            "baseline_volume": 50.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 1.10,
+            "lead_time_days": 14,
+            "targetLat": 1.3521,
+            "targetLng": 103.8198,
+            "target_market": "Singapore"
+        },
+        {
+            "source_id": "GOOG_DC_SG",
+            "target_id": "GOOG_DC_FI",
+            "category": "data_storage",
+            "relationship_type": "supplies",
+            "baseline_volume": 40.0,
+            "baseline_share": 0.20,
+            "effective_cost_index": 1.06,
+            "lead_time_days": 18,
+            "targetLat": 60.4518,
+            "targetLng": 22.2666,
+            "target_market": "Finland"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Alphabet",
+        "build_version": "alphabet-v1",
+        "assumption_notes": "Alphabet supply chain with data centers, TPU chip manufacturing, and Pixel devices",
+        "company_key": "alphabet",
+        "parent_company_id": "Alphabet",
+        "accent_color": "#4285f4",
+        "category_labels": {
+            "tpu_chips": "TPU Chips",
+            "cloud_servers": "Cloud Servers",
+            "pixel_devices": "Pixel Devices",
+            "networking": "Network Equipment",
+            "data_storage": "Data Storage"
+        },
+        "arc_colors": {
+            "tpu_chips": "rgba(66,133,244,0.7)",
+            "cloud_servers": "rgba(234,67,53,0.7)",
+            "pixel_devices": "rgba(251,188,4,0.7)",
+            "networking": "rgba(52,168,83,0.7)",
+            "data_storage": "rgba(168,85,247,0.7)"
+        }
+    }
+}

@@ -1,0 +1,338 @@
+{
+    "nodes": [
+        {
+            "id": "FORD_HQ",
+            "name": "Ford Dearborn HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Ford",
+            "lat": 42.3223,
+            "lng": -83.1763,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "vehicles",
+                "trucks",
+                "ev_platforms",
+                "engines",
+                "electronics"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 2,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "FORD_ROUGE",
+            "name": "Ford Rouge Complex (Michigan)",
+            "entity_type": "facility",
+            "parent_company_id": "Ford",
+            "lat": 42.3012,
+            "lng": -83.1504,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "trucks",
+                "vehicles"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 4,
+            "unit_cost_index": 1.08,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.32,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "trucks": 180.0,
+                "vehicles": 100.0
+            }
+        },
+        {
+            "id": "FORD_MX_HERMOSILLO",
+            "name": "Ford Hermosillo Mexico",
+            "entity_type": "facility",
+            "parent_company_id": "Ford",
+            "lat": 29.0729,
+            "lng": -110.9559,
+            "country_iso3": "MEX",
+            "country": "Mexico",
+            "categories": [
+                "vehicles",
+                "engines"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 12,
+            "unit_cost_index": 0.82,
+            "tariff_rate_by_category": {
+                "vehicles": 0.0,
+                "engines": 0.0
+            },
+            "risk_score": 2.5,
+            "risk_event_count": 15,
+            "concentration_share": 0.22,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "vehicles": 95.0,
+                "engines": 70.0
+            }
+        },
+        {
+            "id": "FORD_DE_COLOGNE",
+            "name": "Ford Cologne Germany (EV Hub)",
+            "entity_type": "facility",
+            "parent_company_id": "Ford",
+            "lat": 50.9375,
+            "lng": 6.9603,
+            "country_iso3": "DEU",
+            "country": "Germany",
+            "categories": [
+                "ev_platforms",
+                "vehicles"
+            ],
+            "capacity_index": 0.78,
+            "lead_time_days": 14,
+            "unit_cost_index": 1.05,
+            "tariff_rate_by_category": {
+                "ev_platforms": 0.0,
+                "vehicles": 0.0
+            },
+            "risk_score": 0.8,
+            "risk_event_count": 4,
+            "concentration_share": 0.15,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "ev_platforms": 65.0,
+                "vehicles": 50.0
+            }
+        },
+        {
+            "id": "FORD_IN_CHENNAI",
+            "name": "Ford Chennai India Assembly",
+            "entity_type": "facility",
+            "parent_company_id": "Ford",
+            "lat": 13.0827,
+            "lng": 80.2707,
+            "country_iso3": "IND",
+            "country": "India",
+            "categories": [
+                "vehicles"
+            ],
+            "capacity_index": 0.65,
+            "lead_time_days": 24,
+            "unit_cost_index": 0.78,
+            "tariff_rate_by_category": {
+                "vehicles": 0.08
+            },
+            "risk_score": 3.5,
+            "risk_event_count": 22,
+            "concentration_share": 0.10,
+            "confidence": 0.78,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "vehicles": 55.0
+            }
+        },
+        {
+            "id": "FORD_SK_ON_US",
+            "name": "Ford SK On Battery JV (Tennessee)",
+            "entity_type": "facility",
+            "parent_company_id": "Ford",
+            "lat": 35.6580,
+            "lng": -88.4012,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "ev_platforms",
+                "electronics"
+            ],
+            "capacity_index": 0.75,
+            "lead_time_days": 6,
+            "unit_cost_index": 1.10,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.18,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "ev_platforms": 90.0,
+                "electronics": 45.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "FORD_ROUGE",
+            "target_id": "FORD_HQ",
+            "category": "trucks",
+            "relationship_type": "supplies",
+            "baseline_volume": 180.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 4,
+            "targetLat": 42.3223,
+            "targetLng": -83.1763,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "FORD_ROUGE",
+            "target_id": "FORD_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 100.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 4,
+            "targetLat": 42.3223,
+            "targetLng": -83.1763,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "FORD_MX_HERMOSILLO",
+            "target_id": "FORD_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 95.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 12,
+            "targetLat": 42.3223,
+            "targetLng": -83.1763,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "FORD_MX_HERMOSILLO",
+            "target_id": "FORD_HQ",
+            "category": "engines",
+            "relationship_type": "supplies",
+            "baseline_volume": 70.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 12,
+            "targetLat": 42.3223,
+            "targetLng": -83.1763,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "FORD_DE_COLOGNE",
+            "target_id": "FORD_HQ",
+            "category": "ev_platforms",
+            "relationship_type": "supplies",
+            "baseline_volume": 65.0,
+            "baseline_share": 0.40,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 14,
+            "targetLat": 42.3223,
+            "targetLng": -83.1763,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "FORD_IN_CHENNAI",
+            "target_id": "FORD_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.18,
+            "effective_cost_index": 0.82,
+            "lead_time_days": 24,
+            "targetLat": 42.3223,
+            "targetLng": -83.1763,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "FORD_SK_ON_US",
+            "target_id": "FORD_ROUGE",
+            "category": "ev_platforms",
+            "relationship_type": "supplies",
+            "baseline_volume": 90.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 1.10,
+            "lead_time_days": 6,
+            "targetLat": 42.3012,
+            "targetLng": -83.1504,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "FORD_SK_ON_US",
+            "target_id": "FORD_DE_COLOGNE",
+            "category": "electronics",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 1.12,
+            "lead_time_days": 14,
+            "targetLat": 50.9375,
+            "targetLng": 6.9603,
+            "target_market": "Germany"
+        },
+        {
+            "source_id": "FORD_DE_COLOGNE",
+            "target_id": "FORD_IN_CHENNAI",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 25.0,
+            "baseline_share": 0.15,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 20,
+            "targetLat": 13.0827,
+            "targetLng": 80.2707,
+            "target_market": "India"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Ford",
+        "build_version": "ford-v1",
+        "assumption_notes": "Ford supply chain with Rouge Complex, Mexico, Germany EV hub, India, and SK On battery JV",
+        "company_key": "ford",
+        "parent_company_id": "Ford",
+        "accent_color": "#003478",
+        "category_labels": {
+            "vehicles": "Vehicles",
+            "trucks": "Trucks & SUVs",
+            "ev_platforms": "EV Platforms",
+            "engines": "Engines",
+            "electronics": "Auto Electronics"
+        },
+        "arc_colors": {
+            "vehicles": "rgba(0,52,120,0.7)",
+            "trucks": "rgba(56,189,248,0.7)",
+            "ev_platforms": "rgba(34,197,94,0.7)",
+            "engines": "rgba(251,191,36,0.7)",
+            "electronics": "rgba(168,85,247,0.7)"
+        }
+    }
+}

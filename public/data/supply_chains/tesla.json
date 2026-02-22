@@ -1,0 +1,336 @@
+{
+    "nodes": [
+        {
+            "id": "TSLA_HQ",
+            "name": "Tesla Austin HQ (Gigafactory Texas)",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Tesla",
+            "lat": 30.2235,
+            "lng": -97.6160,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "vehicles",
+                "batteries",
+                "motors",
+                "autopilot",
+                "solar"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 2,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "TSLA_FREMONT",
+            "name": "Tesla Fremont Factory (California)",
+            "entity_type": "facility",
+            "parent_company_id": "Tesla",
+            "lat": 37.4942,
+            "lng": -121.9456,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "vehicles",
+                "motors"
+            ],
+            "capacity_index": 0.90,
+            "lead_time_days": 5,
+            "unit_cost_index": 1.12,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.30,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "vehicles": 160.0,
+                "motors": 90.0
+            }
+        },
+        {
+            "id": "TSLA_GIGA_SH",
+            "name": "Tesla Gigafactory Shanghai",
+            "entity_type": "facility",
+            "parent_company_id": "Tesla",
+            "lat": 31.0975,
+            "lng": 121.8198,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "vehicles",
+                "batteries"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 20,
+            "unit_cost_index": 0.80,
+            "tariff_rate_by_category": {
+                "vehicles": 0.25,
+                "batteries": 0.10
+            },
+            "risk_score": 5.5,
+            "risk_event_count": 38,
+            "concentration_share": 0.35,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "vehicles": 180.0,
+                "batteries": 120.0
+            }
+        },
+        {
+            "id": "TSLA_GIGA_BL",
+            "name": "Tesla Gigafactory Berlin",
+            "entity_type": "facility",
+            "parent_company_id": "Tesla",
+            "lat": 52.3937,
+            "lng": 13.7897,
+            "country_iso3": "DEU",
+            "country": "Germany",
+            "categories": [
+                "vehicles"
+            ],
+            "capacity_index": 0.78,
+            "lead_time_days": 12,
+            "unit_cost_index": 1.06,
+            "tariff_rate_by_category": {
+                "vehicles": 0.0
+            },
+            "risk_score": 0.8,
+            "risk_event_count": 4,
+            "concentration_share": 0.15,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "vehicles": 95.0
+            }
+        },
+        {
+            "id": "TSLA_PAN_NV",
+            "name": "Tesla Panasonic Gigafactory Nevada",
+            "entity_type": "facility",
+            "parent_company_id": "Tesla",
+            "lat": 39.5383,
+            "lng": -119.4442,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "batteries"
+            ],
+            "capacity_index": 0.88,
+            "lead_time_days": 6,
+            "unit_cost_index": 1.05,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.25,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "batteries": 150.0
+            }
+        },
+        {
+            "id": "TSLA_CATL_CN",
+            "name": "Tesla CATL Battery Supply (China)",
+            "entity_type": "facility",
+            "parent_company_id": "Tesla",
+            "lat": 26.6657,
+            "lng": 119.5479,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "batteries",
+                "autopilot"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 22,
+            "unit_cost_index": 0.78,
+            "tariff_rate_by_category": {
+                "batteries": 0.10,
+                "autopilot": 0.10
+            },
+            "risk_score": 5.0,
+            "risk_event_count": 32,
+            "concentration_share": 0.20,
+            "confidence": 0.82,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "batteries": 100.0,
+                "autopilot": 45.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "TSLA_FREMONT",
+            "target_id": "TSLA_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 160.0,
+            "baseline_share": 0.45,
+            "effective_cost_index": 1.12,
+            "lead_time_days": 5,
+            "targetLat": 30.2235,
+            "targetLng": -97.616,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "TSLA_GIGA_SH",
+            "target_id": "TSLA_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 180.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 20,
+            "targetLat": 30.2235,
+            "targetLng": -97.616,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "TSLA_GIGA_BL",
+            "target_id": "TSLA_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 95.0,
+            "baseline_share": 0.28,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 12,
+            "targetLat": 30.2235,
+            "targetLng": -97.616,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "TSLA_PAN_NV",
+            "target_id": "TSLA_FREMONT",
+            "category": "batteries",
+            "relationship_type": "supplies",
+            "baseline_volume": 150.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 6,
+            "targetLat": 37.4942,
+            "targetLng": -121.9456,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "TSLA_PAN_NV",
+            "target_id": "TSLA_HQ",
+            "category": "batteries",
+            "relationship_type": "supplies",
+            "baseline_volume": 80.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 6,
+            "targetLat": 30.2235,
+            "targetLng": -97.616,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "TSLA_CATL_CN",
+            "target_id": "TSLA_GIGA_SH",
+            "category": "batteries",
+            "relationship_type": "supplies",
+            "baseline_volume": 100.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.80,
+            "lead_time_days": 8,
+            "targetLat": 31.0975,
+            "targetLng": 121.8198,
+            "target_market": "China"
+        },
+        {
+            "source_id": "TSLA_GIGA_SH",
+            "target_id": "TSLA_GIGA_BL",
+            "category": "batteries",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 24,
+            "targetLat": 52.3937,
+            "targetLng": 13.7897,
+            "target_market": "Germany"
+        },
+        {
+            "source_id": "TSLA_FREMONT",
+            "target_id": "TSLA_HQ",
+            "category": "motors",
+            "relationship_type": "supplies",
+            "baseline_volume": 90.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 1.12,
+            "lead_time_days": 5,
+            "targetLat": 30.2235,
+            "targetLng": -97.616,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "TSLA_CATL_CN",
+            "target_id": "TSLA_HQ",
+            "category": "autopilot",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.40,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 22,
+            "targetLat": 30.2235,
+            "targetLng": -97.616,
+            "target_market": "USA"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Tesla",
+        "build_version": "tesla-v1",
+        "assumption_notes": "Tesla supply chain with Gigafactories, Panasonic and CATL battery suppliers",
+        "company_key": "tesla",
+        "parent_company_id": "Tesla",
+        "accent_color": "#cc0000",
+        "category_labels": {
+            "vehicles": "Electric Vehicles",
+            "batteries": "Battery Cells",
+            "motors": "Electric Motors",
+            "autopilot": "Autopilot Hardware",
+            "solar": "Solar Products"
+        },
+        "arc_colors": {
+            "vehicles": "rgba(204,0,0,0.7)",
+            "batteries": "rgba(34,197,94,0.7)",
+            "motors": "rgba(56,189,248,0.7)",
+            "autopilot": "rgba(168,85,247,0.7)",
+            "solar": "rgba(251,191,36,0.7)"
+        }
+    }
+}

@@ -1,0 +1,320 @@
+{
+    "nodes": [
+        {
+            "id": "KER_HQ",
+            "name": "Kering Paris HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Kering",
+            "lat": 48.8698,
+            "lng": 2.2778,
+            "country_iso3": "FRA",
+            "country": "France",
+            "categories": [
+                "fashion",
+                "leather_goods",
+                "eyewear",
+                "jewelry",
+                "footwear"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.1,
+            "risk_event_count": 1,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "KER_IT_GUCCI",
+            "name": "Kering Gucci Florence (Leather/Fashion)",
+            "entity_type": "facility",
+            "parent_company_id": "Kering",
+            "lat": 43.7696,
+            "lng": 11.2558,
+            "country_iso3": "ITA",
+            "country": "Italy",
+            "categories": [
+                "leather_goods",
+                "fashion",
+                "footwear"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 8,
+            "unit_cost_index": 1.15,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.45,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "leather_goods": 140.0,
+                "fashion": 110.0,
+                "footwear": 70.0
+            }
+        },
+        {
+            "id": "KER_IT_BV",
+            "name": "Kering Bottega Veneta Vicenza",
+            "entity_type": "facility",
+            "parent_company_id": "Kering",
+            "lat": 45.5455,
+            "lng": 11.5354,
+            "country_iso3": "ITA",
+            "country": "Italy",
+            "categories": [
+                "leather_goods"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 10,
+            "unit_cost_index": 1.18,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.4,
+            "risk_event_count": 2,
+            "concentration_share": 0.20,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "leather_goods": 80.0
+            }
+        },
+        {
+            "id": "KER_IT_KERING_EYE",
+            "name": "Kering Eyewear Padua",
+            "entity_type": "facility",
+            "parent_company_id": "Kering",
+            "lat": 45.4064,
+            "lng": 11.8768,
+            "country_iso3": "ITA",
+            "country": "Italy",
+            "categories": [
+                "eyewear"
+            ],
+            "capacity_index": 0.80,
+            "lead_time_days": 8,
+            "unit_cost_index": 1.10,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.3,
+            "risk_event_count": 2,
+            "concentration_share": 0.25,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "eyewear": 65.0
+            }
+        },
+        {
+            "id": "KER_FR_YSL",
+            "name": "Kering Saint Laurent Paris Atelier",
+            "entity_type": "facility",
+            "parent_company_id": "Kering",
+            "lat": 48.8606,
+            "lng": 2.3376,
+            "country_iso3": "FRA",
+            "country": "France",
+            "categories": [
+                "fashion",
+                "leather_goods"
+            ],
+            "capacity_index": 0.78,
+            "lead_time_days": 6,
+            "unit_cost_index": 1.20,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 1,
+            "concentration_share": 0.15,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "fashion": 55.0,
+                "leather_goods": 40.0
+            }
+        },
+        {
+            "id": "KER_CN_DIST",
+            "name": "Kering China Distribution Shanghai",
+            "entity_type": "facility",
+            "parent_company_id": "Kering",
+            "lat": 31.2304,
+            "lng": 121.4737,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "fashion",
+                "jewelry"
+            ],
+            "capacity_index": 0.72,
+            "lead_time_days": 22,
+            "unit_cost_index": 0.90,
+            "tariff_rate_by_category": {
+                "fashion": 0.08,
+                "jewelry": 0.10
+            },
+            "risk_score": 4.0,
+            "risk_event_count": 25,
+            "concentration_share": 0.12,
+            "confidence": 0.78,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "fashion": 45.0,
+                "jewelry": 30.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "KER_IT_GUCCI",
+            "target_id": "KER_HQ",
+            "category": "leather_goods",
+            "relationship_type": "supplies",
+            "baseline_volume": 140.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 1.15,
+            "lead_time_days": 8,
+            "targetLat": 48.8698,
+            "targetLng": 2.2778,
+            "target_market": "France"
+        },
+        {
+            "source_id": "KER_IT_GUCCI",
+            "target_id": "KER_HQ",
+            "category": "fashion",
+            "relationship_type": "supplies",
+            "baseline_volume": 110.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 1.15,
+            "lead_time_days": 8,
+            "targetLat": 48.8698,
+            "targetLng": 2.2778,
+            "target_market": "France"
+        },
+        {
+            "source_id": "KER_IT_GUCCI",
+            "target_id": "KER_CN_DIST",
+            "category": "fashion",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 1.20,
+            "lead_time_days": 22,
+            "targetLat": 31.2304,
+            "targetLng": 121.4737,
+            "target_market": "China"
+        },
+        {
+            "source_id": "KER_IT_BV",
+            "target_id": "KER_HQ",
+            "category": "leather_goods",
+            "relationship_type": "supplies",
+            "baseline_volume": 80.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 1.18,
+            "lead_time_days": 10,
+            "targetLat": 48.8698,
+            "targetLng": 2.2778,
+            "target_market": "France"
+        },
+        {
+            "source_id": "KER_IT_KERING_EYE",
+            "target_id": "KER_HQ",
+            "category": "eyewear",
+            "relationship_type": "supplies",
+            "baseline_volume": 65.0,
+            "baseline_share": 0.70,
+            "effective_cost_index": 1.10,
+            "lead_time_days": 8,
+            "targetLat": 48.8698,
+            "targetLng": 2.2778,
+            "target_market": "France"
+        },
+        {
+            "source_id": "KER_FR_YSL",
+            "target_id": "KER_HQ",
+            "category": "fashion",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 1.20,
+            "lead_time_days": 6,
+            "targetLat": 48.8698,
+            "targetLng": 2.2778,
+            "target_market": "France"
+        },
+        {
+            "source_id": "KER_FR_YSL",
+            "target_id": "KER_CN_DIST",
+            "category": "leather_goods",
+            "relationship_type": "supplies",
+            "baseline_volume": 25.0,
+            "baseline_share": 0.15,
+            "effective_cost_index": 1.22,
+            "lead_time_days": 22,
+            "targetLat": 31.2304,
+            "targetLng": 121.4737,
+            "target_market": "China"
+        },
+        {
+            "source_id": "KER_IT_GUCCI",
+            "target_id": "KER_HQ",
+            "category": "footwear",
+            "relationship_type": "supplies",
+            "baseline_volume": 70.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 1.15,
+            "lead_time_days": 8,
+            "targetLat": 48.8698,
+            "targetLng": 2.2778,
+            "target_market": "France"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Kering",
+        "build_version": "kering-v1",
+        "assumption_notes": "Kering with Gucci, Bottega Veneta, Saint Laurent, Kering Eyewear, and China distribution",
+        "company_key": "kering",
+        "parent_company_id": "Kering",
+        "accent_color": "#1a1a2e",
+        "category_labels": {
+            "fashion": "Fashion",
+            "leather_goods": "Leather Goods",
+            "eyewear": "Eyewear",
+            "jewelry": "Jewelry",
+            "footwear": "Footwear"
+        },
+        "arc_colors": {
+            "fashion": "rgba(100,100,140,0.7)",
+            "leather_goods": "rgba(168,85,247,0.7)",
+            "eyewear": "rgba(56,189,248,0.7)",
+            "jewelry": "rgba(244,114,182,0.7)",
+            "footwear": "rgba(251,191,36,0.7)"
+        }
+    }
+}

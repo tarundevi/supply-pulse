@@ -1,0 +1,382 @@
+{
+    "nodes": [
+        {
+            "id": "XOM_HQ",
+            "name": "ExxonMobil Houston HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "ExxonMobil",
+            "lat": 29.7604,
+            "lng": -95.3698,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "crude_oil",
+                "natural_gas",
+                "refined_fuels",
+                "chemicals",
+                "lubricants"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 2,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "XOM_PERMIAN",
+            "name": "ExxonMobil Permian Basin (Texas)",
+            "entity_type": "facility",
+            "parent_company_id": "ExxonMobil",
+            "lat": 31.9973,
+            "lng": -102.0779,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "crude_oil",
+                "natural_gas"
+            ],
+            "capacity_index": 0.95,
+            "lead_time_days": 4,
+            "unit_cost_index": 0.80,
+            "tariff_rate_by_category": {},
+            "risk_score": 1.0,
+            "risk_event_count": 6,
+            "concentration_share": 0.35,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "crude_oil": 200.0,
+                "natural_gas": 140.0
+            }
+        },
+        {
+            "id": "XOM_BAYTOWN",
+            "name": "ExxonMobil Baytown Refinery (Texas)",
+            "entity_type": "facility",
+            "parent_company_id": "ExxonMobil",
+            "lat": 29.7355,
+            "lng": -94.9774,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "refined_fuels",
+                "chemicals"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 6,
+            "unit_cost_index": 0.90,
+            "tariff_rate_by_category": {},
+            "risk_score": 1.5,
+            "risk_event_count": 8,
+            "concentration_share": 0.28,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refined_fuels": 170.0,
+                "chemicals": 90.0
+            }
+        },
+        {
+            "id": "XOM_GUYANA",
+            "name": "ExxonMobil Guyana Offshore",
+            "entity_type": "facility",
+            "parent_company_id": "ExxonMobil",
+            "lat": 6.8013,
+            "lng": -58.1551,
+            "country_iso3": "GUY",
+            "country": "Guyana",
+            "categories": [
+                "crude_oil"
+            ],
+            "capacity_index": 0.82,
+            "lead_time_days": 20,
+            "unit_cost_index": 0.75,
+            "tariff_rate_by_category": {
+                "crude_oil": 0.02
+            },
+            "risk_score": 3.2,
+            "risk_event_count": 15,
+            "concentration_share": 0.20,
+            "confidence": 0.80,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "crude_oil": 120.0
+            }
+        },
+        {
+            "id": "XOM_ROTT_NL",
+            "name": "ExxonMobil Rotterdam Refinery",
+            "entity_type": "facility",
+            "parent_company_id": "ExxonMobil",
+            "lat": 51.9225,
+            "lng": 4.4792,
+            "country_iso3": "NLD",
+            "country": "Netherlands",
+            "categories": [
+                "refined_fuels",
+                "lubricants"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 14,
+            "unit_cost_index": 1.05,
+            "tariff_rate_by_category": {
+                "refined_fuels": 0.03,
+                "lubricants": 0.04
+            },
+            "risk_score": 1.0,
+            "risk_event_count": 5,
+            "concentration_share": 0.15,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refined_fuels": 110.0,
+                "lubricants": 55.0
+            }
+        },
+        {
+            "id": "XOM_SG_CHEM",
+            "name": "ExxonMobil Singapore Chemical Plant",
+            "entity_type": "facility",
+            "parent_company_id": "ExxonMobil",
+            "lat": 1.2655,
+            "lng": 103.8222,
+            "country_iso3": "SGP",
+            "country": "Singapore",
+            "categories": [
+                "chemicals",
+                "lubricants"
+            ],
+            "capacity_index": 0.80,
+            "lead_time_days": 18,
+            "unit_cost_index": 0.92,
+            "tariff_rate_by_category": {
+                "chemicals": 0.0,
+                "lubricants": 0.0
+            },
+            "risk_score": 0.8,
+            "risk_event_count": 4,
+            "concentration_share": 0.12,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "chemicals": 80.0,
+                "lubricants": 45.0
+            }
+        },
+        {
+            "id": "XOM_PNG",
+            "name": "ExxonMobil PNG LNG Project",
+            "entity_type": "facility",
+            "parent_company_id": "ExxonMobil",
+            "lat": -6.7144,
+            "lng": 147.0003,
+            "country_iso3": "PNG",
+            "country": "Papua New Guinea",
+            "categories": [
+                "natural_gas"
+            ],
+            "capacity_index": 0.72,
+            "lead_time_days": 25,
+            "unit_cost_index": 0.85,
+            "tariff_rate_by_category": {
+                "natural_gas": 0.02
+            },
+            "risk_score": 4.0,
+            "risk_event_count": 20,
+            "concentration_share": 0.10,
+            "confidence": 0.75,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "natural_gas": 75.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "XOM_PERMIAN",
+            "target_id": "XOM_BAYTOWN",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 200.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 0.80,
+            "lead_time_days": 4,
+            "targetLat": 29.7355,
+            "targetLng": -94.9774,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "XOM_PERMIAN",
+            "target_id": "XOM_HQ",
+            "category": "natural_gas",
+            "relationship_type": "supplies",
+            "baseline_volume": 140.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.80,
+            "lead_time_days": 4,
+            "targetLat": 29.7604,
+            "targetLng": -95.3698,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "XOM_BAYTOWN",
+            "target_id": "XOM_HQ",
+            "category": "refined_fuels",
+            "relationship_type": "supplies",
+            "baseline_volume": 170.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 0.90,
+            "lead_time_days": 6,
+            "targetLat": 29.7604,
+            "targetLng": -95.3698,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "XOM_GUYANA",
+            "target_id": "XOM_BAYTOWN",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 120.0,
+            "baseline_share": 0.40,
+            "effective_cost_index": 0.78,
+            "lead_time_days": 20,
+            "targetLat": 29.7355,
+            "targetLng": -94.9774,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "XOM_GUYANA",
+            "target_id": "XOM_ROTT_NL",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 65.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 0.80,
+            "lead_time_days": 22,
+            "targetLat": 51.9225,
+            "targetLng": 4.4792,
+            "target_market": "Netherlands"
+        },
+        {
+            "source_id": "XOM_ROTT_NL",
+            "target_id": "XOM_HQ",
+            "category": "refined_fuels",
+            "relationship_type": "supplies",
+            "baseline_volume": 110.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 14,
+            "targetLat": 29.7604,
+            "targetLng": -95.3698,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "XOM_SG_CHEM",
+            "target_id": "XOM_HQ",
+            "category": "chemicals",
+            "relationship_type": "supplies",
+            "baseline_volume": 80.0,
+            "baseline_share": 0.45,
+            "effective_cost_index": 0.95,
+            "lead_time_days": 18,
+            "targetLat": 29.7604,
+            "targetLng": -95.3698,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "XOM_BAYTOWN",
+            "target_id": "XOM_SG_CHEM",
+            "category": "chemicals",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.22,
+            "effective_cost_index": 0.92,
+            "lead_time_days": 22,
+            "targetLat": 1.2655,
+            "targetLng": 103.8222,
+            "target_market": "Singapore"
+        },
+        {
+            "source_id": "XOM_PNG",
+            "target_id": "XOM_SG_CHEM",
+            "category": "natural_gas",
+            "relationship_type": "supplies",
+            "baseline_volume": 75.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 0.88,
+            "lead_time_days": 12,
+            "targetLat": 1.2655,
+            "targetLng": 103.8222,
+            "target_market": "Singapore"
+        },
+        {
+            "source_id": "XOM_ROTT_NL",
+            "target_id": "XOM_SG_CHEM",
+            "category": "lubricants",
+            "relationship_type": "supplies",
+            "baseline_volume": 35.0,
+            "baseline_share": 0.28,
+            "effective_cost_index": 1.06,
+            "lead_time_days": 24,
+            "targetLat": 1.2655,
+            "targetLng": 103.8222,
+            "target_market": "Singapore"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "ExxonMobil",
+        "build_version": "exxonmobil-v1",
+        "assumption_notes": "ExxonMobil supply chain with upstream production, refineries, and chemical plants",
+        "company_key": "exxonmobil",
+        "parent_company_id": "ExxonMobil",
+        "accent_color": "#e01a2b",
+        "category_labels": {
+            "crude_oil": "Crude Oil",
+            "natural_gas": "Natural Gas",
+            "refined_fuels": "Refined Fuels",
+            "chemicals": "Chemicals",
+            "lubricants": "Lubricants"
+        },
+        "arc_colors": {
+            "crude_oil": "rgba(224,26,43,0.7)",
+            "natural_gas": "rgba(56,189,248,0.7)",
+            "refined_fuels": "rgba(251,191,36,0.7)",
+            "chemicals": "rgba(34,197,94,0.7)",
+            "lubricants": "rgba(168,85,247,0.7)"
+        }
+    }
+}

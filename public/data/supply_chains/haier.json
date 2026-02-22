@@ -1,0 +1,341 @@
+{
+    "nodes": [
+        {
+            "id": "HAIER_HQ",
+            "name": "Haier Qingdao HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Haier",
+            "lat": 36.0671,
+            "lng": 120.3826,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "refrigerators",
+                "washing_machines",
+                "air_conditioners",
+                "smart_home",
+                "compressors"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.3,
+            "risk_event_count": 8,
+            "concentration_share": 0,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "HAIER_QD_FACTORY",
+            "name": "Haier Qingdao Intercool Factory",
+            "entity_type": "facility",
+            "parent_company_id": "Haier",
+            "lat": 36.15,
+            "lng": 120.45,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "refrigerators",
+                "air_conditioners"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 5,
+            "unit_cost_index": 0.80,
+            "tariff_rate_by_category": {
+                "refrigerators": 0.10,
+                "air_conditioners": 0.10
+            },
+            "risk_score": 5.0,
+            "risk_event_count": 35,
+            "concentration_share": 0.40,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refrigerators": 160.0,
+                "air_conditioners": 120.0
+            }
+        },
+        {
+            "id": "HAIER_GE_US",
+            "name": "Haier GE Appliances Louisville (USA)",
+            "entity_type": "facility",
+            "parent_company_id": "Haier",
+            "lat": 38.2527,
+            "lng": -85.7585,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "refrigerators",
+                "washing_machines"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 8,
+            "unit_cost_index": 1.10,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.22,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refrigerators": 90.0,
+                "washing_machines": 75.0
+            }
+        },
+        {
+            "id": "HAIER_IN_PUNE",
+            "name": "Haier India Pune Factory",
+            "entity_type": "facility",
+            "parent_company_id": "Haier",
+            "lat": 18.5204,
+            "lng": 73.8567,
+            "country_iso3": "IND",
+            "country": "India",
+            "categories": [
+                "washing_machines",
+                "air_conditioners"
+            ],
+            "capacity_index": 0.72,
+            "lead_time_days": 20,
+            "unit_cost_index": 0.78,
+            "tariff_rate_by_category": {
+                "washing_machines": 0.08,
+                "air_conditioners": 0.08
+            },
+            "risk_score": 3.0,
+            "risk_event_count": 20,
+            "concentration_share": 0.12,
+            "confidence": 0.78,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "washing_machines": 55.0,
+                "air_conditioners": 45.0
+            }
+        },
+        {
+            "id": "HAIER_TH_COMP",
+            "name": "Haier Thailand Compressor Plant",
+            "entity_type": "facility",
+            "parent_company_id": "Haier",
+            "lat": 13.7563,
+            "lng": 100.5018,
+            "country_iso3": "THA",
+            "country": "Thailand",
+            "categories": [
+                "compressors"
+            ],
+            "capacity_index": 0.78,
+            "lead_time_days": 15,
+            "unit_cost_index": 0.82,
+            "tariff_rate_by_category": {
+                "compressors": 0.03
+            },
+            "risk_score": 1.5,
+            "risk_event_count": 10,
+            "concentration_share": 0.18,
+            "confidence": 0.80,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "compressors": 80.0
+            }
+        },
+        {
+            "id": "HAIER_IT_CANDY",
+            "name": "Haier Candy Italy (Smart Appliances)",
+            "entity_type": "facility",
+            "parent_company_id": "Haier",
+            "lat": 45.5845,
+            "lng": 9.2744,
+            "country_iso3": "ITA",
+            "country": "Italy",
+            "categories": [
+                "smart_home",
+                "washing_machines"
+            ],
+            "capacity_index": 0.70,
+            "lead_time_days": 16,
+            "unit_cost_index": 1.05,
+            "tariff_rate_by_category": {
+                "smart_home": 0.02,
+                "washing_machines": 0.02
+            },
+            "risk_score": 0.8,
+            "risk_event_count": 4,
+            "concentration_share": 0.10,
+            "confidence": 0.82,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "smart_home": 45.0,
+                "washing_machines": 40.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "HAIER_QD_FACTORY",
+            "target_id": "HAIER_HQ",
+            "category": "refrigerators",
+            "relationship_type": "supplies",
+            "baseline_volume": 160.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 0.80,
+            "lead_time_days": 5,
+            "targetLat": 36.0671,
+            "targetLng": 120.3826,
+            "target_market": "China"
+        },
+        {
+            "source_id": "HAIER_QD_FACTORY",
+            "target_id": "HAIER_GE_US",
+            "category": "refrigerators",
+            "relationship_type": "supplies",
+            "baseline_volume": 50.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 28,
+            "targetLat": 38.2527,
+            "targetLng": -85.7585,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "HAIER_GE_US",
+            "target_id": "HAIER_HQ",
+            "category": "washing_machines",
+            "relationship_type": "supplies",
+            "baseline_volume": 75.0,
+            "baseline_share": 0.45,
+            "effective_cost_index": 1.12,
+            "lead_time_days": 8,
+            "targetLat": 36.0671,
+            "targetLng": 120.3826,
+            "target_market": "China"
+        },
+        {
+            "source_id": "HAIER_IN_PUNE",
+            "target_id": "HAIER_HQ",
+            "category": "washing_machines",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 0.80,
+            "lead_time_days": 20,
+            "targetLat": 36.0671,
+            "targetLng": 120.3826,
+            "target_market": "China"
+        },
+        {
+            "source_id": "HAIER_IN_PUNE",
+            "target_id": "HAIER_HQ",
+            "category": "air_conditioners",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 0.82,
+            "lead_time_days": 20,
+            "targetLat": 36.0671,
+            "targetLng": 120.3826,
+            "target_market": "China"
+        },
+        {
+            "source_id": "HAIER_TH_COMP",
+            "target_id": "HAIER_QD_FACTORY",
+            "category": "compressors",
+            "relationship_type": "supplies",
+            "baseline_volume": 80.0,
+            "baseline_share": 0.65,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 15,
+            "targetLat": 36.15,
+            "targetLng": 120.45,
+            "target_market": "China"
+        },
+        {
+            "source_id": "HAIER_IT_CANDY",
+            "target_id": "HAIER_HQ",
+            "category": "smart_home",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 16,
+            "targetLat": 36.0671,
+            "targetLng": 120.3826,
+            "target_market": "China"
+        },
+        {
+            "source_id": "HAIER_IT_CANDY",
+            "target_id": "HAIER_HQ",
+            "category": "washing_machines",
+            "relationship_type": "supplies",
+            "baseline_volume": 40.0,
+            "baseline_share": 0.20,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 16,
+            "targetLat": 36.0671,
+            "targetLng": 120.3826,
+            "target_market": "China"
+        },
+        {
+            "source_id": "HAIER_QD_FACTORY",
+            "target_id": "HAIER_HQ",
+            "category": "air_conditioners",
+            "relationship_type": "supplies",
+            "baseline_volume": 120.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.82,
+            "lead_time_days": 5,
+            "targetLat": 36.0671,
+            "targetLng": 120.3826,
+            "target_market": "China"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Haier",
+        "build_version": "haier-v1",
+        "assumption_notes": "Haier supply chain with Qingdao factories, GE Appliances USA, and global manufacturing",
+        "company_key": "haier",
+        "parent_company_id": "Haier",
+        "accent_color": "#1a78c2",
+        "category_labels": {
+            "refrigerators": "Refrigerators",
+            "washing_machines": "Washing Machines",
+            "air_conditioners": "Air Conditioners",
+            "smart_home": "Smart Home",
+            "compressors": "Compressors"
+        },
+        "arc_colors": {
+            "refrigerators": "rgba(26,120,194,0.7)",
+            "washing_machines": "rgba(56,189,248,0.7)",
+            "air_conditioners": "rgba(34,197,94,0.7)",
+            "smart_home": "rgba(168,85,247,0.7)",
+            "compressors": "rgba(251,191,36,0.7)"
+        }
+    }
+}

@@ -1,4 +1,4 @@
-    // Industry and company data for company mode
+// Industry and company data for company mode
 export const INDUSTRY_COMPANY_MAP = {
   technology: {
     label: 'Technology',
@@ -55,15 +55,5 @@ export const INDUSTRY_COMPANY_MAP = {
       { key: 'chow_tai_fook', label: 'Chow Tai Fook' },
     ],
   },
-  healthcare: {
-    label: 'Healthcare & Pharma',
-    description: '',
-    companies: [
-      { key: 'jnj', label: 'Johnson & Johnson' },
-      { key: 'pfizer', label: 'Pfizer' },
-      { key: 'roche', label: 'Roche' },
-      { key: 'novartis', label: 'Novartis' },
-      { key: 'unitedhealth', label: 'UnitedHealth Group' },
-    ],
-  },
+
 };

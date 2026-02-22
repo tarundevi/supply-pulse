@@ -1,0 +1,337 @@
+{
+    "nodes": [
+        {
+            "id": "TM_HQ",
+            "name": "Toyota Toyota City HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "Toyota",
+            "lat": 35.0840,
+            "lng": 137.1562,
+            "country_iso3": "JPN",
+            "country": "Japan",
+            "categories": [
+                "vehicles",
+                "engines",
+                "ev_batteries",
+                "electronics",
+                "steel"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 2,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "TM_US_KY",
+            "name": "Toyota Georgetown Kentucky (TMMK)",
+            "entity_type": "facility",
+            "parent_company_id": "Toyota",
+            "lat": 38.2098,
+            "lng": -84.5590,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "vehicles"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 8,
+            "unit_cost_index": 1.08,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.25,
+            "confidence": 0.92,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "vehicles": 180.0
+            }
+        },
+        {
+            "id": "TM_CN_TIANJIN",
+            "name": "Toyota Tianjin China Assembly",
+            "entity_type": "facility",
+            "parent_company_id": "Toyota",
+            "lat": 39.3434,
+            "lng": 117.3616,
+            "country_iso3": "CHN",
+            "country": "China",
+            "categories": [
+                "vehicles",
+                "ev_batteries"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 20,
+            "unit_cost_index": 0.82,
+            "tariff_rate_by_category": {
+                "vehicles": 0.25,
+                "ev_batteries": 0.10
+            },
+            "risk_score": 5.5,
+            "risk_event_count": 38,
+            "concentration_share": 0.20,
+            "confidence": 0.82,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "vehicles": 120.0,
+                "ev_batteries": 65.0
+            }
+        },
+        {
+            "id": "TM_TH_BAN",
+            "name": "Toyota Ban Pho Thailand Assembly",
+            "entity_type": "facility",
+            "parent_company_id": "Toyota",
+            "lat": 13.3633,
+            "lng": 100.9925,
+            "country_iso3": "THA",
+            "country": "Thailand",
+            "categories": [
+                "vehicles",
+                "engines"
+            ],
+            "capacity_index": 0.82,
+            "lead_time_days": 18,
+            "unit_cost_index": 0.80,
+            "tariff_rate_by_category": {
+                "vehicles": 0.03,
+                "engines": 0.03
+            },
+            "risk_score": 1.8,
+            "risk_event_count": 12,
+            "concentration_share": 0.18,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "vehicles": 95.0,
+                "engines": 70.0
+            }
+        },
+        {
+            "id": "TM_DENSO_JP",
+            "name": "Toyota Denso Aichi (Electronics)",
+            "entity_type": "facility",
+            "parent_company_id": "Toyota",
+            "lat": 34.8833,
+            "lng": 137.1600,
+            "country_iso3": "JPN",
+            "country": "Japan",
+            "categories": [
+                "electronics"
+            ],
+            "capacity_index": 0.90,
+            "lead_time_days": 6,
+            "unit_cost_index": 1.05,
+            "tariff_rate_by_category": {},
+            "risk_score": 1.0,
+            "risk_event_count": 5,
+            "concentration_share": 0.30,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "electronics": 110.0
+            }
+        },
+        {
+            "id": "TM_BR_SOROCABA",
+            "name": "Toyota Sorocaba Brazil Assembly",
+            "entity_type": "facility",
+            "parent_company_id": "Toyota",
+            "lat": -23.5015,
+            "lng": -47.4526,
+            "country_iso3": "BRA",
+            "country": "Brazil",
+            "categories": [
+                "vehicles",
+                "steel"
+            ],
+            "capacity_index": 0.72,
+            "lead_time_days": 22,
+            "unit_cost_index": 0.85,
+            "tariff_rate_by_category": {
+                "vehicles": 0.06,
+                "steel": 0.04
+            },
+            "risk_score": 3.0,
+            "risk_event_count": 18,
+            "concentration_share": 0.10,
+            "confidence": 0.78,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "vehicles": 60.0,
+                "steel": 45.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "TM_US_KY",
+            "target_id": "TM_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 180.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 1.08,
+            "lead_time_days": 8,
+            "targetLat": 35.084,
+            "targetLng": 137.1562,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "TM_CN_TIANJIN",
+            "target_id": "TM_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 120.0,
+            "baseline_share": 0.35,
+            "effective_cost_index": 0.88,
+            "lead_time_days": 20,
+            "targetLat": 35.084,
+            "targetLng": 137.1562,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "TM_TH_BAN",
+            "target_id": "TM_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 95.0,
+            "baseline_share": 0.28,
+            "effective_cost_index": 0.83,
+            "lead_time_days": 18,
+            "targetLat": 35.084,
+            "targetLng": 137.1562,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "TM_TH_BAN",
+            "target_id": "TM_HQ",
+            "category": "engines",
+            "relationship_type": "supplies",
+            "baseline_volume": 70.0,
+            "baseline_share": 0.45,
+            "effective_cost_index": 0.83,
+            "lead_time_days": 18,
+            "targetLat": 35.084,
+            "targetLng": 137.1562,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "TM_DENSO_JP",
+            "target_id": "TM_US_KY",
+            "category": "electronics",
+            "relationship_type": "supplies",
+            "baseline_volume": 110.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 1.06,
+            "lead_time_days": 14,
+            "targetLat": 38.2098,
+            "targetLng": -84.559,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "TM_DENSO_JP",
+            "target_id": "TM_CN_TIANJIN",
+            "category": "electronics",
+            "relationship_type": "supplies",
+            "baseline_volume": 55.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 1.06,
+            "lead_time_days": 10,
+            "targetLat": 39.3434,
+            "targetLng": 117.3616,
+            "target_market": "China"
+        },
+        {
+            "source_id": "TM_CN_TIANJIN",
+            "target_id": "TM_HQ",
+            "category": "ev_batteries",
+            "relationship_type": "supplies",
+            "baseline_volume": 65.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 20,
+            "targetLat": 35.084,
+            "targetLng": 137.1562,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "TM_BR_SOROCABA",
+            "target_id": "TM_HQ",
+            "category": "vehicles",
+            "relationship_type": "supplies",
+            "baseline_volume": 60.0,
+            "baseline_share": 0.18,
+            "effective_cost_index": 0.88,
+            "lead_time_days": 22,
+            "targetLat": 35.084,
+            "targetLng": 137.1562,
+            "target_market": "Japan"
+        },
+        {
+            "source_id": "TM_BR_SOROCABA",
+            "target_id": "TM_US_KY",
+            "category": "steel",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.30,
+            "effective_cost_index": 0.88,
+            "lead_time_days": 18,
+            "targetLat": 38.2098,
+            "targetLng": -84.559,
+            "target_market": "USA"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "Toyota",
+        "build_version": "toyota-v1",
+        "assumption_notes": "Toyota supply chain with global assembly plants and key suppliers like Denso",
+        "company_key": "toyota",
+        "parent_company_id": "Toyota",
+        "accent_color": "#eb0a1e",
+        "category_labels": {
+            "vehicles": "Vehicles",
+            "engines": "Engines",
+            "ev_batteries": "EV Batteries",
+            "electronics": "Auto Electronics",
+            "steel": "Steel & Materials"
+        },
+        "arc_colors": {
+            "vehicles": "rgba(235,10,30,0.7)",
+            "engines": "rgba(56,189,248,0.7)",
+            "ev_batteries": "rgba(34,197,94,0.7)",
+            "electronics": "rgba(168,85,247,0.7)",
+            "steel": "rgba(251,191,36,0.7)"
+        }
+    }
+}

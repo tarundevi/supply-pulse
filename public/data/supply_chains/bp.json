@@ -1,0 +1,333 @@
+{
+    "nodes": [
+        {
+            "id": "BP_HQ",
+            "name": "BP London HQ",
+            "entity_type": "anchor_company",
+            "parent_company_id": "BP",
+            "lat": 51.5074,
+            "lng": -0.1278,
+            "country_iso3": "GBR",
+            "country": "United Kingdom",
+            "categories": [
+                "crude_oil",
+                "natural_gas",
+                "refined_fuels",
+                "renewables",
+                "petrochemicals"
+            ],
+            "capacity_index": 1.0,
+            "lead_time_days": 0,
+            "unit_cost_index": 1.0,
+            "tariff_rate_by_category": {},
+            "risk_score": 0.2,
+            "risk_event_count": 2,
+            "concentration_share": 0,
+            "confidence": 0.95,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {}
+        },
+        {
+            "id": "BP_GOM",
+            "name": "BP Gulf of Mexico Deepwater",
+            "entity_type": "facility",
+            "parent_company_id": "BP",
+            "lat": 28.0,
+            "lng": -89.0,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "crude_oil",
+                "natural_gas"
+            ],
+            "capacity_index": 0.88,
+            "lead_time_days": 10,
+            "unit_cost_index": 0.85,
+            "tariff_rate_by_category": {},
+            "risk_score": 4.0,
+            "risk_event_count": 25,
+            "concentration_share": 0.30,
+            "confidence": 0.85,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "crude_oil": 150.0,
+                "natural_gas": 90.0
+            }
+        },
+        {
+            "id": "BP_WHITING",
+            "name": "BP Whiting Refinery (Indiana)",
+            "entity_type": "facility",
+            "parent_company_id": "BP",
+            "lat": 41.6792,
+            "lng": -87.5005,
+            "country_iso3": "USA",
+            "country": "USA",
+            "categories": [
+                "refined_fuels"
+            ],
+            "capacity_index": 0.92,
+            "lead_time_days": 6,
+            "unit_cost_index": 0.95,
+            "tariff_rate_by_category": {},
+            "risk_score": 1.2,
+            "risk_event_count": 6,
+            "concentration_share": 0.28,
+            "confidence": 0.90,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refined_fuels": 165.0
+            }
+        },
+        {
+            "id": "BP_AZ_ACG",
+            "name": "BP Azerbaijan ACG Field",
+            "entity_type": "facility",
+            "parent_company_id": "BP",
+            "lat": 40.3558,
+            "lng": 49.9747,
+            "country_iso3": "AZE",
+            "country": "Azerbaijan",
+            "categories": [
+                "crude_oil"
+            ],
+            "capacity_index": 0.80,
+            "lead_time_days": 28,
+            "unit_cost_index": 0.72,
+            "tariff_rate_by_category": {
+                "crude_oil": 0.03
+            },
+            "risk_score": 5.5,
+            "risk_event_count": 35,
+            "concentration_share": 0.20,
+            "confidence": 0.78,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "crude_oil": 100.0
+            }
+        },
+        {
+            "id": "BP_GELSENK",
+            "name": "BP Gelsenkirchen Refinery (Germany)",
+            "entity_type": "facility",
+            "parent_company_id": "BP",
+            "lat": 51.5177,
+            "lng": 7.0857,
+            "country_iso3": "DEU",
+            "country": "Germany",
+            "categories": [
+                "refined_fuels",
+                "petrochemicals"
+            ],
+            "capacity_index": 0.85,
+            "lead_time_days": 8,
+            "unit_cost_index": 1.02,
+            "tariff_rate_by_category": {
+                "refined_fuels": 0.0,
+                "petrochemicals": 0.02
+            },
+            "risk_score": 0.8,
+            "risk_event_count": 4,
+            "concentration_share": 0.18,
+            "confidence": 0.88,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "refined_fuels": 110.0,
+                "petrochemicals": 65.0
+            }
+        },
+        {
+            "id": "BP_AU_WIND",
+            "name": "BP Australia Renewable Wind",
+            "entity_type": "facility",
+            "parent_company_id": "BP",
+            "lat": -37.8136,
+            "lng": 144.9631,
+            "country_iso3": "AUS",
+            "country": "Australia",
+            "categories": [
+                "renewables"
+            ],
+            "capacity_index": 0.65,
+            "lead_time_days": 15,
+            "unit_cost_index": 1.10,
+            "tariff_rate_by_category": {
+                "renewables": 0.0
+            },
+            "risk_score": 0.5,
+            "risk_event_count": 3,
+            "concentration_share": 0.08,
+            "confidence": 0.78,
+            "sources": {
+                "source_type": "manual",
+                "facility": "manual",
+                "risk": "manual"
+            },
+            "baseline_volume_by_category": {
+                "renewables": 50.0
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source_id": "BP_GOM",
+            "target_id": "BP_WHITING",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 150.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 0.85,
+            "lead_time_days": 10,
+            "targetLat": 41.6792,
+            "targetLng": -87.5005,
+            "target_market": "USA"
+        },
+        {
+            "source_id": "BP_WHITING",
+            "target_id": "BP_HQ",
+            "category": "refined_fuels",
+            "relationship_type": "supplies",
+            "baseline_volume": 165.0,
+            "baseline_share": 0.55,
+            "effective_cost_index": 0.95,
+            "lead_time_days": 6,
+            "targetLat": 51.5074,
+            "targetLng": -0.1278,
+            "target_market": "United Kingdom"
+        },
+        {
+            "source_id": "BP_AZ_ACG",
+            "target_id": "BP_GELSENK",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 100.0,
+            "baseline_share": 0.45,
+            "effective_cost_index": 0.76,
+            "lead_time_days": 28,
+            "targetLat": 51.5177,
+            "targetLng": 7.0857,
+            "target_market": "Germany"
+        },
+        {
+            "source_id": "BP_GELSENK",
+            "target_id": "BP_HQ",
+            "category": "refined_fuels",
+            "relationship_type": "supplies",
+            "baseline_volume": 110.0,
+            "baseline_share": 0.38,
+            "effective_cost_index": 1.02,
+            "lead_time_days": 8,
+            "targetLat": 51.5074,
+            "targetLng": -0.1278,
+            "target_market": "United Kingdom"
+        },
+        {
+            "source_id": "BP_GELSENK",
+            "target_id": "BP_HQ",
+            "category": "petrochemicals",
+            "relationship_type": "supplies",
+            "baseline_volume": 65.0,
+            "baseline_share": 0.50,
+            "effective_cost_index": 1.05,
+            "lead_time_days": 8,
+            "targetLat": 51.5074,
+            "targetLng": -0.1278,
+            "target_market": "United Kingdom"
+        },
+        {
+            "source_id": "BP_GOM",
+            "target_id": "BP_HQ",
+            "category": "natural_gas",
+            "relationship_type": "supplies",
+            "baseline_volume": 90.0,
+            "baseline_share": 0.48,
+            "effective_cost_index": 0.88,
+            "lead_time_days": 10,
+            "targetLat": 51.5074,
+            "targetLng": -0.1278,
+            "target_market": "United Kingdom"
+        },
+        {
+            "source_id": "BP_AZ_ACG",
+            "target_id": "BP_HQ",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 60.0,
+            "baseline_share": 0.25,
+            "effective_cost_index": 0.78,
+            "lead_time_days": 28,
+            "targetLat": 51.5074,
+            "targetLng": -0.1278,
+            "target_market": "United Kingdom"
+        },
+        {
+            "source_id": "BP_AU_WIND",
+            "target_id": "BP_HQ",
+            "category": "renewables",
+            "relationship_type": "supplies",
+            "baseline_volume": 50.0,
+            "baseline_share": 0.60,
+            "effective_cost_index": 1.10,
+            "lead_time_days": 15,
+            "targetLat": 51.5074,
+            "targetLng": -0.1278,
+            "target_market": "United Kingdom"
+        },
+        {
+            "source_id": "BP_GOM",
+            "target_id": "BP_GELSENK",
+            "category": "crude_oil",
+            "relationship_type": "supplies",
+            "baseline_volume": 45.0,
+            "baseline_share": 0.20,
+            "effective_cost_index": 0.90,
+            "lead_time_days": 18,
+            "targetLat": 51.5177,
+            "targetLng": 7.0857,
+            "target_market": "Germany"
+        }
+    ],
+    "metadata": {
+        "mode": "company",
+        "anchor_company": "BP",
+        "build_version": "bp-v1",
+        "assumption_notes": "BP supply chain with Gulf of Mexico, Azerbaijan, and European refining",
+        "company_key": "bp",
+        "parent_company_id": "BP",
+        "accent_color": "#009b3a",
+        "category_labels": {
+            "crude_oil": "Crude Oil",
+            "natural_gas": "Natural Gas",
+            "refined_fuels": "Refined Fuels",
+            "renewables": "Renewables",
+            "petrochemicals": "Petrochemicals"
+        },
+        "arc_colors": {
+            "crude_oil": "rgba(0,155,58,0.7)",
+            "natural_gas": "rgba(56,189,248,0.7)",
+            "refined_fuels": "rgba(251,191,36,0.7)",
+            "renewables": "rgba(168,85,247,0.7)",
+            "petrochemicals": "rgba(244,114,182,0.7)"
+        }
+    }
+}
