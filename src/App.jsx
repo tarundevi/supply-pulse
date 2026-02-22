@@ -479,15 +479,6 @@ export default function App() {
           </span>
         </div>
         <div className="flex items-center gap-3">
-          <select
-            value={mode}
-            onChange={(e) => setMode(e.target.value)}
-            className="text-xs font-mono px-2 py-1 rounded border cursor-pointer"
-            style={{ background: COLORS.panelBg, borderColor: COLORS.separator, color: COLORS.textPrimary }}
-          >
-            <option value="company" disabled={!graphs.company}>Company Mode</option>
-            <option value="country" disabled={!graphs.country}>Country Mode</option>
-          </select>
           {mode === 'company' ? (
             <>
               <IndustryFilter

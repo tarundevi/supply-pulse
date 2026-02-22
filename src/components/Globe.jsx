@@ -181,6 +181,7 @@ export default function Globe({
       const isDisrupted = node.id === disruptedNodeId;
       const isChainFacility = hasCompanyChain && node.parent_company_id === chainParentId;
       const isSelectedRec = node.id === selectedRecId;
+      const isMacroAffectedNode = !isOutOfNetwork && macroEvent && macroEvent.countries?.includes(node.country_iso3);
       let baseSize = mode === 'country'
         ? Math.max(0.1, Math.log10(vol + 1) * 0.08)
         : isChainFacility
@@ -193,21 +194,25 @@ export default function Globe({
         color: isSelectedRec
           ? '#4ade80'
           : isDisrupted
-            ? COLORS.arcDisrupted
-            : isOutOfNetwork
-              ? OUT_OF_NETWORK_COLOR
-            : isChainFacility
-              ? accentColor
-              : riskColor(node.risk_event_count || 0),
+            ? '#f97316'
+          : isMacroAffectedNode
+            ? '#f97316'
+          : isOutOfNetwork
+            ? OUT_OF_NETWORK_COLOR
+          : isChainFacility
+            ? accentColor
+            : riskColor(node.risk_event_count || 0),
         ringColor: isSelectedRec
           ? '#4ade80'
           : isDisrupted
-            ? COLORS.arcDisrupted
-            : isOutOfNetwork
-              ? OUT_OF_NETWORK_COLOR
-              : isChainFacility
-                ? accentColor
-                : riskColor(node.risk_event_count || 0),
+            ? '#f97316'
+          : isMacroAffectedNode
+            ? '#f97316'
+          : isOutOfNetwork
+            ? OUT_OF_NETWORK_COLOR
+          : isChainFacility
+            ? accentColor
+            : riskColor(node.risk_event_count || 0),
         isDestination: false,
         isChainFacility,
         isOutOfNetwork,
@@ -230,7 +235,7 @@ export default function Globe({
     return hasCompanyChain
       ? [...supplierPoints]
       : [...supplierPoints, destPoint];
-  }, [graph, activeCategory, disruptedNodeId, destinationMarket, recommendations, hasCompanyChain, chainParentId, accentColor, mode, selectedRecId]);
+  }, [graph, activeCategory, disruptedNodeId, destinationMarket, recommendations, hasCompanyChain, chainParentId, accentColor, mode, selectedRecId, macroEvent]);
 
   const affectedEdgeTargets = useMemo(() => {
     if (!graph) return [];
@@ -282,6 +287,8 @@ export default function Globe({
         const isDisrupted = edge.source_id === disruptedNodeId;
         const isMacroAffected = macroEvent && macroEvent.countries?.includes(src.country_iso3);
         const hideDisrupted = (isDisrupted || (isMacroAffected && !src.is_discovered)) && selectedRecId;
+        const hasDisruption = !!disruptedNodeId || !!macroEvent;
+        const isGreyedOut = hasDisruption && !isDisrupted && !isMacroAffected;
         const isChainArc = hasCompanyChain && (src.parent_company_id === chainParentId || tgt?.parent_company_id === chainParentId);
         let strokeWidth = Math.max(0.45, Math.log10((edge.baseline_volume || 0) + 1) * 0.75);
         if (mode === 'country') {
@@ -298,12 +305,14 @@ export default function Globe({
           color: hideDisrupted
             ? 'rgba(0,0,0,0)'
             : isDisrupted
-              ? 'rgba(239,68,68,0.25)'
-              : isMacroAffected
-                ? 'rgba(239,68,68,0.25)'
-                : (isChainArc || mode === 'company')
-                  ? (arcColorMap[edge.category] || 'rgba(34,197,94,0.6)')
-                  : COLORS.arcDefault,
+              ? 'rgba(249,115,22,0.6)'
+            : isMacroAffected
+              ? 'rgba(249,115,22,0.4)'
+            : isGreyedOut
+              ? 'rgba(100,116,139,0.35)'
+            : (isChainArc || mode === 'company')
+              ? (arcColorMap[edge.category] || 'rgba(34,197,94,0.6)')
+              : COLORS.arcDefault,
           stroke: hideDisrupted ? 0 : strokeWidth,
           label: isChainArc
             ? `<b>${catLabel}</b><br/><span style="opacity:0.8">${srcName} → ${tgtName}</span>`
@@ -467,6 +476,18 @@ export default function Globe({
     return [...nodeLabels, ...arcLabels];
   }, [points, arcs, hasCompanyChain, graph, companyLabel, accentColor]);
 
+  const handleZoomIn = useCallback(() => {
+    if (!globeRef.current) return;
+    const pov = globeRef.current.pointOfView();
+    globeRef.current.pointOfView({ ...pov, altitude: Math.max(0.5, pov.altitude * 0.75) }, 300);
+  }, []);
+
+  const handleZoomOut = useCallback(() => {
+    if (!globeRef.current) return;
+    const pov = globeRef.current.pointOfView();
+    globeRef.current.pointOfView({ ...pov, altitude: Math.min(5.0, pov.altitude * 1.33) }, 300);
+  }, []);
+
   // Create HTML element for each label — styled colored box
   const createLabelElement = useCallback((d) => {
     const clickable = d.nodeId != null && !d.isDestination && !d.isOutOfNetwork;
@@ -505,7 +526,7 @@ export default function Globe({
   if (!graph) return null;
 
   return (
-    <div ref={containerRef} style={{ width: '100%', height: '100%' }}>
+    <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'relative' }}>
       {dimensions.width > 0 && <GlobeGL
         ref={globeRef}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
@@ -566,6 +587,31 @@ export default function Globe({
         width={dimensions.width}
         height={dimensions.height}
       />}
+      <div style={{ position: 'absolute', bottom: 20, left: 20, zIndex: 20, display: 'flex', flexDirection: 'column', gap: 4 }}>
+        {[{ label: '+', fn: handleZoomIn }, { label: '−', fn: handleZoomOut }].map(({ label, fn }) => (
+          <button
+            key={label}
+            onClick={fn}
+            style={{
+              width: 32, height: 32,
+              background: 'rgba(10,10,20,0.82)',
+              border: '1px solid rgba(100,116,139,0.5)',
+              borderRadius: 6,
+              color: '#e2e8f0',
+              fontFamily: "'SF Mono','Fira Code','Consolas',monospace",
+              fontSize: 18,
+              fontWeight: 700,
+              lineHeight: 1,
+              cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              backdropFilter: 'blur(4px)',
+              userSelect: 'none',
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
