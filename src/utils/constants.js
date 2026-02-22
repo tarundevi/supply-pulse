@@ -76,6 +76,12 @@ export const ECONOMIC_CATEGORY_MAP = {
   memory: 'chips',
   hbm: 'chips',
   substrate: 'chips',
+  microcontrollers: 'chips',
+  microcontroller: 'chips',
+  pcbs: 'chips',
+  pcb: 'chips',
+  'populated pcbs': 'chips',
+  populated_pcbs: 'chips',
   tvs: 'displays',
   screens: 'displays',
   cameras: 'sensors',
@@ -178,6 +184,7 @@ export const PARSER_CONFIG_BY_MODE = {
     validCategories: Object.keys(COMMODITY_CATEGORIES_COMPANY),
     categoryAliases: {
       chip: 'chips', chips: 'chips', semiconductor: 'chips', semiconductors: 'chips',
+      microcontroller: 'chips', microcontrollers: 'chips', pcb: 'chips', pcbs: 'chips',
       display: 'displays', displays: 'displays', screen: 'displays', screens: 'displays',
       battery: 'batteries', batteries: 'batteries',
       assembly: 'assembly', assembled: 'assembly',
@@ -249,15 +256,15 @@ export const PRICE_ELASTICITY_OF_DEMAND = {
 
 export const RETAIL_PRICE_BASELINE = {
   electronics: { avgUnitPrice: 420, markupFactor: 2.4 },
-  textiles:    { avgUnitPrice: 35,  markupFactor: 3.0 },
-  chemicals:   { avgUnitPrice: 180, markupFactor: 1.8 },
-  machinery:   { avgUnitPrice: 2500, markupFactor: 1.6 },
-  vehicles:    { avgUnitPrice: 32000, markupFactor: 1.4 },
-  chips:       { avgUnitPrice: 85,  markupFactor: 2.8 },
-  displays:    { avgUnitPrice: 220, markupFactor: 2.2 },
-  batteries:   { avgUnitPrice: 150, markupFactor: 2.0 },
-  assembly:    { avgUnitPrice: 950, markupFactor: 1.5 },
-  sensors:     { avgUnitPrice: 45,  markupFactor: 2.5 },
+  textiles: { avgUnitPrice: 35, markupFactor: 3.0 },
+  chemicals: { avgUnitPrice: 180, markupFactor: 1.8 },
+  machinery: { avgUnitPrice: 2500, markupFactor: 1.6 },
+  vehicles: { avgUnitPrice: 32000, markupFactor: 1.4 },
+  chips: { avgUnitPrice: 85, markupFactor: 2.8 },
+  displays: { avgUnitPrice: 220, markupFactor: 2.2 },
+  batteries: { avgUnitPrice: 150, markupFactor: 2.0 },
+  assembly: { avgUnitPrice: 950, markupFactor: 1.5 },
+  sensors: { avgUnitPrice: 45, markupFactor: 2.5 },
 };
 
 export const GROSS_MARGIN_RATES = {
@@ -298,7 +305,7 @@ export const SELECTION_IMPACT_FACTORS = {
  */
 const VOLUME_KEY_MAP = {
   // Company mode categories
-  chips: ['chips', 'ai_chips', 'semiconductors', 'tpu_chips', 'graviton_chips', 'graphics_cards'],
+  chips: ['chips', 'ai_chips', 'semiconductors', 'tpu_chips', 'graviton_chips', 'graphics_cards', 'microcontrollers', 'microcontroller', 'pcbs', 'pcb', 'populated pcbs', 'populated_pcbs'],
   displays: ['displays', 'tvs', 'screens'],
   batteries: ['batteries', 'ev_batteries'],
   assembly: ['assembly', 'iphones', 'pixel_devices', 'echo_devices', 'macbooks', 'surface_devices', 'xbox', 'smart_home'],

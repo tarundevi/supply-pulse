@@ -1,0 +1,83 @@
+{
+  "nodes": [
+    {
+      "id": "CUSTOM_HQ",
+      "name": "Custom Company HQ",
+      "entity_type": "anchor_company",
+      "parent_company_id": "Custom Company",
+      "lat": 38.9,
+      "lng": -77.0,
+      "country_iso3": "USA",
+      "country": "USA",
+      "categories": ["textiles"],
+      "capacity_index": 1,
+      "lead_time_days": 0,
+      "unit_cost_index": 1,
+      "tariff_rate_by_category": {},
+      "risk_score": 1.0,
+      "risk_event_count": 0,
+      "concentration_share": 0,
+      "confidence": 1.0,
+      "sources": {
+        "source_type": "user_upload"
+      },
+      "baseline_volume_by_category": {},
+      "max_volume_by_category": {}
+    },
+    {
+      "id": "AFRICA_TEXTILE_SUPPLIER",
+      "name": "Custom Africa Textile",
+      "entity_type": "facility",
+      "parent_company_id": "Custom Textile Ltd",
+      "lat": 8.0,
+      "lng": 10.0,
+      "country_iso3": "NGA",
+      "country": "Nigeria",
+      "categories": ["textiles"],
+      "capacity_index": 0.8,
+      "lead_time_days": 20,
+      "unit_cost_index": 0.9,
+      "tariff_rate_by_category": {},
+      "risk_score": 1.2,
+      "risk_event_count": 1,
+      "concentration_share": 1.0,
+      "confidence": 0.9,
+      "sources": {
+        "source_type": "user_upload"
+      },
+      "baseline_volume_by_category": {
+        "textiles": 1000000
+      },
+      "max_volume_by_category": {
+        "textiles": 1200000
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source_id": "AFRICA_TEXTILE_SUPPLIER",
+      "target_id": "CUSTOM_HQ",
+      "category": "textiles",
+      "relationship_type": "supplies",
+      "baseline_volume": 1000000,
+      "baseline_share": 1.0,
+      "effective_cost_index": 0.9,
+      "lead_time_days": 20,
+      "targetLat": 38.9,
+      "targetLng": -77.0,
+      "target_market": "USA"
+    }
+  ],
+  "metadata": {
+    "anchor_company": "Custom Company",
+    "company_key": "custom_company",
+    "category_labels": {
+      "textiles": "Textiles"
+    },
+    "arc_colors": {
+      "textiles": "rgba(59,130,246,0.6)"
+    },
+    "accent_color": "#3b82f6",
+    "mode": "company"
+  }
+}

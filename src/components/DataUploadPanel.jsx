@@ -76,7 +76,7 @@ The format must match the following schema:
 Guidelines:
 1. Extract ALL mentioned facilities, suppliers, and manufacturing locations.
 2. Estimate coordinates (lat/lng) for each location based on the city/country provided.
-3. Infer the categories of components/products being supplied.
+3. Infer the categories of components/products being supplied. CRITICAL: Try to map custom components to standard categories like 'semiconductors', 'chips', 'batteries', 'displays', 'sensors', 'assembly', 'electronics', 'machinery', 'vehicles', 'textiles', 'chemicals' or use simple broadly identifiable singular words like 'solar', 'memory', 'motors'. Avoid hyper-specific multi-word categories if a simpler one applies.
 4. CRITICAL: For EVERY NODE, you MUST provide a realistic estimate in \`baseline_volume_by_category\` for the categories it handles. The sum of these volumes dictates the Consumer Impact Forecast revenue at risk.
 5. If specific volumes/metrics aren't explicitly stated, provide reasonable estimates based on any financial or revenue data mentioned. \`baseline_volume\` on edges MUST be bounded between 10.0 and 500.0.
 6. CRITICAL: \`parent_company_id\` on EVERY SINGLE NODE (including 3rd-party suppliers like Foxconn) MUST exactly match the string used in \`metadata.anchor_company\`. This groups them together.
