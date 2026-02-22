@@ -28,6 +28,32 @@ function rotationSpeedFromAltitude(altitude) {
 
 const NVIDIA_GREEN = '#22c55e';
 
+// Human-readable descriptions for each transported material in the Nvidia supply chain
+const NVIDIA_CATEGORY_LABELS = {
+  semiconductors: 'Semiconductors',
+  ai_chips: 'AI Chips',
+  hbm: 'High-Bandwidth Memory',
+  graphics_cards: 'Graphics Cards',
+  automotive: 'Automotive AI Modules',
+  substrate: 'IC Substrates',
+  materials: 'Raw Materials',
+  memory: 'Memory Modules',
+  packaging: 'Chip Packaging',
+};
+
+// Distinct arc colors per category for visual differentiation
+const NVIDIA_ARC_COLORS = {
+  semiconductors: 'rgba(34,197,94,0.7)',
+  ai_chips: 'rgba(56,189,248,0.7)',
+  hbm: 'rgba(168,85,247,0.7)',
+  graphics_cards: 'rgba(251,191,36,0.7)',
+  automotive: 'rgba(244,114,182,0.7)',
+  substrate: 'rgba(45,212,191,0.7)',
+  materials: 'rgba(251,146,60,0.7)',
+  memory: 'rgba(129,140,248,0.7)',
+  packaging: 'rgba(163,230,53,0.7)',
+};
+
 export default function Globe({
   graph,
   activeCategory,
@@ -132,7 +158,7 @@ export default function Globe({
 
     const isNvidia = selectedCompany === 'nvidia';
     const nodeById = new Map((graph.nodes || []).map((n) => [n.id, n]));
-    
+
     let filteredEdges = graph.edges || [];
     if (isNvidia) {
       filteredEdges = filteredEdges.filter((e) => {
@@ -143,17 +169,21 @@ export default function Globe({
     }
 
     const baseArcs = filteredEdges
-      .filter((e) => e.category === activeCategory)
+      .filter((e) => isNvidia ? true : e.category === activeCategory)
       .map((edge) => {
         const src = nodeById.get(edge.source_id);
         if (!src) return null;
+        const tgt = nodeById.get(edge.target_id);
         const isDisrupted = edge.source_id === disruptedNodeId;
-        const isNvidiaArc = isNvidia && (src.parent_company_id === 'NVIDIA' || nodeById.get(edge.target_id)?.parent_company_id === 'NVIDIA');
+        const isNvidiaArc = isNvidia && (src.parent_company_id === 'NVIDIA' || tgt?.parent_company_id === 'NVIDIA');
         // Make country mode arcs thinner, matching company mode style
         let strokeWidth = Math.max(0.45, Math.log10((edge.baseline_volume || 0) + 1) * 0.75);
         if (mode === 'country') {
           strokeWidth = Math.max(0.12, Math.log10((edge.baseline_volume || 0) + 1) * 0.18);
         }
+        const categoryLabel = NVIDIA_CATEGORY_LABELS[edge.category] || edge.category;
+        const srcName = src.name?.replace('NVIDIA ', '') || edge.source_id;
+        const tgtName = tgt?.name?.replace('NVIDIA ', '') || edge.target_market || edge.target_id;
         return {
           startLat: src.lat,
           startLng: src.lng,
@@ -162,11 +192,11 @@ export default function Globe({
           color: isDisrupted
             ? 'rgba(239,68,68,0.25)'
             : isNvidiaArc
-              ? 'rgba(34,197,94,0.6)'
+              ? (NVIDIA_ARC_COLORS[edge.category] || 'rgba(34,197,94,0.6)')
               : COLORS.arcDefault,
           stroke: strokeWidth,
           label: isNvidiaArc
-            ? `${edge.category}: ${src.name} -> ${edge.target_market || edge.target_id}`
+            ? `<b>${categoryLabel}</b><br/><span style="opacity:0.8">${srcName} → ${tgtName}</span>`
             : `${src.name} -> ${edge.target_market || edge.target_id}`,
           isNvidiaArc: isNvidiaArc,
         };

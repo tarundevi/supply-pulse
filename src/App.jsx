@@ -233,6 +233,7 @@ export default function App() {
             destinationMarket={destinationMarket}
             mode={mode}
             autoRotate={autoRotate}
+            selectedCompany={selectedCompany}
           />
         </div>
         <TerminalSidebar
