@@ -11,7 +11,7 @@ function thresholdColor(pct, greenMax, amberMax) {
 const hl = { color: COLORS.electricBlue };
 const val = { color: COLORS.textPrimary };
 const mut = { color: COLORS.textMuted };
-const sym = { color: '#a78bfa' }; // purple for symbolic variable names
+const sym = { color: '#a78bfa' };
 
 function FormulaBlock({ name, symbolic, substituted, result, resultColor }) {
   return (
@@ -25,7 +25,9 @@ function FormulaBlock({ name, symbolic, substituted, result, resultColor }) {
       <div style={{ ...hl, fontSize: '8px', letterSpacing: '0.08em' }}>{name}</div>
       <div style={mut}>{symbolic}</div>
       <div style={mut}>= {substituted}</div>
-      <div>= <span className="font-bold" style={{ color: resultColor || COLORS.textPrimary }}>{result}</span></div>
+      <div>
+        = <span className="font-bold" style={{ color: resultColor || COLORS.textPrimary }}>{result}</span>
+      </div>
     </div>
   );
 }
@@ -86,6 +88,9 @@ export default function ConsumerImpact({ impact }) {
   } = impact;
 
   const i = inputs || {};
+  const constantsLabel = (i.normalizedCategory || i.category || '').toUpperCase();
+  const isSelectionComposite = i.selectionMode === 'selected'
+    && (i.scenarioType === 'outage' || i.scenarioType === 'combined');
 
   const toggleBtn = (
     <button
@@ -112,18 +117,56 @@ export default function ConsumerImpact({ impact }) {
       }}
     >
       <div style={{ ...hl, fontSize: '8px', letterSpacing: '0.1em', marginBottom: '3px' }}>
-        CONSTANTS — {i.category?.toUpperCase()}
+        CONSTANTS - {constantsLabel}
       </div>
       <div className="grid grid-cols-3 gap-x-3 gap-y-0.5">
         <div><span style={sym}>passThrough</span> <span style={val}>{i.passThrough}</span></div>
         <div><span style={sym}>elasticity</span> <span style={val}>{i.elasticity}</span></div>
-        <div><span style={sym}>markup</span> <span style={val}>{i.markupFactor}×</span></div>
-        <div><span style={sym}>basePrice</span> <span style={val}>${i.avgUnitPrice}</span></div>
+        <div><span style={sym}>markup</span> <span style={val}>{i.markupFactor}x</span></div>
+        <div><span style={sym}>basePrice</span> <span style={val}>{formatCurrency(i.avgUnitPrice || 0)}</span></div>
         <div><span style={sym}>margin</span> <span style={val}>{p(i.grossMargin)}</span></div>
-        <div><span style={sym}>volume</span> <span style={val}>{formatVolume(i.affectedVolume)}</span></div>
+        <div><span style={sym}>volume</span> <span style={val}>{formatVolume(i.affectedVolume || 0)}</span></div>
       </div>
-      <div className="border-t mt-1.5 pt-1" style={{ borderColor: COLORS.separator }}>
-        <div><span style={sym}>costDelta</span> <span style={val}>{p(i.effectiveCostDelta)}</span> &nbsp; <span style={sym}>rerouteDelta</span> <span style={val}>{p(i.bestCostDelta)}</span></div>
+      <div className="border-t mt-1.5 pt-1 space-y-0.5" style={{ borderColor: COLORS.separator }}>
+        <div>
+          <span style={sym}>scenario</span> <span style={val}>{i.scenarioType || 'outage'}</span>
+          {' '}
+          <span style={sym}>selection</span> <span style={val}>{i.selectionMode || 'baseline'}</span>
+        </div>
+        <div>
+          <span style={sym}>affectedRevenue</span> <span style={val}>{formatCurrency(i.affectedRevenue || 0)}</span>
+        </div>
+        <div>
+          <span style={sym}>baseShockCostDelta</span> <span style={val}>{p(i.baseShockCostDelta)}</span>
+          {' '}
+          <span style={sym}>chosenMitigationDelta</span> <span style={val}>{p(i.chosenMitigationDelta)}</span>
+        </div>
+        <div>
+          <span style={sym}>mitigatedCostDelta</span> <span style={val}>{p(i.mitigatedCostDelta)}</span>
+          {' '}
+          <span style={sym}>effectiveCostDelta</span> <span style={val}>{p(i.effectiveCostDelta)}</span>
+        </div>
+        {isSelectionComposite && (
+          <>
+            <div>
+              <span style={sym}>selectedCoveragePct</span> <span style={val}>{p(i.selectedCoveragePct)}</span>
+            </div>
+            <div>
+              <span style={sym}>residualShockComponent</span> <span style={val}>{p(i.residualShockComponent)}</span>
+              {' '}
+              <span style={sym}>selectedCostComponent</span> <span style={val}>{p(i.selectedCostComponent)}</span>
+            </div>
+            <div>
+              <span style={sym}>selectedOperationalPenalty</span> <span style={val}>{p(i.selectedOperationalPenalty)}</span>
+              {' '}
+              <span style={sym}>coverageGapPenalty</span> <span style={val}>{p(i.coverageGapPenalty)}</span>
+              {' '}
+              <span style={sym}>leadTimePenalty</span> <span style={val}>{p(i.leadTimePenalty)}</span>
+              {' '}
+              <span style={sym}>riskPenalty</span> <span style={val}>{p(i.riskPenalty)}</span>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
@@ -131,7 +174,11 @@ export default function ConsumerImpact({ impact }) {
   if (hasNegativeImpact) {
     const priceColor = thresholdColor(retailPriceIncreasePct, 0.03, 0.08);
     const demandColor = Math.abs(demandDropPct) > 0.05 ? COLORS.riskHigh : COLORS.riskMedium;
-    const marginColor = marginPreservedPct >= 0.8 ? COLORS.riskLow : marginPreservedPct >= 0.4 ? COLORS.riskMedium : COLORS.riskHigh;
+    const marginColor = marginPreservedPct >= 0.8
+      ? COLORS.riskLow
+      : marginPreservedPct >= 0.4
+        ? COLORS.riskMedium
+        : COLORS.riskHigh;
 
     return (
       <div className="space-y-1.5">
@@ -144,18 +191,37 @@ export default function ConsumerImpact({ impact }) {
 
         {inputsPanel}
 
+        {showFormulas && isSelectionComposite && (
+          <FormulaBlock
+            name="effectiveCostDelta"
+            symbolic={<><span style={sym}>residualShockComponent</span> + <span style={sym}>selectedCostComponent</span> + <span style={sym}>selectedOperationalPenalty</span></>}
+            substituted={<>{p(i.residualShockComponent)} + {p(i.selectedCostComponent)} + {p(i.selectedOperationalPenalty)}</>}
+            result={p(i.effectiveCostDelta)}
+            resultColor={priceColor}
+          />
+        )}
+        {showFormulas && isSelectionComposite && (
+          <FormulaBlock
+            name="selectedOperationalPenalty"
+            symbolic={<><span style={sym}>coverageGapPenalty</span> + <span style={sym}>leadTimePenalty</span> + <span style={sym}>riskPenalty</span></>}
+            substituted={<>{p(i.coverageGapPenalty)} + {p(i.leadTimePenalty)} + {p(i.riskPenalty)}</>}
+            result={p(i.selectedOperationalPenalty)}
+            resultColor={COLORS.riskMedium}
+          />
+        )}
+
         <MetricCard
           icon="&#9650;"
           label="Retail Price"
-          value={`+$${retailPriceIncrease.toFixed(2)}  (+${(retailPriceIncreasePct * 100).toFixed(1)}%)`}
+          value={`+${formatCurrency(retailPriceIncrease)}  (+${(retailPriceIncreasePct * 100).toFixed(1)}%)`}
           color={priceColor}
           barPct={Math.min(retailPriceIncreasePct * 100 * 5, 100)}
         />
         {showFormulas && (
           <FormulaBlock
             name="retailPriceIncreasePct"
-            symbolic={<>(<span style={sym}>costDelta</span> / <span style={sym}>markup</span>) × <span style={sym}>passThrough</span></>}
-            substituted={<>({p(i.effectiveCostDelta)} / {i.markupFactor}) × {i.passThrough}</>}
+            symbolic={<><span style={sym}>effectiveCostDelta</span> / <span style={sym}>markup</span> * <span style={sym}>passThrough</span></>}
+            substituted={<>{p(i.effectiveCostDelta)} / {i.markupFactor} * {i.passThrough}</>}
             result={p(retailPriceIncreasePct)}
             resultColor={priceColor}
           />
@@ -171,8 +237,8 @@ export default function ConsumerImpact({ impact }) {
         {showFormulas && (
           <FormulaBlock
             name="demandDropPct"
-            symbolic={<><span style={sym}>elasticity</span> × <span style={sym}>retailPriceIncreasePct</span></>}
-            substituted={<>{i.elasticity} × {p(retailPriceIncreasePct)}</>}
+            symbolic={<><span style={sym}>elasticity</span> * <span style={sym}>retailPriceIncreasePct</span></>}
+            substituted={<>{i.elasticity} * {p(retailPriceIncreasePct)}</>}
             result={p(demandDropPct)}
             resultColor={demandColor}
           />
@@ -188,8 +254,8 @@ export default function ConsumerImpact({ impact }) {
         {showFormulas && (
           <FormulaBlock
             name="revenueAtRisk"
-            symbolic={<><span style={sym}>volume</span> × |<span style={sym}>demandDropPct</span>| × <span style={sym}>grossMargin</span></>}
-            substituted={<>{formatVolume(i.affectedVolume)} × {p(Math.abs(demandDropPct))} × {p(i.grossMargin)}</>}
+            symbolic={<><span style={sym}>affectedRevenue</span> * |<span style={sym}>demandDropPct</span>| * <span style={sym}>grossMargin</span></>}
+            substituted={<>{formatCurrency(i.affectedRevenue || 0)} * {p(Math.abs(demandDropPct))} * {p(i.grossMargin)}</>}
             result={formatCurrency(revenueAtRisk)}
             resultColor={COLORS.riskHigh}
           />
@@ -205,8 +271,8 @@ export default function ConsumerImpact({ impact }) {
         {showFormulas && (
           <FormulaBlock
             name="marginPreservedPct"
-            symbolic={<>(<span style={sym}>costDelta</span> − <span style={sym}>rerouteDelta</span>) / <span style={sym}>costDelta</span></>}
-            substituted={<>({p(i.effectiveCostDelta)} − {p(i.bestCostDelta)}) / {p(i.effectiveCostDelta)}</>}
+            symbolic={<>(<span style={sym}>baseShockCostDelta</span> - <span style={sym}>mitigatedCostDelta</span>) / <span style={sym}>baseShockCostDelta</span></>}
+            substituted={`(${p(i.baseShockCostDelta)} - ${p(i.mitigatedCostDelta)}) / ${p(i.baseShockCostDelta)}`}
             result={p(marginPreservedPct)}
             resultColor={marginColor}
           />
@@ -234,17 +300,26 @@ export default function ConsumerImpact({ impact }) {
           }}
         >
           <div style={{ ...hl, fontSize: '8px', letterSpacing: '0.1em', marginBottom: '2px' }}>
-            CONSTANTS — {i.category?.toUpperCase()}
+            CONSTANTS - {constantsLabel}
           </div>
-          <div><span style={sym}>costDelta</span> = <span style={val}>{p(i.effectiveCostDelta)}</span> &nbsp; <span style={sym}>passThrough</span> = <span style={val}>{i.passThrough}</span></div>
-          <div style={{ marginTop: '4px' }}>No negative impact — rerouting absorbs cost.</div>
+          <div>
+            <span style={sym}>baseShockCostDelta</span> = <span style={val}>{p(i.baseShockCostDelta)}</span>
+            {' '}
+            <span style={sym}>mitigatedCostDelta</span> = <span style={val}>{p(i.mitigatedCostDelta)}</span>
+          </div>
+          {isSelectionComposite && (
+            <div>
+              <span style={sym}>effectiveCostDelta</span> = <span style={val}>{p(i.residualShockComponent)} + {p(i.selectedCostComponent)} + {p(i.selectedOperationalPenalty)}</span>
+            </div>
+          )}
+          <div style={{ marginTop: '4px' }}>No negative impact - mitigation fully offsets modeled cost shock.</div>
         </div>
       )}
 
       <MetricCard icon="&#10003;" label="Retail Price" value="No increase" color={COLORS.riskLow} barPct={0} />
       <MetricCard icon="&#10003;" label="Demand Drop" value="None" color={COLORS.riskLow} barPct={0} />
       <MetricCard
-        icon={costSavingsPct > 0 ? '&#9660;' : '—'}
+        icon={costSavingsPct > 0 ? '&#9660;' : '-'}
         label="Reroute Cost Savings"
         value={costSavingsPct > 0 ? `-${(costSavingsPct * 100).toFixed(1)}%` : 'Neutral'}
         color={costSavingsPct > 0 ? COLORS.riskLow : COLORS.textMuted}

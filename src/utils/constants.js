@@ -41,6 +41,106 @@ export const SCENARIO_MODES = {
   combined: 'combined',
 };
 
+/**
+ * Map product-specific categories to canonical economic categories used by
+ * consumer impact constants.
+ */
+export const ECONOMIC_CATEGORY_MAP = {
+  // Canonical categories
+  electronics: 'electronics',
+  textiles: 'textiles',
+  chemicals: 'chemicals',
+  machinery: 'machinery',
+  vehicles: 'vehicles',
+  chips: 'chips',
+  displays: 'displays',
+  batteries: 'batteries',
+  assembly: 'assembly',
+  sensors: 'sensors',
+
+  // Company mode product categories
+  iphones: 'assembly',
+  macbooks: 'assembly',
+  pixel_devices: 'assembly',
+  echo_devices: 'assembly',
+  surface_devices: 'assembly',
+  xbox: 'assembly',
+  playstation: 'assembly',
+  smart_home: 'assembly',
+  ev_batteries: 'batteries',
+  semiconductors: 'chips',
+  ai_chips: 'chips',
+  tpu_chips: 'chips',
+  graviton_chips: 'chips',
+  graphics_cards: 'chips',
+  memory: 'chips',
+  hbm: 'chips',
+  substrate: 'chips',
+  tvs: 'displays',
+  screens: 'displays',
+  cameras: 'sensors',
+  image_sensors: 'sensors',
+  audio: 'sensors',
+  networking: 'sensors',
+  robotics: 'sensors',
+  cloud_servers: 'electronics',
+  aws_servers: 'electronics',
+  data_storage: 'electronics',
+  home_appliances: 'electronics',
+  washing_machines: 'electronics',
+  refrigerators: 'electronics',
+  dryers: 'electronics',
+  dishwashers: 'electronics',
+  ovens: 'electronics',
+  air_conditioners: 'electronics',
+  automotive: 'vehicles',
+  ev_platforms: 'vehicles',
+  trucks: 'vehicles',
+  engines: 'machinery',
+  motors: 'machinery',
+  transmissions: 'machinery',
+  logistics: 'machinery',
+  renewables: 'machinery',
+  solar: 'machinery',
+  steel: 'machinery',
+  materials: 'machinery',
+  compressors: 'machinery',
+  hvac: 'machinery',
+  autopilot: 'sensors',
+
+  // Energy / materials
+  crude_oil: 'chemicals',
+  natural_gas: 'chemicals',
+  lng: 'chemicals',
+  refined_fuels: 'chemicals',
+  refined_products: 'chemicals',
+  petrochemicals: 'chemicals',
+  base_oils: 'chemicals',
+  lubricants: 'chemicals',
+  packaging: 'chemicals',
+
+  // Luxury / consumer goods
+  fashion: 'textiles',
+  leather_goods: 'textiles',
+  footwear: 'textiles',
+  eyewear: 'textiles',
+  jewelry: 'textiles',
+  gold_jewelry: 'textiles',
+  diamonds: 'textiles',
+  gemstones: 'textiles',
+  jade: 'textiles',
+  watches: 'textiles',
+  writing_instruments: 'textiles',
+  perfumes: 'textiles',
+  fragrances: 'textiles',
+  wines_spirits: 'textiles',
+};
+
+export function normalizeEconomicCategory(category) {
+  if (!category) return category;
+  return ECONOMIC_CATEGORY_MAP[category] || category;
+}
+
 export const SANCTION_PRICE_SHOCK_FACTOR = 0.25;
 
 export const INTEREST_RATE_COST_SENSITIVITY = {
@@ -163,6 +263,32 @@ export const RETAIL_PRICE_BASELINE = {
 export const GROSS_MARGIN_RATES = {
   electronics: 0.38, textiles: 0.52, chemicals: 0.30, machinery: 0.28, vehicles: 0.22,
   chips: 0.55, displays: 0.35, batteries: 0.32, assembly: 0.18, sensors: 0.45,
+};
+
+/**
+ * Selection-impact decomposition for outage/combined scenarios.
+ * These factors convert selected supplier execution frictions into an
+ * effective downstream cost delta used by consumer impact metrics.
+ */
+export const SELECTION_IMPACT_FACTORS = {
+  default: {
+    unavoidableShockShare: 0.20,
+    coverageGapMax: 0.08,
+    leadPerDay: 0.0015,
+    riskPerPoint: 0.0020,
+  },
+  assembly: {
+    coverageGapMax: 0.10,
+    leadPerDay: 0.0020,
+  },
+  chips: {
+    coverageGapMax: 0.09,
+    riskPerPoint: 0.0025,
+  },
+  vehicles: {
+    coverageGapMax: 0.09,
+    leadPerDay: 0.0018,
+  },
 };
 
 /**
