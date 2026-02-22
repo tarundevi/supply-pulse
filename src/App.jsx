@@ -302,7 +302,7 @@ export default function App() {
         <div className="flex-1 min-w-0 bg-black relative">
           {/* Floating Pause Button */}
           <div
-            style={{ position: 'absolute', top: 20, left: 20, zIndex: 20 }}
+            style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 20 }}
             className="pointer-events-auto"
           >
             <button
