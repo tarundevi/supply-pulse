@@ -1,4 +1,4 @@
-import { RISK_THRESHOLDS, getNodeVolume } from '../utils/constants';
+import { RISK_THRESHOLDS, getNodeVolume, getNodeTotalVolume } from '../utils/constants';
 
 function norm(value, min, max) {
   if (max <= min) return 0;
@@ -94,7 +94,7 @@ export function rerouteSupplierOutage(disruptedNodeId, category, graph, weights)
   const disruptedNode = graph.nodes.find((n) => n.id === disruptedNodeId);
   if (!disruptedNode) return [];
 
-  const disruptedVolume = categoryVolume(disruptedNode, category);
+  const disruptedVolume = getNodeTotalVolume(disruptedNode);
   if (disruptedVolume <= 0) return [];
 
   const candidates = candidateNodes(graph, category, [disruptedNodeId]);

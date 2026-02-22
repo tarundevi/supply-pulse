@@ -8,6 +8,7 @@ import {
   EXPORT_CONTROL_COST_PREMIUM,
   CURRENCY_PASS_THROUGH_RATES,
   getNodeVolume,
+  getNodeTotalVolume,
 } from '../utils/constants';
 
 /**
@@ -140,7 +141,21 @@ export function computeConsumerImpact(disruptedNode, category, simulatedGraph, o
     }
   } else if (disruptedNode) {
     eventDescription = `Supplier Disruption`;
-    affectedVolume = getNodeVolume(disruptedNode, categoryForConstants);
+    affectedVolume = getNodeTotalVolume(disruptedNode);
+
+    // Supplier outage: cost delta = weighted-avg reroute cost across all allocated alternatives
+    if (recommendations?.length > 0) {
+      const totalAlloc = recommendations.reduce((s, r) => s + (r.allocatedVolume || 0), 0);
+      if (totalAlloc > 0) {
+        eventEffectiveCostDelta = recommendations.reduce(
+          (s, r) => s + (r.costDeltaPct ?? 0) * (r.allocatedVolume || 0), 0
+        ) / totalAlloc;
+      } else {
+        eventEffectiveCostDelta = recommendations[0].costDeltaPct ?? 0;
+      }
+      // Outage always has a cost impact — even "cheaper" reroutes carry disruption risk premium
+      eventEffectiveCostDelta = Math.max(eventEffectiveCostDelta, 0.02);
+    }
   }
 
   const bestCostDelta = recommendations?.length > 0 ? (recommendations[0].costDeltaPct ?? 0) : 0;
