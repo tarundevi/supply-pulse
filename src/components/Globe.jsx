@@ -84,6 +84,7 @@ function rotationSpeedFromAltitude(altitude) {
 }
 
 const DEFAULT_ACCENT = '#22c55e';
+const OUT_OF_NETWORK_COLOR = '#fb923c';
 
 export default function Globe({
   graph,
@@ -145,17 +146,33 @@ export default function Globe({
 
   const points = useMemo(() => {
     if (!graph) return [];
+    const discoveredRecommendedIds = new Set(
+      (recommendations || [])
+        .filter((rec) => rec.isDiscovered)
+        .map((rec) => rec.id)
+    );
 
     const chainNodes = hasCompanyChain
-      ? graph.nodes.filter((n) => n.parent_company_id === chainParentId && n.entity_type !== 'anchor_company')
+      ? graph.nodes.filter(
+          (n) =>
+            n.entity_type !== 'anchor_company' &&
+            (n.parent_company_id === chainParentId || discoveredRecommendedIds.has(n.id))
+        )
       : [];
 
     const nodesToRender = hasCompanyChain
       ? chainNodes
-      : graph.nodes.filter((n) => n.entity_type !== 'anchor_company');
+      : graph.nodes.filter(
+          (n) =>
+            n.entity_type !== 'anchor_company' &&
+            (!n.is_discovered || discoveredRecommendedIds.has(n.id))
+        );
 
     const supplierPoints = nodesToRender.map((node) => {
-      const vol = node.baseline_volume_by_category?.[activeCategory] || 0;
+      const isOutOfNetwork = node.is_discovered || node.network_status === 'out_of_network';
+      const vol = isOutOfNetwork
+        ? (node.max_volume_by_category?.[activeCategory] || 0)
+        : (node.baseline_volume_by_category?.[activeCategory] || 0);
       const isDisrupted = node.id === disruptedNodeId;
       const isChainFacility = hasCompanyChain && node.parent_company_id === chainParentId;
       return {
@@ -167,12 +184,21 @@ export default function Globe({
             : Math.max(0.28, Math.log10(vol + 1) * 0.23),
         color: isDisrupted
           ? COLORS.arcDisrupted
+          : isOutOfNetwork
+            ? OUT_OF_NETWORK_COLOR
           : isChainFacility
             ? accentColor
             : riskColor(node.risk_event_count || 0),
-        ringColor: isDisrupted ? COLORS.arcDisrupted : isChainFacility ? accentColor : riskColor(node.risk_event_count || 0),
+        ringColor: isDisrupted
+          ? COLORS.arcDisrupted
+          : isOutOfNetwork
+            ? OUT_OF_NETWORK_COLOR
+            : isChainFacility
+              ? accentColor
+              : riskColor(node.risk_event_count || 0),
         isDestination: false,
         isChainFacility,
+        isOutOfNetwork,
       };
     });
 
@@ -192,7 +218,7 @@ export default function Globe({
     return hasCompanyChain
       ? [...supplierPoints]
       : [...supplierPoints, destPoint];
-  }, [graph, activeCategory, disruptedNodeId, destinationMarket, hasCompanyChain, chainParentId, accentColor, mode]);
+  }, [graph, activeCategory, disruptedNodeId, destinationMarket, recommendations, hasCompanyChain, chainParentId, accentColor, mode]);
 
   const arcs = useMemo(() => {
     if (!graph) return [];
@@ -362,11 +388,15 @@ export default function Globe({
         pointLabel={(d) =>
           d.isDestination
             ? `${d.name}`
+            : d.isOutOfNetwork
+              ? `<b>${d.name}</b><br/>${d.country_iso3}<br/>Candidate supplier (out of network)<br/>Confidence: ${Math.round((d.confidence || 0) * 100)}%`
             : d.isChainFacility
               ? `<b>${d.name}</b><br/>${d.country_iso3}<br/>${companyLabel} Facility`
               : `${d.name} (${d.country_iso3})<br/>${d.parent_company_id || 'Supplier'}`
         }
-        onPointClick={(point) => (point.isDestination ? null : onNodeClick(point.id))}
+        onPointClick={(point) => (
+          point.isDestination || point.isOutOfNetwork ? null : onNodeClick(point.id)
+        )}
         onGlobeClick={() => onNodeClick(null)}
         arcsData={arcs}
         arcStartLat="startLat"
@@ -385,7 +415,7 @@ export default function Globe({
         htmlAltitude="altitude"
         htmlElement={createLabelElement}
         htmlTransitionDuration={300}
-        ringsData={disruptedNodeId ? points.filter((p) => p.id === disruptedNodeId) : []}
+        ringsData={disruptedNodeId ? points.filter((p) => p.id === disruptedNodeId && !p.isOutOfNetwork) : []}
         ringLat="lat"
         ringLng="lng"
         ringColor="ringColor"

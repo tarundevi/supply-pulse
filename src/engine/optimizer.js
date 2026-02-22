@@ -1,5 +1,9 @@
 import { RISK_THRESHOLDS } from '../utils/constants';
 
+const DISCOVERY_CONFIDENCE_THRESHOLD = 0.7;
+const MAX_SCORED_CANDIDATES = 7;
+const MAX_RECOMMENDATIONS = 5;
+
 function norm(value, min, max) {
   if (max <= min) return 0;
   return (value - min) / (max - min);
@@ -20,18 +24,48 @@ function categoryVolume(node, category) {
   return node.baseline_volume_by_category?.[category] || 0;
 }
 
+function discoveredCategoryVolume(node, category) {
+  return node.max_volume_by_category?.[category] || 0;
+}
+
 function hasCategory(node, category) {
   if (!category) return true;
   return (node.categories || []).includes(category) || node.supplier_category === category;
 }
 
-function candidateNodes(graph, category, excludeIds = []) {
-  return (graph.nodes || []).filter(
-    (n) =>
-      !excludeIds.includes(n.id) &&
-      n.entity_type !== 'anchor_company' &&
-      hasCategory(n, category)
-  );
+function isDiscoveredNode(node) {
+  return node?.is_discovered === true || node?.network_status === 'out_of_network';
+}
+
+function candidateBaseVolume(node, category) {
+  if (isDiscoveredNode(node)) return discoveredCategoryVolume(node, category);
+  return categoryVolume(node, category);
+}
+
+function candidatePools(graph, category, excludeIds = [], blockedCountries = []) {
+  const blocked = new Set(blockedCountries || []);
+  const known = [];
+  const discovered = [];
+
+  for (const node of graph.nodes || []) {
+    if (excludeIds.includes(node.id)) continue;
+    if (node.entity_type === 'anchor_company') continue;
+    if (!hasCategory(node, category)) continue;
+
+    const baseVolume = candidateBaseVolume(node, category);
+    if (baseVolume <= 0) continue;
+
+    if (isDiscoveredNode(node)) {
+      if ((node.confidence || 0) < DISCOVERY_CONFIDENCE_THRESHOLD) continue;
+      if (blocked.has(node.country_iso3)) continue;
+      discovered.push(node);
+      continue;
+    }
+
+    known.push(node);
+  }
+
+  return { known, discovered };
 }
 
 function buildScoredCandidates(candidates, category, weights, baselineCost, baselineLead, baselineRisk) {
@@ -63,6 +97,7 @@ function buildScoredCandidates(candidates, category, weights, baselineCost, base
     const costDeltaPct = baselineCost > 0 ? effectiveCost(node, category) / baselineCost - 1 : 0;
     const leadTimeDeltaDays = (node.lead_time_days || 0) - (baselineLead || 0);
     const riskDelta = (node.risk_score || 0) - (baselineRisk || 0);
+    const discovered = isDiscoveredNode(node);
 
     return {
       ...node,
@@ -71,45 +106,102 @@ function buildScoredCandidates(candidates, category, weights, baselineCost, base
       costDeltaPct,
       leadTimeDeltaDays,
       riskDelta,
-      potentialCoverageVolume: categoryVolume(node, category) * (node.capacity_index || 0),
+      potentialCoverageVolume: candidateBaseVolume(node, category) * (node.capacity_index || 0),
+      isDiscovered: discovered,
+      networkStatus: node.network_status || (discovered ? 'out_of_network' : 'in_network'),
+      qualificationReason: discovered ? 'gap_fill_external' : 'in_network',
     };
   });
 }
 
-function allocateCoverage(scored, requiredVolume) {
-  let remaining = requiredVolume;
+function allocateCoverage(scored, allocationVolume, totalRequiredVolume = allocationVolume) {
+  let remaining = allocationVolume;
   return scored.map((rec) => {
     const alloc = Math.min(Math.max(remaining, 0), rec.potentialCoverageVolume);
     remaining -= alloc;
     return {
       ...rec,
       allocatedVolume: alloc,
-      coveragePct: requiredVolume > 0 ? alloc / requiredVolume : 0,
-      potentialCoveragePct: requiredVolume > 0 ? rec.potentialCoverageVolume / requiredVolume : 0,
+      coveragePct: totalRequiredVolume > 0 ? alloc / totalRequiredVolume : 0,
+      potentialCoveragePct: totalRequiredVolume > 0 ? rec.potentialCoverageVolume / totalRequiredVolume : 0,
     };
   });
 }
 
-export function rerouteSupplierOutage(disruptedNodeId, category, graph, weights) {
+function buildScenarioRecommendations({
+  graph,
+  category,
+  excludeIds,
+  blockedCountries,
+  requiredVolume,
+  weights,
+  baselineCost,
+  baselineLead,
+  baselineRisk,
+  transform,
+}) {
+  if (requiredVolume <= 0) return [];
+  const applyTransform = typeof transform === 'function' ? transform : (record) => record;
+
+  const { known, discovered } = candidatePools(graph, category, excludeIds, blockedCountries);
+
+  const knownScored = buildScoredCandidates(
+    known,
+    category,
+    weights,
+    baselineCost,
+    baselineLead,
+    baselineRisk
+  )
+    .map((record) => applyTransform({ ...record, qualificationReason: 'in_network' }))
+    .sort((a, b) => a.score - b.score)
+    .slice(0, MAX_SCORED_CANDIDATES);
+
+  const knownAllocated = allocateCoverage(knownScored, requiredVolume, requiredVolume)
+    .filter((record) => record.allocatedVolume > 0);
+
+  const coveredByKnown = knownAllocated.reduce((sum, record) => sum + record.allocatedVolume, 0);
+  const remainingVolume = Math.max(requiredVolume - coveredByKnown, 0);
+
+  let discoveredAllocated = [];
+  if (remainingVolume > 0 && discovered.length > 0) {
+    const discoveredScored = buildScoredCandidates(
+      discovered,
+      category,
+      weights,
+      baselineCost,
+      baselineLead,
+      baselineRisk
+    )
+      .map((record) => applyTransform({ ...record, qualificationReason: 'gap_fill_external' }))
+      .sort((a, b) => a.score - b.score)
+      .slice(0, MAX_SCORED_CANDIDATES);
+
+    discoveredAllocated = allocateCoverage(discoveredScored, remainingVolume, requiredVolume)
+      .filter((record) => record.allocatedVolume > 0);
+  }
+
+  return [...knownAllocated, ...discoveredAllocated].slice(0, MAX_RECOMMENDATIONS);
+}
+
+export function rerouteSupplierOutage(disruptedNodeId, category, graph, weights, options = {}) {
   const disruptedNode = graph.nodes.find((n) => n.id === disruptedNodeId);
   if (!disruptedNode) return [];
 
   const disruptedVolume = categoryVolume(disruptedNode, category);
   if (disruptedVolume <= 0) return [];
 
-  const candidates = candidateNodes(graph, category, [disruptedNodeId]);
-  const scored = buildScoredCandidates(
-    candidates,
+  return buildScenarioRecommendations({
+    graph,
     category,
+    excludeIds: [disruptedNodeId],
+    blockedCountries: options.blockedCountries || [],
+    requiredVolume: disruptedVolume,
     weights,
-    effectiveCost(disruptedNode, category),
-    disruptedNode.lead_time_days,
-    disruptedNode.risk_score
-  )
-    .sort((a, b) => a.score - b.score)
-    .slice(0, 7);
-
-  return allocateCoverage(scored, disruptedVolume).slice(0, 5);
+    baselineCost: effectiveCost(disruptedNode, category),
+    baselineLead: disruptedNode.lead_time_days,
+    baselineRisk: disruptedNode.risk_score,
+  });
 }
 
 export function rerouteTariffShock(macroEvent, category, graph, weights) {
@@ -118,6 +210,7 @@ export function rerouteTariffShock(macroEvent, category, graph, weights) {
   const affected = graph.nodes.filter(
     (n) =>
       n.entity_type !== 'anchor_company' &&
+      !isDiscoveredNode(n) &&
       macroEvent.countries.includes(n.country_iso3) &&
       hasCategory(n, category)
   );
@@ -132,24 +225,21 @@ export function rerouteTariffShock(macroEvent, category, graph, weights) {
   const avgAffectedRisk =
     affected.reduce((sum, n) => sum + (n.risk_score || 0), 0) / Math.max(affected.length, 1);
 
-  const affectedIds = affected.map((n) => n.id);
-  const candidates = candidateNodes(graph, category, affectedIds);
-  const scored = buildScoredCandidates(
-    candidates,
+  return buildScenarioRecommendations({
+    graph,
     category,
+    excludeIds: affected.map((n) => n.id),
+    blockedCountries: macroEvent.countries,
+    requiredVolume: affectedVolume,
     weights,
-    avgAffectedCost,
-    avgAffectedLead,
-    avgAffectedRisk
-  )
-    .map((r) => ({
-      ...r,
-      costSavingsPct: -r.costDeltaPct,
-    }))
-    .sort((a, b) => a.score - b.score)
-    .slice(0, 7);
-
-  return allocateCoverage(scored, affectedVolume).slice(0, 5);
+    baselineCost: avgAffectedCost,
+    baselineLead: avgAffectedLead,
+    baselineRisk: avgAffectedRisk,
+    transform: (record) => ({
+      ...record,
+      costSavingsPct: -record.costDeltaPct,
+    }),
+  });
 }
 
 export function rerouteSanctionShock(macroEvent, category, graph, weights) {
@@ -158,6 +248,7 @@ export function rerouteSanctionShock(macroEvent, category, graph, weights) {
   const affected = graph.nodes.filter(
     (n) =>
       n.entity_type !== 'anchor_company' &&
+      !isDiscoveredNode(n) &&
       macroEvent.countries.includes(n.country_iso3) &&
       hasCategory(n, category) &&
       (n.capacity_index || 1) === 0
@@ -171,24 +262,21 @@ export function rerouteSanctionShock(macroEvent, category, graph, weights) {
   const avgAffectedRisk =
     affected.reduce((sum, n) => sum + (n.risk_score || 0), 0) / Math.max(affected.length, 1);
 
-  const affectedIds = affected.map((n) => n.id);
-  const candidates = candidateNodes(graph, category, affectedIds);
-  const scored = buildScoredCandidates(
-    candidates,
+  return buildScenarioRecommendations({
+    graph,
     category,
+    excludeIds: affected.map((n) => n.id),
+    blockedCountries: macroEvent.countries,
+    requiredVolume: affectedVolume,
     weights,
-    999999,
-    avgAffectedLead,
-    avgAffectedRisk
-  )
-    .map((r) => ({
-      ...r,
+    baselineCost: 999999,
+    baselineLead: avgAffectedLead,
+    baselineRisk: avgAffectedRisk,
+    transform: (record) => ({
+      ...record,
       costSavingsPct: 1,
-    }))
-    .sort((a, b) => a.score - b.score)
-    .slice(0, 7);
-
-  return allocateCoverage(scored, affectedVolume).slice(0, 5);
+    }),
+  });
 }
 
 export function rerouteCurrencyShock(macroEvent, category, graph, weights) {
@@ -197,6 +285,7 @@ export function rerouteCurrencyShock(macroEvent, category, graph, weights) {
   const affected = graph.nodes.filter(
     (n) =>
       n.entity_type !== 'anchor_company' &&
+      !isDiscoveredNode(n) &&
       macroEvent.countries.includes(n.country_iso3) &&
       hasCategory(n, category)
   );
@@ -211,24 +300,21 @@ export function rerouteCurrencyShock(macroEvent, category, graph, weights) {
   const avgAffectedRisk =
     affected.reduce((sum, n) => sum + (n.risk_score || 0), 0) / Math.max(affected.length, 1);
 
-  const affectedIds = affected.map((n) => n.id);
-  const candidates = candidateNodes(graph, category, affectedIds);
-  const scored = buildScoredCandidates(
-    candidates,
+  return buildScenarioRecommendations({
+    graph,
     category,
+    excludeIds: affected.map((n) => n.id),
+    blockedCountries: macroEvent.countries,
+    requiredVolume: affectedVolume,
     weights,
-    avgAffectedCost,
-    avgAffectedLead,
-    avgAffectedRisk
-  )
-    .map((r) => ({
-      ...r,
-      costSavingsPct: -r.costDeltaPct,
-    }))
-    .sort((a, b) => a.score - b.score)
-    .slice(0, 7);
-
-  return allocateCoverage(scored, affectedVolume).slice(0, 5);
+    baselineCost: avgAffectedCost,
+    baselineLead: avgAffectedLead,
+    baselineRisk: avgAffectedRisk,
+    transform: (record) => ({
+      ...record,
+      costSavingsPct: -record.costDeltaPct,
+    }),
+  });
 }
 
 export function rerouteExportControlShock(macroEvent, category, graph, weights) {
@@ -237,6 +323,7 @@ export function rerouteExportControlShock(macroEvent, category, graph, weights) 
   const affected = graph.nodes.filter(
     (n) =>
       n.entity_type !== 'anchor_company' &&
+      !isDiscoveredNode(n) &&
       macroEvent.countries.includes(n.country_iso3) &&
       hasCategory(n, category) &&
       (n.capacity_index || 1) < 1
@@ -252,24 +339,21 @@ export function rerouteExportControlShock(macroEvent, category, graph, weights) 
   const avgAffectedRisk =
     affected.reduce((sum, n) => sum + (n.risk_score || 0), 0) / Math.max(affected.length, 1);
 
-  const affectedIds = affected.map((n) => n.id);
-  const candidates = candidateNodes(graph, category, affectedIds);
-  const scored = buildScoredCandidates(
-    candidates,
+  return buildScenarioRecommendations({
+    graph,
     category,
+    excludeIds: affected.map((n) => n.id),
+    blockedCountries: macroEvent.countries,
+    requiredVolume: affectedVolume,
     weights,
-    avgAffectedCost,
-    avgAffectedLead,
-    avgAffectedRisk
-  )
-    .map((r) => ({
-      ...r,
-      costSavingsPct: -r.costDeltaPct,
-    }))
-    .sort((a, b) => a.score - b.score)
-    .slice(0, 7);
-
-  return allocateCoverage(scored, affectedVolume).slice(0, 5);
+    baselineCost: avgAffectedCost,
+    baselineLead: avgAffectedLead,
+    baselineRisk: avgAffectedRisk,
+    transform: (record) => ({
+      ...record,
+      costSavingsPct: -record.costDeltaPct,
+    }),
+  });
 }
 
 export function rerouteInterestRateShock(macroEvent, category, graph, weights) {
@@ -384,5 +468,7 @@ export function simulateCombinedScenario(disruptedNodeId, macroEvent, category, 
       break;
   }
 
-  return rerouteSupplierOutage(disruptedNodeId, category, adjustedGraph, weights);
+  return rerouteSupplierOutage(disruptedNodeId, category, adjustedGraph, weights, {
+    blockedCountries: macroEvent.countries || [],
+  });
 }

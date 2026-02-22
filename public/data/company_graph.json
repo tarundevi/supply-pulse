@@ -38,7 +38,9 @@
         "batteries": 0.0,
         "assembly": 155.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "FOX_ZHZ",
@@ -78,7 +80,9 @@
         "batteries": 0.0,
         "assembly": 140.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "PEG_SHA",
@@ -117,7 +121,9 @@
         "batteries": 0.0,
         "assembly": 90.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "LUX_KUN",
@@ -157,7 +163,9 @@
         "batteries": 0.0,
         "assembly": 80.0,
         "sensors": 48.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "TSM_HSC",
@@ -196,7 +204,9 @@
         "batteries": 0.0,
         "assembly": 0.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "SMS_GIH",
@@ -236,7 +246,9 @@
         "batteries": 0.0,
         "assembly": 0.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "LGD_PAJ",
@@ -275,7 +287,9 @@
         "batteries": 0.0,
         "assembly": 0.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "BOE_CDU",
@@ -314,7 +328,9 @@
         "batteries": 0.0,
         "assembly": 0.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "MUR_KYO",
@@ -353,7 +369,9 @@
         "batteries": 0.0,
         "assembly": 0.0,
         "sensors": 54.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "SNY_KUM",
@@ -392,7 +410,9 @@
         "batteries": 0.0,
         "assembly": 0.0,
         "sensors": 45.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "NID_AYU",
@@ -432,7 +452,9 @@
         "batteries": 0.0,
         "assembly": 42.0,
         "sensors": 30.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "CTC_SUZ",
@@ -471,7 +493,9 @@
         "batteries": 0.0,
         "assembly": 60.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "SWD_DON",
@@ -510,7 +534,9 @@
         "batteries": 88.0,
         "assembly": 0.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "ATL_NDG",
@@ -549,7 +575,9 @@
         "batteries": 92.0,
         "assembly": 0.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "DSY_HUI",
@@ -588,7 +616,9 @@
         "batteries": 60.0,
         "assembly": 0.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "WIS_BLR",
@@ -627,7 +657,9 @@
         "batteries": 0.0,
         "assembly": 55.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "TAT_HOS",
@@ -667,7 +699,9 @@
         "batteries": 0.0,
         "assembly": 52.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "GRT_WEF",
@@ -706,7 +740,9 @@
         "batteries": 0.0,
         "assembly": 0.0,
         "sensors": 58.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "AAC_SHZ",
@@ -745,7 +781,9 @@
         "batteries": 0.0,
         "assembly": 0.0,
         "sensors": 55.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "FLX_PEN",
@@ -785,7 +823,9 @@
         "batteries": 0.0,
         "assembly": 48.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     },
     {
       "id": "USI_SHA",
@@ -824,7 +864,705 @@
         "batteries": 0.0,
         "assembly": 0.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
+    },
+    {
+      "id": "DSC_VTC_BAC",
+      "name": "Viettronics Bac Ninh",
+      "entity_type": "facility",
+      "parent_company_id": "Viettronics",
+      "lat": 21.1861,
+      "lng": 106.0763,
+      "country_iso3": "VNM",
+      "country": "VNM",
+      "categories": [
+        "assembly",
+        "displays"
+      ],
+      "capacity_index": 0.76,
+      "lead_time_days": 26.0,
+      "unit_cost_index": 0.96,
+      "tariff_rate_by_category": {
+        "chips": 0.04,
+        "displays": 0.04,
+        "batteries": 0.04,
+        "assembly": 0.04,
+        "sensors": 0.04
+      },
+      "risk_score": 1.25,
+      "risk_event_count": 15,
+      "concentration_share": 0.0,
+      "confidence": 0.78,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 0.0,
+        "displays": 55.0,
+        "batteries": 0.0,
+        "assembly": 120.0,
+        "sensors": 0.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
+    },
+    {
+      "id": "DSC_CMX_GUA",
+      "name": "Comex Guadalajara",
+      "entity_type": "facility",
+      "parent_company_id": "Comex Electronics",
+      "lat": 20.6597,
+      "lng": -103.3496,
+      "country_iso3": "MEX",
+      "country": "MEX",
+      "categories": [
+        "assembly",
+        "sensors"
+      ],
+      "capacity_index": 0.71,
+      "lead_time_days": 23.0,
+      "unit_cost_index": 0.99,
+      "tariff_rate_by_category": {
+        "chips": 0.04,
+        "displays": 0.04,
+        "batteries": 0.04,
+        "assembly": 0.04,
+        "sensors": 0.04
+      },
+      "risk_score": 1.25,
+      "risk_event_count": 15,
+      "concentration_share": 0.0,
+      "confidence": 0.74,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 105.0,
+        "sensors": 38.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
+    },
+    {
+      "id": "DSC_JBL_PEN",
+      "name": "Jabil Penang",
+      "entity_type": "facility",
+      "parent_company_id": "Jabil",
+      "lat": 5.4164,
+      "lng": 100.3327,
+      "country_iso3": "MYS",
+      "country": "MYS",
+      "categories": [
+        "assembly",
+        "displays",
+        "sensors"
+      ],
+      "capacity_index": 0.69,
+      "lead_time_days": 24.0,
+      "unit_cost_index": 1.01,
+      "tariff_rate_by_category": {
+        "chips": 0.036,
+        "displays": 0.0315,
+        "batteries": 0.0345,
+        "assembly": 0.03,
+        "sensors": 0.033
+      },
+      "risk_score": 1.5,
+      "risk_event_count": 18,
+      "concentration_share": 0.0,
+      "confidence": 0.73,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 0.0,
+        "displays": 28.0,
+        "batteries": 0.0,
+        "assembly": 80.0,
+        "sensors": 44.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
+    },
+    {
+      "id": "DSC_FOX_VIE",
+      "name": "Foxconn Bac Giang",
+      "entity_type": "facility",
+      "parent_company_id": "Foxconn",
+      "lat": 21.2777,
+      "lng": 106.1946,
+      "country_iso3": "VNM",
+      "country": "VNM",
+      "categories": [
+        "assembly",
+        "chips"
+      ],
+      "capacity_index": 0.81,
+      "lead_time_days": 25.0,
+      "unit_cost_index": 0.95,
+      "tariff_rate_by_category": {
+        "chips": 0.04,
+        "displays": 0.04,
+        "batteries": 0.04,
+        "assembly": 0.04,
+        "sensors": 0.04
+      },
+      "risk_score": 1.25,
+      "risk_event_count": 15,
+      "concentration_share": 0.0,
+      "confidence": 0.79,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 42.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 140.0,
+        "sensors": 0.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
+    },
+    {
+      "id": "DSC_ASE_KUL",
+      "name": "ASE Kulim",
+      "entity_type": "facility",
+      "parent_company_id": "ASE",
+      "lat": 5.3642,
+      "lng": 100.5618,
+      "country_iso3": "MYS",
+      "country": "MYS",
+      "categories": [
+        "chips",
+        "sensors"
+      ],
+      "capacity_index": 0.74,
+      "lead_time_days": 21.0,
+      "unit_cost_index": 0.98,
+      "tariff_rate_by_category": {
+        "chips": 0.036,
+        "displays": 0.0315,
+        "batteries": 0.0345,
+        "assembly": 0.03,
+        "sensors": 0.033
+      },
+      "risk_score": 1.5,
+      "risk_event_count": 18,
+      "concentration_share": 0.0,
+      "confidence": 0.75,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 68.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 22.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
+    },
+    {
+      "id": "DSC_UMC_TAI",
+      "name": "UMC Tainan",
+      "entity_type": "facility",
+      "parent_company_id": "UMC",
+      "lat": 23.0,
+      "lng": 120.2,
+      "country_iso3": "TWN",
+      "country": "TWN",
+      "categories": [
+        "chips"
+      ],
+      "capacity_index": 0.84,
+      "lead_time_days": 30.0,
+      "unit_cost_index": 1.03,
+      "tariff_rate_by_category": {
+        "chips": 0.048,
+        "displays": 0.042,
+        "batteries": 0.046,
+        "assembly": 0.04,
+        "sensors": 0.044
+      },
+      "risk_score": 3.33,
+      "risk_event_count": 40,
+      "concentration_share": 0.0,
+      "confidence": 0.82,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 92.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
+    },
+    {
+      "id": "DSC_BOE_HEF",
+      "name": "BOE Hefei",
+      "entity_type": "facility",
+      "parent_company_id": "BOE",
+      "lat": 31.8206,
+      "lng": 117.2272,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "displays"
+      ],
+      "capacity_index": 0.79,
+      "lead_time_days": 29.0,
+      "unit_cost_index": 1.0,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.0,
+      "confidence": 0.72,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 0.0,
+        "displays": 88.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
+    },
+    {
+      "id": "DSC_INO_SUZ",
+      "name": "Innolux Suzhou",
+      "entity_type": "facility",
+      "parent_company_id": "Innolux",
+      "lat": 31.2989,
+      "lng": 120.5853,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "displays"
+      ],
+      "capacity_index": 0.72,
+      "lead_time_days": 27.0,
+      "unit_cost_index": 0.99,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.0,
+      "confidence": 0.71,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 0.0,
+        "displays": 74.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
+    },
+    {
+      "id": "DSC_EVE_HUI",
+      "name": "EVE Huizhou",
+      "entity_type": "facility",
+      "parent_company_id": "EVE Energy",
+      "lat": 23.0794,
+      "lng": 114.4126,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "batteries"
+      ],
+      "capacity_index": 0.75,
+      "lead_time_days": 22.0,
+      "unit_cost_index": 1.02,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.0,
+      "confidence": 0.73,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 66.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
+    },
+    {
+      "id": "DSC_BAK_CHQ",
+      "name": "BAK Chongqing",
+      "entity_type": "facility",
+      "parent_company_id": "BAK Battery",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "country_iso3": "CHN",
+      "country": "CHN",
+      "categories": [
+        "batteries"
+      ],
+      "capacity_index": 0.68,
+      "lead_time_days": 24.0,
+      "unit_cost_index": 1.01,
+      "tariff_rate_by_category": {
+        "chips": 0.12,
+        "displays": 0.105,
+        "batteries": 0.115,
+        "assembly": 0.1,
+        "sensors": 0.11
+      },
+      "risk_score": 10.0,
+      "risk_event_count": 120,
+      "concentration_share": 0.0,
+      "confidence": 0.7,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 58.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
+    },
+    {
+      "id": "DSC_SON_OSA",
+      "name": "Sony Osaka Sensors",
+      "entity_type": "facility",
+      "parent_company_id": "Sony",
+      "lat": 34.6937,
+      "lng": 135.5023,
+      "country_iso3": "JPN",
+      "country": "JPN",
+      "categories": [
+        "sensors",
+        "chips"
+      ],
+      "capacity_index": 0.73,
+      "lead_time_days": 19.0,
+      "unit_cost_index": 1.06,
+      "tariff_rate_by_category": {
+        "chips": 0.024,
+        "displays": 0.021,
+        "batteries": 0.023,
+        "assembly": 0.02,
+        "sensors": 0.022
+      },
+      "risk_score": 2.17,
+      "risk_event_count": 26,
+      "concentration_share": 0.0,
+      "confidence": 0.77,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 26.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 47.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
+    },
+    {
+      "id": "DSC_STM_CAT",
+      "name": "STMicro Catania",
+      "entity_type": "facility",
+      "parent_company_id": "STMicroelectronics",
+      "lat": 37.5079,
+      "lng": 15.083,
+      "country_iso3": "ITA",
+      "country": "ITA",
+      "categories": [
+        "chips",
+        "sensors"
+      ],
+      "capacity_index": 0.67,
+      "lead_time_days": 28.0,
+      "unit_cost_index": 1.08,
+      "tariff_rate_by_category": {
+        "chips": 0.04,
+        "displays": 0.04,
+        "batteries": 0.04,
+        "assembly": 0.04,
+        "sensors": 0.04
+      },
+      "risk_score": 1.25,
+      "risk_event_count": 15,
+      "concentration_share": 0.0,
+      "confidence": 0.72,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 34.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 31.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
+    },
+    {
+      "id": "DSC_POW_WRO",
+      "name": "PowerCell Wroclaw",
+      "entity_type": "facility",
+      "parent_company_id": "PowerCell",
+      "lat": 51.1079,
+      "lng": 17.0385,
+      "country_iso3": "POL",
+      "country": "POL",
+      "categories": [
+        "batteries",
+        "sensors"
+      ],
+      "capacity_index": 0.66,
+      "lead_time_days": 27.0,
+      "unit_cost_index": 1.05,
+      "tariff_rate_by_category": {
+        "chips": 0.04,
+        "displays": 0.04,
+        "batteries": 0.04,
+        "assembly": 0.04,
+        "sensors": 0.04
+      },
+      "risk_score": 1.25,
+      "risk_event_count": 15,
+      "concentration_share": 0.0,
+      "confidence": 0.71,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 36.0,
+        "assembly": 0.0,
+        "sensors": 18.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
+    },
+    {
+      "id": "DSC_FLE_JUA",
+      "name": "Flex Juarez",
+      "entity_type": "facility",
+      "parent_company_id": "Flex",
+      "lat": 31.6904,
+      "lng": -106.4245,
+      "country_iso3": "MEX",
+      "country": "MEX",
+      "categories": [
+        "assembly",
+        "batteries"
+      ],
+      "capacity_index": 0.7,
+      "lead_time_days": 20.0,
+      "unit_cost_index": 1.0,
+      "tariff_rate_by_category": {
+        "chips": 0.04,
+        "displays": 0.04,
+        "batteries": 0.04,
+        "assembly": 0.04,
+        "sensors": 0.04
+      },
+      "risk_score": 1.25,
+      "risk_event_count": 15,
+      "concentration_share": 0.0,
+      "confidence": 0.76,
+      "sources": {
+        "source_type": "manual_catalog",
+        "facility": "manual_catalog",
+        "risk": "country_baseline"
+      },
+      "baseline_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 0.0,
+        "assembly": 0.0,
+        "sensors": 0.0
+      },
+      "max_volume_by_category": {
+        "chips": 0.0,
+        "displays": 0.0,
+        "batteries": 24.0,
+        "assembly": 96.0,
+        "sensors": 0.0
+      },
+      "is_discovered": true,
+      "network_status": "out_of_network",
+      "discovery_source": "manual_catalog"
     },
     {
       "id": "AAPL_HQ",
@@ -867,7 +1605,9 @@
         "batteries": 0.0,
         "assembly": 0.0,
         "sensors": 0.0
-      }
+      },
+      "is_discovered": false,
+      "network_status": "in_network"
     }
   ],
   "edges": [
@@ -1242,6 +1982,15 @@
     "gdelt_window": "90d",
     "tariff_year": "2025-proxy",
     "build_version": "company-v1",
+    "discovery_build_version": "discovery-v1",
+    "discovered_supplier_count": 14,
+    "discovered_categories": [
+      "assembly",
+      "batteries",
+      "chips",
+      "displays",
+      "sensors"
+    ],
     "assumption_notes": "Hybrid free+manual sources. Baseline allocations curated for MVP."
   }
 }

@@ -27,8 +27,18 @@ export default function AlternativeSuppliers({ recommendations, category, isTari
 
       {recommendations.map((rec, i) => (
         <div key={rec.id} className="p-2 rounded text-xs space-y-1" style={{ background: 'rgba(255,255,255,0.03)' }}>
-          <div className="font-bold text-sm" style={{ color: COLORS.electricBlue }}>
-            {i + 1}. {rec.name}
+          <div className="flex items-center gap-2">
+            <div className="font-bold text-sm" style={{ color: COLORS.electricBlue }}>
+              {i + 1}. {rec.name}
+            </div>
+            {rec.isDiscovered && (
+              <span
+                className="px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wide"
+                style={{ color: '#fdba74', border: '1px solid rgba(251,146,60,0.5)', background: 'rgba(251,146,60,0.12)' }}
+              >
+                New / Out-of-network
+              </span>
+            )}
           </div>
           <div className="flex justify-between">
             <span style={{ color: COLORS.textMuted }}>{mode === 'company' ? 'Parent Company:' : 'Entity:'}</span>
@@ -66,6 +76,17 @@ export default function AlternativeSuppliers({ recommendations, category, isTari
             <span style={{ color: COLORS.textMuted }}>Data Confidence:</span>
             <span>{Math.round((rec.confidence || 0) * 100)}%</span>
           </div>
+          {rec.isDiscovered && (
+            <>
+              <div className="flex justify-between">
+                <span style={{ color: COLORS.textMuted }}>Qualification:</span>
+                <span>{rec.qualificationReason === 'gap_fill_external' ? 'Gap-fill external candidate' : rec.qualificationReason}</span>
+              </div>
+              <div className="text-[11px]" style={{ color: '#fdba74' }}>
+                Candidate supplier outside the current baseline network.
+              </div>
+            </>
+          )}
           {isTariffScenario && typeof rec.costSavingsPct === 'number' && (
             <div className="flex justify-between">
               <span style={{ color: COLORS.textMuted }}>Tariff Cost Savings:</span>

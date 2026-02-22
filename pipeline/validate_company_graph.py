@@ -21,6 +21,7 @@ def main(args):
         raise SystemExit("Validation failed: no nodes")
 
     node_ids = {n.get("id") for n in nodes}
+    node_map = {n.get("id"): n for n in nodes}
     required_node_keys = {
         "id", "name", "entity_type", "parent_company_id", "lat", "lng", "country_iso3",
         "categories", "capacity_index", "lead_time_days", "unit_cost_index", "tariff_rate_by_category",
@@ -35,6 +36,22 @@ def main(args):
             raise SystemExit(f"Validation failed: negative numeric fields in node {node['id']}")
         if not (0 <= node["confidence"] <= 1):
             raise SystemExit(f"Validation failed: confidence out of range in node {node['id']}")
+        if "is_discovered" in node and not isinstance(node["is_discovered"], bool):
+            raise SystemExit(f"Validation failed: is_discovered must be boolean in node {node['id']}")
+        if "network_status" in node and node["network_status"] not in {"in_network", "out_of_network"}:
+            raise SystemExit(
+                f"Validation failed: network_status must be in_network/out_of_network in node {node['id']}"
+            )
+        if "max_volume_by_category" in node:
+            if not isinstance(node["max_volume_by_category"], dict):
+                raise SystemExit(
+                    f"Validation failed: max_volume_by_category must be an object in node {node['id']}"
+                )
+            for category, volume in node["max_volume_by_category"].items():
+                if not isinstance(volume, (int, float)) or volume < 0:
+                    raise SystemExit(
+                        f"Validation failed: invalid max_volume_by_category[{category}] in node {node['id']}"
+                    )
 
     required_edge_keys = {
         "source_id", "target_id", "category", "relationship_type", "baseline_volume",
@@ -46,6 +63,15 @@ def main(args):
             raise SystemExit(f"Validation failed: edge missing {sorted(missing)}")
         if edge["source_id"] not in node_ids:
             raise SystemExit(f"Validation failed: orphan source {edge['source_id']}")
+        source_node = node_map.get(edge["source_id"], {})
+        if (
+            source_node.get("is_discovered")
+            and source_node.get("network_status") == "out_of_network"
+            and not source_node.get("is_adopted", False)
+        ):
+            raise SystemExit(
+                f"Validation failed: out_of_network discovered node {edge['source_id']} has baseline edge"
+            )
 
     print(f"Validation passed: {graph_path}")
     print(f"Nodes: {len(nodes)} | Edges: {len(edges)}")

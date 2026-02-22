@@ -48,16 +48,62 @@ export default function App() {
     return graphs.company || graphs.country || null;
   }, [mode, graphs]);
 
-  const categories = useMemo(() => MODE_CATEGORY_MAP[mode], [mode]);
-  const parserConfig = useMemo(() => PARSER_CONFIG_BY_MODE[mode], [mode]);
+  const categories = useMemo(() => {
+    if (mode === 'company') {
+      const labels = graph?.metadata?.category_labels || {};
+      const keys = Object.keys(labels);
+      if (keys.length > 0) {
+        return Object.fromEntries(
+          keys.map((key) => [key, { label: labels[key], code: key.toUpperCase() }])
+        );
+      }
+    }
+    return MODE_CATEGORY_MAP[mode];
+  }, [mode, graph]);
+
+  const parserConfig = useMemo(() => {
+    const base = PARSER_CONFIG_BY_MODE[mode];
+    if (mode !== 'company') return base;
+
+    const dynamicCategories = Object.keys(categories || {});
+    const nodes = graph?.nodes || [];
+    const dynamicCountries = Array.from(
+      new Set(nodes.map((node) => node.country_iso3).filter(Boolean))
+    );
+
+    const dynamicCountryAliases = {};
+    for (const node of nodes) {
+      if (!node?.country_iso3) continue;
+      if (node.country) dynamicCountryAliases[String(node.country).toLowerCase()] = node.country_iso3;
+      if (node.country_iso3) dynamicCountryAliases[String(node.country_iso3).toLowerCase()] = node.country_iso3;
+    }
+
+    const dynamicAliases = { ...(base.categoryAliases || {}) };
+    for (const category of dynamicCategories) {
+      dynamicAliases[category] = category;
+      dynamicAliases[category.replace(/_/g, ' ')] = category;
+      if (category.endsWith('s') && category.length > 1) {
+        dynamicAliases[category.slice(0, -1)] = category;
+      }
+    }
+
+    return {
+      ...base,
+      validCategories: dynamicCategories.length > 0 ? dynamicCategories : base.validCategories,
+      categoryAliases: dynamicAliases,
+      validCountries: dynamicCountries.length > 0
+        ? Array.from(new Set([...(base.validCountries || []), ...dynamicCountries]))
+        : base.validCountries,
+      countryAliases: {
+        ...(base.countryAliases || {}),
+        ...dynamicCountryAliases,
+      },
+    };
+  }, [mode, categories, graph]);
 
   const [activeCategory, setActiveCategory] = useState(Object.keys(MODE_CATEGORY_MAP[DEFAULT_MODE])[0]);
 
   useEffect(() => {
-    const keys = Object.keys(categories || {});
-    if (!keys.includes(activeCategory)) {
-      setActiveCategory(keys[0]);
-    }
     setDisruptedNodeId(null);
     setMacroEvent(null);
     // Reset industry/company on mode switch
@@ -65,7 +111,16 @@ export default function App() {
       setSelectedIndustry(Object.keys(INDUSTRY_COMPANY_MAP)[0]);
       setSelectedCompany(INDUSTRY_COMPANY_MAP[Object.keys(INDUSTRY_COMPANY_MAP)[0]].companies[0].key);
     }
-  }, [mode, categories]);
+  }, [mode]);
+
+  useEffect(() => {
+    const keys = Object.keys(categories || {});
+    if (keys.length > 0 && !keys.includes(activeCategory)) {
+      setActiveCategory(keys[0]);
+      setDisruptedNodeId(null);
+      setMacroEvent(null);
+    }
+  }, [categories, activeCategory]);
 
   const simulatedGraph = useMemo(() => {
     if (!graph || !macroEvent) return graph;
@@ -267,6 +322,7 @@ export default function App() {
                 onChange={setSelectedCompany}
                 companies={INDUSTRY_COMPANY_MAP[selectedIndustry].companies}
               />
+              <CategoryFilter value={activeCategory} onChange={setActiveCategory} categories={categories} />
             </>
           ) : (
             <>
