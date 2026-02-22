@@ -2,6 +2,22 @@
 import GlobeGL from 'react-globe.gl';
 import { COLORS, RISK_THRESHOLDS } from '../utils/constants';
 
+// Parse rgba string into components and return a darkened version for background boxes
+function darkenRgba(rgbaStr, bgAlpha = 0.85) {
+  const m = rgbaStr.match(/rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)/);
+  if (!m) return 'rgba(30,30,40,0.85)';
+  const r = Math.round(Number(m[1]) * 0.35);
+  const g = Math.round(Number(m[2]) * 0.35);
+  const b = Math.round(Number(m[3]) * 0.35);
+  return `rgba(${r},${g},${b},${bgAlpha})`;
+}
+
+function borderFromRgba(rgbaStr, alpha = 0.6) {
+  const m = rgbaStr.match(/rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)/);
+  if (!m) return 'rgba(100,100,120,0.5)';
+  return `rgba(${m[1]},${m[2]},${m[3]},${alpha})`;
+}
+
 const DESTINATION_COORDS = {
   USA: { lat: 33.75, lng: -118.19, hub: 'US Distribution', label: 'United States' },
   EU: { lat: 51.90, lng: 4.50, hub: 'EU Distribution', label: 'European Union' },
@@ -16,6 +32,47 @@ function riskColor(eventCount) {
 
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
+}
+
+// Interpolate along the actual great circle path (SLERP) — matches the 3D arc path
+// t=0 is start, t=1 is end; t=0.5 gives the true great circle midpoint
+function interpolateGreatCircle(lat1, lng1, lat2, lng2, t = 0.5) {
+  const toRad = (d) => (d * Math.PI) / 180;
+  const toDeg = (r) => (r * 180) / Math.PI;
+  const φ1 = toRad(lat1), λ1 = toRad(lng1);
+  const φ2 = toRad(lat2), λ2 = toRad(lng2);
+  // Convert to 3D cartesian on unit sphere
+  const x1 = Math.cos(φ1) * Math.cos(λ1), y1 = Math.cos(φ1) * Math.sin(λ1), z1 = Math.sin(φ1);
+  const x2 = Math.cos(φ2) * Math.cos(λ2), y2 = Math.cos(φ2) * Math.sin(λ2), z2 = Math.sin(φ2);
+  // Angular distance
+  const dot = x1 * x2 + y1 * y2 + z1 * z2;
+  const omega = Math.acos(Math.min(1, Math.max(-1, dot)));
+  if (omega < 1e-6) return { lat: lat1, lng: lng1 }; // same point
+  const sinOmega = Math.sin(omega);
+  const a = Math.sin((1 - t) * omega) / sinOmega;
+  const b = Math.sin(t * omega) / sinOmega;
+  const x = a * x1 + b * x2;
+  const y = a * y1 + b * y2;
+  const z = a * z1 + b * z2;
+  return { lat: toDeg(Math.atan2(z, Math.sqrt(x * x + y * y))), lng: toDeg(Math.atan2(y, x)) };
+}
+
+// Estimate the peak altitude of a react-globe.gl arc (matches its internal calculation)
+// Returns altitude in globe-radius units for the apex of the parabolic curve
+function estimateArcPeakAlt(lat1, lng1, lat2, lng2) {
+  const toRad = (d) => (d * Math.PI) / 180;
+  let dLng = lng2 - lng1;
+  if (dLng > 180) dLng -= 360;
+  if (dLng < -180) dLng += 360;
+  const dLngRad = toRad(dLng);
+  const dLatRad = toRad(lat2 - lat1);
+  const a =
+    Math.sin(dLatRad / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLngRad / 2) ** 2;
+  const angDist = 2 * Math.asin(Math.sqrt(a));
+  // Match three-globe's auto altitude: altAutoScale(0.5) * straightLineDist / 2
+  const straightDist = 2 * Math.sin(angDist / 2);
+  return (0.5 * straightDist) / 2;
 }
 
 function rotationSpeedFromAltitude(altitude) {
@@ -82,11 +139,13 @@ export default function Globe({
 
   // Set initial view when globe becomes available
   useEffect(() => {
-    if (!globeRef.current || dimensions.width === 0) return;
-    globeRef.current.controls().autoRotate = autoRotate;
-    globeRef.current.controls().autoRotateSpeed = 0.35;
+    if (!globeRef.current) return;
+    const controls = globeRef.current.controls();
+    controls.autoRotate = autoRotate;
+    controls.autoRotateSpeed = 0.35;
+    controls.zoomSpeed = 3.0; // Increase scroll zoom sensitivity (default 1.0)
     globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 2.5 });
-  }, [dimensions.width, dimensions.height, autoRotate]);
+  }, []);
 
   useEffect(() => {
     if (!globeRef.current) return;
@@ -220,16 +279,94 @@ export default function Globe({
       : [...baseArcs, ...(recArcs || [])];
   }, [graph, activeCategory, disruptedNodeId, recommendations, destinationMarket, selectedCompany, mode]);
 
-  const nvidiaLabel = useMemo(() => {
-    if (selectedCompany !== 'nvidia') return null;
-    const nvidiaNode = points.find(p => p.id === 'NVDA_SC');
-    if (!nvidiaNode) return null;
-    return {
-      lat: nvidiaNode.lat,
-      lng: nvidiaNode.lng,
-      text: 'NVIDIA HQ',
-    };
-  }, [points, selectedCompany]);
+  // Always-visible HTML labels for Nvidia nodes and arc midpoints
+  const htmlLabels = useMemo(() => {
+    const isNvidia = selectedCompany === 'nvidia';
+    if (!isNvidia) return [];
+
+    // Node labels — offset slightly in latitude so they sit beside the node
+    const nodeLabels = points.map((p) => {
+      const shortName = p.name?.replace('NVIDIA ', '') || p.id;
+      const accentColor = p.color || NVIDIA_GREEN;
+      return {
+        lat: p.lat + 1.8,
+        lng: p.lng + 2.5,
+        text: shortName,
+        bgColor: darkenRgba(accentColor),
+        borderColor: borderFromRgba(accentColor),
+        textColor: '#fff',
+        altitude: 0.012,
+        isHQ: false,
+      };
+    });
+
+    // NVIDIA HQ anchor label
+    const hqNode = (graph?.nodes || []).find(n => n.id === 'NVDA_SC');
+    if (hqNode) {
+      nodeLabels.push({
+        lat: hqNode.lat + 2.5,
+        lng: hqNode.lng + 3,
+        text: '\u2b22 NVIDIA HQ',
+        bgColor: darkenRgba(NVIDIA_GREEN),
+        borderColor: borderFromRgba(NVIDIA_GREEN),
+        textColor: NVIDIA_GREEN,
+        altitude: 0.015,
+        isHQ: true,
+      });
+    }
+
+    // Arc labels placed at the peak (apex) of the parabolic arc
+    const arcLabels = arcs
+      .filter((a) => a.isNvidiaArc)
+      .map((arc, i) => {
+        // Place label at the arc apex (t=0.5) with slight stagger
+        const t = 0.48 + (i % 3) * 0.02;
+        const pos = interpolateGreatCircle(arc.startLat, arc.startLng, arc.endLat, arc.endLng, t);
+        const categoryMatch = arc.label?.match(/<b>([^<]+)<\/b>/);
+        const categoryText = categoryMatch ? categoryMatch[1] : '';
+        const accentColor = arc.color || 'rgba(255,255,255,0.8)';
+        // Compute the peak altitude so the label floats at the top of the arc
+        const peakAlt = estimateArcPeakAlt(arc.startLat, arc.startLng, arc.endLat, arc.endLng);
+        return {
+          lat: pos.lat,
+          lng: pos.lng,
+          text: categoryText,
+          bgColor: darkenRgba(accentColor),
+          borderColor: borderFromRgba(accentColor),
+          textColor: '#fff',
+          altitude: peakAlt, // sit exactly on the arc peak
+          isHQ: false,
+        };
+      });
+
+    return [...nodeLabels, ...arcLabels];
+  }, [points, arcs, selectedCompany, graph]);
+
+  // Create HTML element for each label — styled colored box
+  const createLabelElement = useCallback((d) => {
+    const el = document.createElement('div');
+    el.style.cssText = `
+      background: ${d.bgColor};
+      border: 1px solid ${d.borderColor};
+      color: ${d.textColor};
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: ${d.isHQ ? '11px' : '9px'};
+      font-weight: ${d.isHQ ? '700' : '500'};
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      backdrop-filter: blur(4px);
+      letter-spacing: 0.3px;
+      line-height: 1.4;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+      transform: translate(8px, -50%);
+    `;
+    el.textContent = d.text;
+    return el;
+  }, []);
 
   if (!graph) return null;
 
@@ -265,6 +402,12 @@ export default function Globe({
         arcDashGap={(d) => (d.isRecommended ? 0.2 : undefined)}
         arcDashAnimateTime={(d) => (d.isRecommended ? 1500 : 0)}
         arcLabel="label"
+        htmlElementsData={htmlLabels}
+        htmlLat="lat"
+        htmlLng="lng"
+        htmlAltitude="altitude"
+        htmlElement={createLabelElement}
+        htmlTransitionDuration={300}
         ringsData={disruptedNodeId ? points.filter((p) => p.id === disruptedNodeId) : []}
         ringLat="lat"
         ringLng="lng"
