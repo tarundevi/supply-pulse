@@ -114,9 +114,10 @@ function toDiscoveryPoolEntries(graph, companyKey) {
     if (node.is_discovered || node.network_status === 'out_of_network') continue;
 
     const baselineVolume = node.baseline_volume_by_category || {};
+    const maxVolume = node.max_volume_by_category || baselineVolume;
     const categories = Array.from(
-      new Set([...(node.categories || []), ...Object.keys(baselineVolume)])
-    ).filter((category) => Number(baselineVolume[category] || 0) > 0 || (node.categories || []).includes(category));
+      new Set([...(node.categories || []), ...Object.keys(maxVolume)])
+    ).filter((category) => Number(maxVolume[category] || 0) > 0 || (node.categories || []).includes(category));
 
     if (categories.length === 0) continue;
 
@@ -129,7 +130,7 @@ function toDiscoveryPoolEntries(graph, companyKey) {
       country_iso3: node.country_iso3,
       country: node.country,
       categories,
-      maxVolumeByCategory: { ...baselineVolume },
+      maxVolumeByCategory: { ...maxVolume },
       capacity_index: Number(node.capacity_index || 0.5),
       lead_time_days: Number(node.lead_time_days || 25),
       unit_cost_index: Number(node.unit_cost_index || 1),
@@ -161,12 +162,30 @@ function withDiscoveredNodes(graph, selectedCompany, poolEntries) {
     if (candidate.originCompanyKey === selectedCompany) continue;
     if (candidate.confidence < DISCOVERY_CONFIDENCE_THRESHOLD) continue;
 
-    const eligibleCategories = candidate.categories.filter((category) => {
-      if (!graphCategories.has(category)) return false;
-      if (categoryCounts[category] >= DISCOVERY_LIMIT_PER_CATEGORY) return false;
-      return Number(candidate.maxVolumeByCategory?.[category] || 0) > 0;
-    });
-    if (eligibleCategories.length === 0) continue;
+    const mappedCategories = [];
+    for (const rawCat of candidate.categories) {
+      const catLower = rawCat.toLowerCase();
+      let match = null;
+
+      // Check for exact and case-insensitive/plural matches
+      for (const gc of graphCategoryList) {
+        const gcLower = gc.toLowerCase();
+        if (gcLower === catLower || gcLower === catLower + 's' || gcLower + 's' === catLower) {
+          match = gc;
+          break;
+        }
+      }
+
+      if (match) {
+        if (Number(candidate.maxVolumeByCategory?.[rawCat] || 0) > 0) {
+          if (categoryCounts[match] < DISCOVERY_LIMIT_PER_CATEGORY) {
+            mappedCategories.push({ graphCat: match, candidateCat: rawCat });
+          }
+        }
+      }
+    }
+
+    if (mappedCategories.length === 0) continue;
 
     const discoveredId = `DISC_${candidate.originCompanyKey}_${candidate.id}`;
     if (existingIds.has(discoveredId)) continue;
@@ -175,10 +194,21 @@ function withDiscoveredNodes(graph, selectedCompany, poolEntries) {
     const maxVolumeByCategory = {};
     for (const category of graphCategoryList) {
       baselineVolumeByCategory[category] = 0;
-      maxVolumeByCategory[category] = eligibleCategories.includes(category)
-        ? Number(candidate.maxVolumeByCategory?.[category] || 0)
-        : 0;
+      maxVolumeByCategory[category] = 0;
     }
+
+    // Assign mapped volumes
+    const eligibleGraphCategories = [];
+    for (const mapping of mappedCategories) {
+      maxVolumeByCategory[mapping.graphCat] = Math.max(
+        maxVolumeByCategory[mapping.graphCat],
+        Number(candidate.maxVolumeByCategory?.[mapping.candidateCat] || 0)
+      );
+      eligibleGraphCategories.push(mapping.graphCat);
+    }
+
+    // Deduplicate eligible categories
+    const uniqueEligibleCategories = Array.from(new Set(eligibleGraphCategories));
 
     discoveredNodes.push({
       id: discoveredId,
@@ -189,7 +219,7 @@ function withDiscoveredNodes(graph, selectedCompany, poolEntries) {
       lng: candidate.lng,
       country_iso3: candidate.country_iso3 || 'UNK',
       country: candidate.country || candidate.country_iso3 || 'UNK',
-      categories: eligibleCategories,
+      categories: uniqueEligibleCategories,
       capacity_index: candidate.capacity_index,
       lead_time_days: candidate.lead_time_days,
       unit_cost_index: candidate.unit_cost_index,
@@ -211,7 +241,7 @@ function withDiscoveredNodes(graph, selectedCompany, poolEntries) {
     });
 
     existingIds.add(discoveredId);
-    for (const category of eligibleCategories) {
+    for (const category of uniqueEligibleCategories) {
       categoryCounts[category] += 1;
     }
 
